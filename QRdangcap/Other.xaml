@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QRdangcap.Other"
+             Title="Khác">
+    <ContentPage.Content>
+        <TableView Intent="Data" >
+            <TableRoot>
+                <TableSection Title="Menu có layout chống cháy."/>
+                <TableSection Title=" "/>
+                <TableSection>
+                    <TextCell x:Name="GenQR" Tapped="GenQR_Tapped" Text="Tạo mã QR"/>
+                    <TextCell x:Name="SendAbs" Tapped="SendAbs_Tapped" Text="Báo nghỉ học sinh"/>
+                    <TextCell x:Name="AbsLog" Tapped="AbsLog_Tapped" Text="Danh sách học sinh báo nghỉ"/>
+                    <TextCell x:Name="RestDay" Tapped="RestDay_Tapped" Text="Đặt ngày nghỉ"/>
+                    <TextCell x:Name="GPSTest" Tapped="GPSTest_Tapped" Text="Kiểm tra GPS"/>
+                    <TextCell x:Name="TCClr" Tapped="TCClr_Tapped" Text="Tra cứu theo lớp" />
+                    <TextCell x:Name="HistDB" Tapped="HistDB_Tapped" Text="Lịch sử ĐD (toàn hệ thống)" />
+                    <TextCell x:Name="HistLocal" Tapped="HistLocal_Tapped" Text="Lịch sử ĐD (cục bộ)" />
+                </TableSection>
+                <TableSection Title=" "/>
+                <TableSection>
+                    <TextCell x:Name="UpdateDBUser" Tapped="UpdateDBUser_Tapped" Text="Cập nhật DB User" />
+                    <TextCell x:Name="UpdateDBLog" Tapped="UpdateDBLog_Tapped" Text="Cập nhật DB ĐD" />
+                    <TextCell x:Name="DelDBLocal" Tapped="DelDBLocal_Tapped" Text="Xóa lịch sử ĐD (cục bộ)" />
+                </TableSection>
+                <TableSection Title=" "/>
+                <TableSection>
+                    <SwitchCell x:Name="IsGPSRequired" Text="Bắt buộc GPS? (Chỉ hiệu lực trong phiên này)" OnChanged="IsGPSRequired_OnChanged" />
+                </TableSection>
+                <TableSection Title=" "/>
+                <TableSection>
+                    <TextCell x:Name="LoginStatusText" Text="Tài khoản" Detail=""/>
+                    <TextCell x:Name="ChangePassword" Tapped="ChangePassword_Tapped" Text="Đổi mật khẩu" />
+                    <TextCell x:Name="Logout" Tapped="Logout_Tapped" Text="Đăng xuất" />
+                </TableSection>
+                <TableSection Title=" "/>
+                <TableSection>
+                    <TextCell x:Name="ClientVerText" Text="Phiên bản Client:" Detail=""/>
+                    <TextCell x:Name="UpdateCheck" Tapped="UpdateCheck_Tapped" Text="Kiểm tra cập nhật" />
+                </TableSection>
+            </TableRoot>
+        </TableView>
+    </ContentPage.Content>
+</ContentPage>

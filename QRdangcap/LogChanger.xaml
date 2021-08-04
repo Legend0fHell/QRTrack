@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QRdangcap.LogChanger"
+             Title="Chỉnh sửa biên bản">
+    <ContentPage.Content>
+        <RefreshView x:Name ="RefreshingView">
+            <ScrollView>
+                <StackLayout BackgroundColor="#e6e6e6">
+                    <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="70" VerticalOptions="Start">
+                        <StackLayout Margin="10,5,10,0">
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                <Label Text="ID Biên bản:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                                <Label x:Name="ChoseLogId" FontSize="18" LineBreakMode="HeadTruncation"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Center" Spacing="2">
+                                <Label Text="Học sinh:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label x:Name="ChoseString" FontSize="18" LineBreakMode="HeadTruncation"/>
+                            </StackLayout>
+                        </StackLayout>
+
+                    </Frame>
+                    <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="190" VerticalOptions="Start">
+                        <StackLayout>
+                            <Label Text="BIÊN BẢN:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,5,0,-10"/>
+                            <StackLayout Orientation="Horizontal" Margin="10,5,10,-10" VerticalOptions="Center">
+                                <Label Text="Lỗi:" FontSize="18" FontAttributes="Bold" VerticalOptions="Center"/>
+                                <Entry x:Name="StMistake" FontSize="15" HorizontalOptions="Fill"/>
+
+                            </StackLayout>
+                            <Label Text="(Lưu ý: NONE có nghĩa là không lỗi, nếu có nhiều lỗi hãy sử dụng dấu chấm phẩy (;) để phân cách.)" Margin="10,0,10,0"/>
+                            <StackLayout x:Name="RadioButtonStatus" Orientation="Horizontal" RadioButtonGroup.GroupName="logStatus" Margin="10,0,10,0">
+                                <Label Text="Trạng thái:" FontSize="18" FontAttributes="Bold" VerticalOptions="Center"/>
+                                <RadioButton x:Name="OnTime" Content="Đúng giờ"/>
+                                <RadioButton x:Name="LateTime" Content="Muộn giờ"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" Margin="10,0,10,0" VerticalOptions="Center">
+                                <Label Text="Thời gian ghi nhận:" FontSize="18" FontAttributes="Bold" />
+                                <Label x:Name="StTime" FontSize="18"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                    <Grid Margin="10,5,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column ="0" Text="Sửa" Clicked="Button_Clicked_1" HeightRequest="70" FontSize="30" FontAttributes="Bold" BackgroundColor="#a6dca1" TextColor="#7D7D7D" CornerRadius="15"/>
+                        <Button Grid.Column ="1" Text="Xóa" Clicked="Button_Clicked_2" HeightRequest="70" FontSize="30" FontAttributes="Bold" BackgroundColor="#fab8bc" TextColor="#7D7D7D" CornerRadius="15"/>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>
