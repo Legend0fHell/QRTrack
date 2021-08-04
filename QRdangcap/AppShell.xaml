@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:QRdangcap"
+       x:Class="QRdangcap.AppShell">
+    <ShellItem Route="LoginPage">
+        <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" />
+    </ShellItem>
+    <TabBar Route="main">
+        <Tab Title="Cá nhân" Icon="ic_action_account_circle.png">
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+        </Tab>
+        <Tab Title="Thống kê" Icon="ic_action_insert_chart.png">
+            <ShellContent ContentTemplate="{DataTemplate local:RealStats}" />
+        </Tab>
+        <Tab Title="Ghi nhận" Icon="ic_action_assignment.png">
+            <ShellContent ContentTemplate="{DataTemplate local:SubmitForm}" />
+        </Tab>
+        <Tab Title="TC HS" Icon="ic_action_search.png">
+            <ShellContent ContentTemplate="{DataTemplate local:QueryInfo}" />
+        </Tab>
+        <Tab Title="Khác" Icon="ic_action_dehaze.png">
+            <ShellContent ContentTemplate="{DataTemplate local:Other}" />
+        </Tab>
+    </TabBar>
+</Shell>

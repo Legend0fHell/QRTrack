@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             mc:Ignorable="d"
+             x:Class="QRdangcap.LoginPage"
+             Shell.FlyoutBehavior="Disabled"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="InvalidStyle" TargetType="Entry">
+                <Setter Property="TextColor" Value="Red" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#e6e6e6">
+            <Grid>
+                <StackLayout Padding="0" Margin="0">
+                    <Frame BackgroundColor="LightPink" HeightRequest="190" HorizontalOptions="FillAndExpand">
+
+                    </Frame>
+                </StackLayout>
+                <StackLayout HorizontalOptions="Center" VerticalOptions="StartAndExpand" Margin="0,10,0,0">
+                    <Image Source="ResourcesImg/logo.jpg" HeightRequest="150" WidthRequest="150" />
+                </StackLayout>
+                <StackLayout Margin="10,170,10,0">
+                    <Frame BackgroundColor="White" HasShadow="True" HeightRequest="280" HorizontalOptions="FillAndExpand">
+                        <Grid>
+                            <StackLayout HorizontalOptions="CenterAndExpand">
+                                <Label Text="ĐĂNG NHẬP HỆ THỐNG" TextColor="Black" FontSize="Large" FontAttributes="Bold" />
+                            </StackLayout>
+                            <StackLayout Margin="10,50,10,0">
+                                <Entry x:Name="Entry_Username" 
+                                       Placeholder="Tên đăng nhập" 
+                                       PlaceholderColor="DarkGray">
+                                </Entry>
+                                <Entry x:Name="Entry_Password" 
+                                       Placeholder="Mật khẩu" 
+                                       PlaceholderColor="DarkGray" 
+                                       IsPassword="True">
+                                </Entry>
+                            </StackLayout>
+                            <StackLayout Padding="0" Margin="15,10" VerticalOptions="EndAndExpand">
+                                <Button x:Name="LoginBtn" Text="ĐĂNG NHẬP" BackgroundColor="HotPink" TextColor="White" CornerRadius="30" Clicked="LoginProcedure"/>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Button x:Name="DebugInstantBtn" Text="InstantLogin" BackgroundColor="HotPink" TextColor="White" CornerRadius="30" Clicked="InstantLoginProcedure"/>
+                                    <Button x:Name="DebugInstantBtnByp" Text="InstantLoginBypass" BackgroundColor="HotPink" TextColor="White" CornerRadius="30" Clicked="InstantLoginProcedureBypass"/>
+                                </StackLayout>
+                                
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+                <ActivityIndicator x:Name="ActivityIndicator" 
+                                   IsRunning="False"
+                                   Color="Red" 
+                                   HorizontalOptions="CenterAndExpand" 
+                                   VerticalOptions="CenterAndExpand" 
+                                   HeightRequest="50"
+                                   WidthRequest="50"/>
+            </Grid>
+
+            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="10,30,10,20">
+                <Label Text="Hệ thống Quản lý Học sinh CYB - Bản Thử nghiệm" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  TextColor="Black"/>
+                <Label x:Name="ClientVer" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  TextColor="Black"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms" xmlns:zxing1="clr-namespace:ZXing.Common;assembly=zxing"
+             x:Class="QRdangcap.GenQR"
+             Title="Tạo mã QR">
+    <ContentPage.Content>
+        <RefreshView x:Name ="RefreshingView">
+            <ScrollView>
+                <StackLayout x:Name="stackRenderQRCode" Margin="10,5,10,0">
+                    <Label x:Name="randomQRCode" HorizontalOptions="CenterAndExpand" FontSize="Large" FontAttributes="Bold"  TextColor="Black"/>
+                    <Label x:Name="encodedQRCode" HorizontalOptions="CenterAndExpand" FontSize="Medium" TextColor="Black"/>
+                    <Entry x:Name="entryQRCode" Placeholder="Nội dung cần tạo..." />
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,0,0,-20">
+                        <Button Text="Tạo QR" Clicked="Button_Clicked"/>
+                        <Button Text="Lấy mã QR hợp lệ" Clicked="Button2_Clicked" />
+                    </StackLayout>
+
+                    <zxing:ZXingBarcodeImageView
+                        IsVisible="False"
+                        x:Name="QRCodeImg"
+                        BarcodeFormat="QR_CODE"
+                        HeightRequest="400"
+                        WidthRequest="400"
+                        BarcodeValue="Gen de gen de">
+                        <zxing:ZXingBarcodeImageView.BarcodeOptions>
+                            <zxing1:EncodingOptions Height="400" Width="400" />
+                        </zxing:ZXingBarcodeImageView.BarcodeOptions>
+                    </zxing:ZXingBarcodeImageView>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>

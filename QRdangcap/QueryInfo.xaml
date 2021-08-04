@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QRdangcap.QueryInfo"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             Title="Tra cứu thông tin">
+    <ContentPage.Content>
+        <RefreshView x:Name="refreshAll" Refreshing="RefreshView_Refreshing">
+            <ScrollView>
+                <StackLayout>
+                    <Button x:Name ="updateUser" Text="C/nhật DB" Clicked="Button_Clicked" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <SearchBar x:Name ="ClassQuery" Grid.Column="0" Placeholder="Lớp" TextChanged="Test_TextChanged" HeightRequest="30" Margin="-10,0,0,0"/>
+                        <SearchBar x:Name ="NameQuery" Grid.Column="1" Placeholder="Tên" TextChanged="Test_TextChanged" HeightRequest="30" Margin="-30,0,0,0"/>
+                    </Grid>
+                    
+                    <CollectionView x:Name ="myCollectionView" 
+                                    ItemsSource="{Binding ItemsList}"
+                                    HeightRequest="400"
+                                    VerticalOptions="FillAndExpand" 
+                                    HorizontalOptions="FillAndExpand"
+                                    SelectionMode="Single"
+                                    SelectionChanged="MyCollectionView_SelectionChanged">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BackgroundColor="White" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="True">
+                                    <Grid HeightRequest="30" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout Grid.Column="0" Orientation="Vertical" Margin="0,0" HorizontalOptions="Start" VerticalOptions="Center">
+                                            <Label Text="{Binding StId}" TextColor="#7D7D7D" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" Margin="10,5,0,0"/>
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="1" Orientation="Vertical" Margin="0,0" HorizontalOptions="Start" VerticalOptions="Center">
+                                            <Label Text="{Binding StName}" TextColor="Black" FontSize="17" FontAttributes="Bold" VerticalOptions="Center" Margin="5,5,0,0" LineBreakMode="HeadTruncation"/>
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="2" Orientation="Vertical" Margin="0,0" HorizontalOptions="End" VerticalOptions="Center">
+                                            <Label Text="{Binding StClass}" TextColor="#7D7D7D" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" Margin="0,5,10,0"/>
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="3" VerticalOptions="Center">
+                                            <Image Source="ic_action_arrow_forward_ios.png" />
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>

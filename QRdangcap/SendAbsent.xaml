@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QRdangcap.SendAbsent"
+             Title="Báo nghỉ học sinh">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#e6e6e6">
+            <Frame HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="90" VerticalOptions="Start">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </Frame.GestureRecognizers>
+                <StackLayout>
+                    <Label Text="CHỌN HỌC SINH:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,5,0,-10"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column ="0" x:Name="ChoseString" Margin="10,0,0,0" FontSize="17" VerticalOptions="Center" LineBreakMode="HeadTruncation"/>
+                        <Button Grid.Column ="1" 
+                                ImageSource="ic_action_search.png" 
+                                Clicked="TapGestureRecognizer_Tapped" 
+                                BackgroundColor="Transparent" 
+                                BorderColor="Transparent"
+                                Scale="1.5"
+                                Margin="-5,0,0,0"
+                                HeightRequest="60"
+                                WidthRequest="50"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"/>
+                        <Button Grid.Column ="2" 
+                                ImageSource="ic_action_center_focus_strong.png" 
+                                Clicked="Button_Clicked" 
+                                BackgroundColor="Transparent" 
+                                BorderColor="Transparent"
+                                Scale="1.5"
+                                Margin="-10,0,0,0"
+                                HeightRequest="60"
+                                WidthRequest="50"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"/>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+            <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="190" VerticalOptions="Start">
+                <StackLayout Margin="10,0,10,0">
+                    <Label Text="NỘI DUNG:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,5,0,-10"/>
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Label Text="Từ ngày: " FontSize="20" VerticalOptions="Center"/>
+                        <DatePicker x:Name="FromDate" 
+                                    FontSize="20"
+                                    Format="ddd, dd.MM.yyyy" 
+                                    MinimumWidthRequest="300" 
+                                    HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Label Text="Đến ngày: " FontSize="20" VerticalOptions="Center"/>
+                        <DatePicker x:Name="ToDate" 
+                                    FontSize="20"
+                                    Format="ddd, dd.MM.yyyy" 
+                                    MinimumWidthRequest="300" 
+                                    HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                    <Label Text="CẢNH BÁO: Nội dung điểm danh nằm trong khoảng thời gian này sẽ bị ghi đè và không thể khôi phục lại." HorizontalOptions="CenterAndExpand" FontSize="15" />
+                </StackLayout>
+            </Frame>
+            <Button Text="Gửi" Clicked="Button_Clicked_1" Margin="10,0,10,0"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

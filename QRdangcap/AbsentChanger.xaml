@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QRdangcap.AbsentChanger"
+             Title="Chỉnh sửa biên bản">
+    <ContentPage.Content>
+        <RefreshView x:Name ="RefreshingView">
+            <ScrollView>
+                <StackLayout BackgroundColor="#e6e6e6">
+                    <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="70" VerticalOptions="Start">
+                        <StackLayout Margin="10,5,10,0">
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                <Label Text="ID Biên bản:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                                <Label x:Name="ChoseLogId" FontSize="18" LineBreakMode="HeadTruncation"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                <Label Text="Học sinh:" FontSize="18" FontAttributes="Bold" Margin="0,0,5,0" WidthRequest="100"/>
+                                <Label x:Name="ChoseString" FontSize="18" LineBreakMode="HeadTruncation"/>
+                            </StackLayout>
+                        </StackLayout>
+
+                    </Frame>
+                    <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="190" VerticalOptions="Start">
+                        <StackLayout Margin="10,0,10,0">
+                            <Label Text="NỘI DUNG:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,5,0,-10"/>
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Label Text="Từ ngày: " FontSize="20" VerticalOptions="Center"/>
+                                <DatePicker x:Name="FromDate" 
+                                    FontSize="20"
+                                    Format="ddd, dd.MM.yyyy" 
+                                    MinimumWidthRequest="300" 
+                                    HorizontalOptions="FillAndExpand"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Label Text="Đến ngày: " FontSize="20" VerticalOptions="Center"/>
+                                <DatePicker x:Name="ToDate" 
+                                    FontSize="20"
+                                    Format="ddd, dd.MM.yyyy" 
+                                    MinimumWidthRequest="300" 
+                                    HorizontalOptions="FillAndExpand"/>
+                            </StackLayout>
+                            <Label Text="CẢNH BÁO: Nội dung điểm danh nằm trong khoảng thời gian này sẽ bị ghi đè và không thể khôi phục lại." HorizontalOptions="CenterAndExpand" FontSize="15" />
+                        </StackLayout>
+                    </Frame>
+                    <Grid Margin="10,5,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column ="0" Text="Sửa" Clicked="Button_Clicked_1" HeightRequest="70" FontSize="30" FontAttributes="Bold" BackgroundColor="#a6dca1" TextColor="#7D7D7D" CornerRadius="15"/>
+                        <Button Grid.Column ="1" Text="Xóa" Clicked="Button_Clicked_2" HeightRequest="70" FontSize="30" FontAttributes="Bold" BackgroundColor="#fab8bc" TextColor="#7D7D7D" CornerRadius="15"/>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>

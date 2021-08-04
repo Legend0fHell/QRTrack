@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QRdangcap.RealStats"
+             xmlns:syncfusion="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
+             xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
+            Title="Thống kê">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <chart:ChartColorCollection x:Key="Colors">
+                <Color>Gray</Color>
+                <Color>Green</Color>
+                <Color>Orange</Color>
+                <Color>Magenta</Color>
+                <Color>Red</Color>
+            </chart:ChartColorCollection>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <RefreshView x:Name="refreshAll" Refreshing="RefreshView_Refreshing">
+            <ScrollView>
+                <StackLayout BackgroundColor="#e6e6e6">
+                    <StackLayout Orientation="Horizontal" Margin="10,0,10,-5">
+                        <Label Text="Xem theo:" FontSize="17" FontAttributes="Bold" VerticalOptions="Center"/>
+                        <Picker x:Name="WatchMode" Title="Xem theo..." SelectedIndexChanged="WatchMode_SelectedIndexChanged" HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                    <syncfusion:SfPicker x:Name="MonthPicker" ColumnHeaderHeight="40"
+                                             HorizontalOptions="Center"
+                                             PickerHeight="400"
+                                             PickerMode="Dialog"
+                                             PickerWidth="300"
+                                             VerticalOptions="Center" 
+                                             SelectedItem="{Binding MonthSelected}" 
+                                         OkButtonClicked="MonthPicker_OkButtonClicked"
+                                          HeaderText="Chọn tháng"
+                                         ShowHeader="True"
+                                         ShowFooter="True"
+                                         ShowColumnHeader="True"/>
+                    <Frame HasShadow="True" CornerRadius="10" Margin="10,0,10,0" Padding="0" HeightRequest="45" VerticalOptions="Start">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0"  x:Name="PrevDate" ImageSource="ic_action_arrow_left.png" Clicked="PrevDate_Clicked" WidthRequest="50" BackgroundColor="Transparent"/>
+                            <Button Grid.Column="1" x:Name="MonthView" Text="lmao" Clicked="Button_Clicked" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                            <StackLayout x:Name="DailyView" Grid.Column="1" >
+                                <DatePicker 
+                                        x:Name="DatePicked" 
+                                        DateSelected="DatePicked_DateSelected" 
+                                        FontSize="20" FontAttributes="Bold" 
+                                        Format="ddd, dd.MM.yy" 
+                                        MinimumWidthRequest="300"
+                                        HorizontalOptions="Center" VerticalOptions="Center"
+                                        />
+                            </StackLayout>
+                            <Button Grid.Column="2"  x:Name="NextDate" ImageSource="ic_action_arrow_left.png" Rotation="180" Clicked="NextDate_Clicked" WidthRequest="50" BackgroundColor="Transparent"/>
+                        </Grid>
+                    </Frame>
+                    <Frame x:Name="Frame_Info" HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="80" VerticalOptions="Start">
+                        <StackLayout>
+                            <Label Text="Không có dữ liệu!" FontSize="20" FontAttributes="Bold" Margin="10,5,10,0" HorizontalOptions="Center"/>
+                            <Label Text="Kiểm tra lại ngày tra cứu và thử lại." FontSize="17" Margin="10,5,10,0" HorizontalOptions="CenterAndExpand"/>
+                        </StackLayout>
+                    </Frame>
+                    <Frame x:Name="Frame_Chart1" HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="250" VerticalOptions="Start">
+                        <StackLayout>
+                            <Label Text="Toàn trường" FontSize="20" FontAttributes="Bold" Opacity="80" Margin="10,5,0,0"/>
+                            <chart:SfChart x:Name="chartSfAllSchool" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <chart:SfChart.Legend>
+                                    <!--<chart:ChartLegend IconHeight="10" IconWidth="10" OverflowMode="Scroll" DockPosition="Right"  /> -->
+                                    <chart:ChartLegend DockPosition="Right" OverflowMode="Scroll">
+                                        <chart:ChartLegend.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout Orientation="Vertical" WidthRequest="100" Margin="0,-10,0,-10">
+                                                    <StackLayout Orientation="Horizontal">
+                                                        <BoxView Color="{Binding IconColor}" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="9" WidthRequest="9" />
+                                                        <Label FontSize="11" VerticalTextAlignment="Center" Text="{Binding DataPoint.Name}"/>
+                                                    </StackLayout>
+                                                    <StackLayout Orientation="Horizontal" Margin="0,-8,0,0">
+                                                        <Label FontSize="13" VerticalTextAlignment="Center" Text="{Binding DataPoint.Percentage}" HorizontalOptions="StartAndExpand"/>
+                                                        <Label HorizontalTextAlignment="End" VerticalTextAlignment="Center" HorizontalOptions="EndAndExpand" FontSize="13" Text="{Binding DataPoint.Value}"/>
+                                                    </StackLayout>
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </chart:ChartLegend.ItemTemplate>
+                                    </chart:ChartLegend>
+                                </chart:SfChart.Legend>
+                                <chart:SfChart.Series>
+                                    <chart:DoughnutSeries x:Name="DoughnutAllSchool" ExplodeIndex="{Binding SelectedIndex}" LegendIcon="Circle" EnableAnimation="true" StrokeWidth="1" StrokeColor="White" ExplodeOnTouch="true" EnableDataPointSelection="true"
+                                                          XBindingPath="Name" YBindingPath="Value">
+                                        <chart:DoughnutSeries.DataMarker>
+                                            <chart:ChartDataMarker ShowLabel="True">
+                                                <chart:ChartDataMarker.LabelStyle>
+                                                    <chart:DataMarkerLabelStyle LabelFormat="##" LabelPosition="Auto"/>
+                                                </chart:ChartDataMarker.LabelStyle>
+                                            </chart:ChartDataMarker>
+                                        </chart:DoughnutSeries.DataMarker>
+                                        <chart:DoughnutSeries.ColorModel>
+                                            <chart:ChartColorModel Palette="Custom" CustomBrushes="{StaticResource Colors}"/>
+                                        </chart:DoughnutSeries.ColorModel>
+                                    </chart:DoughnutSeries>
+                                </chart:SfChart.Series>
+                            </chart:SfChart>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame x:Name="Frame_Chart2" HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="200" VerticalOptions="Start">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="YourClassInfo" Tapped="YourClassInfo_Tapped"/>
+                        </Frame.GestureRecognizers>
+                        <StackLayout>
+                            <Label x:Name="usrClassDesc"  Text="Lớp của bạn" FontSize="20" FontAttributes="Bold" Opacity="80" Margin="10,5,10,0"/>
+                            <chart:SfChart x:Name="chartSfYourClass" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="10,5,10,0">
+                                <chart:SfChart.Legend>
+                                    <chart:ChartLegend IconHeight="10" IconWidth="10" OverflowMode="Scroll" DockPosition="Bottom" />
+                                </chart:SfChart.Legend>
+                                <chart:SfChart.ColorModel>
+                                    <chart:ChartColorModel Palette="Custom" CustomBrushes="{StaticResource Colors}"/>
+                                </chart:SfChart.ColorModel>
+                                <chart:SfChart.PrimaryAxis>
+                                    <chart:CategoryAxis IsVisible="False"/>
+                                </chart:SfChart.PrimaryAxis>
+                                <chart:SfChart.SecondaryAxis>
+                                    <chart:NumericalAxis/>
+                                </chart:SfChart.SecondaryAxis>
+                                <chart:SfChart.Series>
+                                    <chart:StackingBar100Series x:Name="series1" Label="Lớp" XBindingPath="Name" YBindingPath="Value" LegendIcon="SeriesType" EnableAnimation="True" />
+                                    <chart:StackingBar100Series x:Name="series2" Label="Đúng giờ" XBindingPath="Name" YBindingPath="Value" LegendIcon="SeriesType" EnableAnimation="True">
+                                    </chart:StackingBar100Series>
+                                    <chart:StackingBar100Series x:Name="series3" Label="Muộn giờ" XBindingPath="Name" YBindingPath="Value" LegendIcon="SeriesType" EnableAnimation="True">
+                                    </chart:StackingBar100Series>
+                                    <chart:StackingBar100Series x:Name="series4" Label="Báo nghỉ" XBindingPath="Name" YBindingPath="Value" LegendIcon="SeriesType" EnableAnimation="True">
+                                    </chart:StackingBar100Series>
+                                    <chart:StackingBar100Series x:Name="series5" Label="Chưa ĐD" XBindingPath="Name" YBindingPath="Value" LegendIcon="SeriesType" EnableAnimation="True">
+                                    </chart:StackingBar100Series>
+                                </chart:SfChart.Series>
+                            </chart:SfChart>
+                        </StackLayout>
+                    </Frame>
+                    <Frame x:Name="Frame_Chart3" HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="250" VerticalOptions="Start">
+                        <StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Các lớp cụ thể" FontSize="20" FontAttributes="Bold" Opacity="80" Margin="10,5,0,0"/>
+                                <Button x:Name="Details" Text="Chi tiết" Clicked="Details_Clicked" HeightRequest="50" BackgroundColor="Transparent" Margin="0,-5,0,0"/>
+                            </StackLayout>
+
+                            <CollectionView
+                                x:Name="ClrList"
+                                VerticalOptions="FillAndExpand" 
+                                HorizontalOptions="FillAndExpand"
+                                HeightRequest="150"
+                                Margin="10,0,10,0"
+                                SelectionMode="Single"
+                                SelectionChanged="ClrList_SelectionChanged">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="20"/>
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout>
+                                            <Label Text="{Binding ClrNoSt}" TextColor="Black" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding ClrOnTime}" TextColor="Green" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding ClrLateTime}" TextColor="Orange" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding ClrAbsent}" TextColor="Magenta" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding ClrNotYet}" TextColor="Red" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding ClrName}" TextColor="#7D7D7D" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>
