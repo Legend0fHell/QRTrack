@@ -10,6 +10,8 @@ using Xamarin.Forms.Xaml;
 using ZXing.Net.Mobile.Forms;
 using QRdangcap.LocalDatabase;
 using SQLite;
+using Firebase.Database;
+using Firebase.Database.Query;
 
 namespace QRdangcap
 {
@@ -159,7 +161,28 @@ namespace QRdangcap
             else Reason = "(Trùng)";
             if (response.Status == "SUCCESS")
             {
+                FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
+                var lmao = new OutboundLog
+                {
+                    StId = tmpStId,
+                    ReporterId = UserData.StudentIdDatabase,
+                    Mistake = MistakeStringCombined,
+                    LoginStatus = 1,
+                };
+                var keyy = await fc.Child("Logging").PostAsync(lmao);
+                InboundLog curLog = await fc.Child("Logging").Child(keyy.Key).OnceSingleAsync<InboundLog>();
+                DateTime CurDateTime = new DateTime(curLog.Timestamp, DateTimeKind.Local);
+                TimeSpan CurTime = new TimeSpan(CurDateTime.Hour, CurDateTime.Minute, CurDateTime.Second);
+                if (CurTime >= UserData.StartTime && CurTime <= UserData.EndTime)
+                {
+                    if (CurTime > UserData.LateTime)
+                    {
+                        curLog.LoginStatus = 2;
+                        await fc.Child("Logging").Child(keyy.Key).PutAsync(curLog);
+                    }
+                }
                 DependencyService.Get<IToast>().ShowShort("OK " + Reason + ": " + QueryName);
+                /*
                 LogListForm SentLog = new LogListForm()
                 {
                     LogId = response.Message2,
@@ -170,6 +193,7 @@ namespace QRdangcap
                     LoginDate = response.DateTimeMessage
                 };
                 db.Insert(SentLog);
+                */
             }
             else
             {

@@ -76,10 +76,7 @@ namespace QRdangcap
                 Mistake = "NONE",
                 LoginStatus = 1,
             };
-            var keyy = await fc
-                .Child("Logging")
-                .PostAsync(lmao);
-            System.Diagnostics.Debug.WriteLine($"Key generated: {keyy.Key}");
+            var keyy = await fc.Child("Logging").PostAsync(lmao);
             InboundLog curLog = await fc.Child("Logging").Child(keyy.Key).OnceSingleAsync<InboundLog>();
             DateTime CurDateTime = new DateTime(curLog.Timestamp, DateTimeKind.Local);
             TimeSpan CurTime = new TimeSpan(CurDateTime.Hour, CurDateTime.Minute, CurDateTime.Second);
