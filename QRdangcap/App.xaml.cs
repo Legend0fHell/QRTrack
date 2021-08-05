@@ -1,5 +1,6 @@
 ﻿using Xamarin.Forms;
 using System.Globalization;
+using Plugin.FirebasePushNotification;
 
 namespace QRdangcap
 {
@@ -13,7 +14,14 @@ namespace QRdangcap
             CultureInfo forceVNCulture = new CultureInfo("vi-VN");
             CultureInfo.DefaultThreadCurrentCulture = forceVNCulture;
 
+            CrossFirebasePushNotification.Current.OnTokenRefresh += Current_OnTokenRefresh;
             MainPage = new AppShell();
+            System.Diagnostics.Debug.WriteLine("== DEBUGGING MODE ACTIVATED ==");
+        }
+
+        private void Current_OnTokenRefresh(object source, FirebasePushNotificationTokenEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine($"Token: {e.Token}");
         }
 
         protected override void OnStart()

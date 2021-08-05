@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "496340213206",
+    "project_id": "qrdangcap",
+    "storage_bucket": "qrdangcap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496340213206:android:7123410551662b2d6c9877",
+        "android_client_info": {
+          "package_name": "com.cyblanha.qrdangcap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "496340213206-c558lpq1f6d0c6gi66g2up3q1c0da1qi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAemVOv1DdZjgQlOubmDp9bQQ3E8aQA_Z0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "496340213206-c558lpq1f6d0c6gi66g2up3q1c0da1qi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
