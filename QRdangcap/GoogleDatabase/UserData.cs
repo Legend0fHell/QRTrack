@@ -19,5 +19,8 @@ namespace QRdangcap.GoogleDatabase
         public static double SchoolLon { get; set; }
         public static double SchoolDist { get; set; }
         public static bool IsAtSchool { get; set; }
+        public static TimeSpan StartTime { get; set; }
+        public static TimeSpan LateTime { get; set; }
+        public static TimeSpan EndTime { get; set; }
     }
 }

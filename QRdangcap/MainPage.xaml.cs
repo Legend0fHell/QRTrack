@@ -22,6 +22,12 @@ using Xamarin.Essentials;
 
 namespace QRdangcap
 {
+    public class TimeLim
+    {
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan LateTime { get; set; }
+        public TimeSpan EndTime { get; set; }
+    }
     public partial class MainPage : ContentPage
     {
 
@@ -78,6 +84,19 @@ namespace QRdangcap
             double dist = resultt.CalculateDistance(School, DistanceUnits.Kilometers);
             if (dist * 1000 >= UserData.SchoolDist) UserData.IsAtSchool = false;
             else UserData.IsAtSchool = true;
+            client = new HttpClient();
+            model = new FeedbackModel()
+            {
+                Mode = "19",
+            };
+            jsonString = JsonConvert.SerializeObject(model);
+            requestContent = new StringContent(jsonString);
+            resultQR = await client.PostAsync(uri, requestContent);
+            resultContent = await resultQR.Content.ReadAsStringAsync();
+            var response2 = JsonConvert.DeserializeObject<TimeLim>(resultContent);
+            UserData.StartTime = response2.StartTime;
+            UserData.LateTime = response2.LateTime;
+            UserData.EndTime = response2.EndTime;
         }
         public async void GetTodayInfo()
         {

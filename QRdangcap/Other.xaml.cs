@@ -131,5 +131,14 @@ namespace QRdangcap
         {
             GlobalVariables.IsGPSRequired = IsGPSRequired.On;
         }
+        private void IsUsingFirebase_OnChanged(object sender, ToggledEventArgs e)
+        {
+            GlobalVariables.IsUsingFirebase = IsUsingFirebase.On;
+        }
+
+        private async void FirebaseLogTesting_Tapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new FirebaseLogTesting());
+        }
     }
 }
