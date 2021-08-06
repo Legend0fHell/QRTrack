@@ -10,6 +10,8 @@ using Xamarin.Forms.Xaml;
 using ZXing.Net.Mobile.Forms;
 using QRdangcap.LocalDatabase;
 using SQLite;
+using Firebase.Database;
+using Firebase.Database.Query;
 
 namespace QRdangcap
 {
@@ -25,7 +27,6 @@ namespace QRdangcap
             ChoseString.Text = "Chọn học sinh...";
             otherMistake.Text = "";
             DeviceDate.Text = DateTime.Now.ToString("dddd, dd.MM.yyyy", CultureInfo.CreateSpecificCulture("vi-VN"));
-            db.CreateTable<LogListForm>();
             MessagingCenter.Subscribe<Page, UserListForm>(this, "ChoseSTId", (p, resUser) =>
                 {
                     ChoseString.Text = resUser.StId.ToString() + " " + resUser.StClass + " - " + resUser.StName;
@@ -136,8 +137,6 @@ namespace QRdangcap
             {
                 Mode = "6",
                 Contents = UserIDRead.ToString(),
-                Contents2 = UserData.StudentIdDatabase.ToString(),
-                Contents3 = MistakeStringCombined
             };
             var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
             var jsonString = JsonConvert.SerializeObject(model);
@@ -159,7 +158,20 @@ namespace QRdangcap
             else Reason = "(Trùng)";
             if (response.Status == "SUCCESS")
             {
+                FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
+                var lmao = new OutboundLog
+                {
+                    StId = tmpStId,
+                    ReporterId = UserData.StudentIdDatabase,
+                    Mistake = MistakeStringCombined,
+                    LoginStatus = response.Message1,
+                };
+                var LogKeys = await fc.Child("Logging").PostAsync(lmao);
+                InboundLog curLog = await fc.Child("Logging").Child(LogKeys.Key).OnceSingleAsync<InboundLog>();
+                curLog.Keys = LogKeys.Key;
+                await fc.Child("Logging").Child(LogKeys.Key).PutAsync(curLog);
                 DependencyService.Get<IToast>().ShowShort("OK " + Reason + ": " + QueryName);
+                /*
                 LogListForm SentLog = new LogListForm()
                 {
                     LogId = response.Message2,
@@ -170,6 +182,7 @@ namespace QRdangcap
                     LoginDate = response.DateTimeMessage
                 };
                 db.Insert(SentLog);
+                */
             }
             else
             {

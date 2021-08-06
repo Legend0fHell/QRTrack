@@ -62,20 +62,12 @@ namespace QRdangcap.GoogleDatabase
             var result = await client.PostAsync(uri, requestContent);
             var resultContent = await result.Content.ReadAsStringAsync();
             var response = JsonConvert.DeserializeObject<LogListForm[]>(resultContent);
-            if (response[0].LogId != -1)
-            {
                 var db = new SQLiteConnection(GlobalVariables.localDatabasePath);
                 db.CreateTable<LogListForm>();
                 db.DeleteAll<LogListForm>();
                 db.InsertAll(response);
                 excTime.Stop();
                 //DependencyService.Get<IToast>().ShowShort("Tải thành công! (" + excTime.ElapsedMilliseconds + "ms)");
-            }
-            else
-            {
-                excTime.Stop();
-                DependencyService.Get<IToast>().ShowShort("Không có dữ liệu!");
-            }
         }
         public string RetrieveNameUser(int Id)
         {
