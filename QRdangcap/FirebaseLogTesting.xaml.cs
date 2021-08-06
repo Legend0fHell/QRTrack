@@ -29,6 +29,7 @@ namespace QRdangcap
     public class InboundLog : LoggingStatsBase
     {
         public long Timestamp { get; set; }
+        public string Keys { get; set; }
     }
     public class OutboundLog : LoggingStatsBase
     {
@@ -72,25 +73,21 @@ namespace QRdangcap
             FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
             var lmao = new OutboundLog
             {
+                StId = UserData.StudentIdDatabase,
                 ReporterId = UserData.StudentIdDatabase,
                 Mistake = "NONE",
                 LoginStatus = 1,
             };
-            var keyy = await fc
-                .Child("Logging")
-                .PostAsync(lmao);
-            System.Diagnostics.Debug.WriteLine($"Key generated: {keyy.Key}");
-            InboundLog curLog = await fc.Child("Logging").Child(keyy.Key).OnceSingleAsync<InboundLog>();
-            DateTime CurDateTime = new DateTime(curLog.Timestamp, DateTimeKind.Local);
+            var LogKeys = await fc.Child("Logging").PostAsync(lmao);
+            InboundLog curLog = await fc.Child("Logging").Child(LogKeys.Key).OnceSingleAsync<InboundLog>();
+            curLog.Keys = LogKeys.Key;
+            DateTime CurDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddMilliseconds(curLog.Timestamp).ToLocalTime();
             TimeSpan CurTime = new TimeSpan(CurDateTime.Hour, CurDateTime.Minute, CurDateTime.Second);
-            if(CurTime >= UserData.StartTime && CurTime <= UserData.EndTime)
+            if (CurTime >= UserData.StartTime && CurTime <= UserData.EndTime)
             {
-                if(CurTime > UserData.LateTime)
-                {
-                    curLog.LoginStatus = 2;
-                    await fc.Child("Logging").Child(keyy.Key).PutAsync(curLog);
-                }
+                if (CurTime > UserData.LateTime) curLog.LoginStatus = 2;
             }
+            await fc.Child("Logging").Child(curLog.Keys).PutAsync(curLog);
         }
     }
 }

@@ -19,15 +19,11 @@ using SQLite;
 using System.Diagnostics;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
+using Firebase.Database;
+using Firebase.Database.Query;
 
 namespace QRdangcap
 {
-    public class TimeLim
-    {
-        public TimeSpan StartTime { get; set; }
-        public TimeSpan LateTime { get; set; }
-        public TimeSpan EndTime { get; set; }
-    }
     public partial class MainPage : ContentPage
     {
 
@@ -84,19 +80,6 @@ namespace QRdangcap
             double dist = resultt.CalculateDistance(School, DistanceUnits.Kilometers);
             if (dist * 1000 >= UserData.SchoolDist) UserData.IsAtSchool = false;
             else UserData.IsAtSchool = true;
-            client = new HttpClient();
-            model = new FeedbackModel()
-            {
-                Mode = "19",
-            };
-            jsonString = JsonConvert.SerializeObject(model);
-            requestContent = new StringContent(jsonString);
-            resultQR = await client.PostAsync(uri, requestContent);
-            resultContent = await resultQR.Content.ReadAsStringAsync();
-            var response2 = JsonConvert.DeserializeObject<TimeLim>(resultContent);
-            UserData.StartTime = response2.StartTime;
-            UserData.LateTime = response2.LateTime;
-            UserData.EndTime = response2.EndTime;
         }
         public async void GetTodayInfo()
         {
@@ -112,7 +95,6 @@ namespace QRdangcap
             var resultQR = await client.PostAsync(uri, requestContent);
             var resultContent = await resultQR.Content.ReadAsStringAsync();
             var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
-
             if (response.Message == "0") IsUserLogin = 0;
             else if (response.Message == "1" || response.Message == "-1") IsUserLogin = 1;
             else if (response.Message == "2" || response.Message == "-2") IsUserLogin = 2;
@@ -225,7 +207,6 @@ namespace QRdangcap
                         SendData();
                         async void SendData()
                         {
-
                             var resultQR = await client.PostAsync(uri, requestContent);
                             var resultContent = await resultQR.Content.ReadAsStringAsync();
                             var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
@@ -245,6 +226,18 @@ namespace QRdangcap
                             else Reason = "Bạn đã điểm danh trước đó!";
                             if (response.Status == "SUCCESS")
                             {
+                                FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
+                                var lmao = new OutboundLog
+                                {
+                                    StId = UserData.StudentIdDatabase,
+                                    ReporterId = UserData.StudentIdDatabase,
+                                    Mistake = "NONE",
+                                    LoginStatus = response.Message1,
+                                };
+                                var LogKeys = await fc.Child("Logging").PostAsync(lmao);
+                                InboundLog curLog = await fc.Child("Logging").Child(LogKeys.Key).OnceSingleAsync<InboundLog>();
+                                curLog.Keys = LogKeys.Key;
+                                await fc.Child("Logging").Child(LogKeys.Key).PutAsync(curLog);
                                 await DisplayAlert("Điểm danh thành công!", Reason, "OK");
                             }
                             else
