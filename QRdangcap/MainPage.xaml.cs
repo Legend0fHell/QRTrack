@@ -232,20 +232,12 @@ namespace QRdangcap
                                     StId = UserData.StudentIdDatabase,
                                     ReporterId = UserData.StudentIdDatabase,
                                     Mistake = "NONE",
-                                    LoginStatus = 1,
+                                    LoginStatus = response.Message1,
                                 };
-                                var keyy = await fc.Child("Logging").PostAsync(lmao);
-                                InboundLog curLog = await fc.Child("Logging").Child(keyy.Key).OnceSingleAsync<InboundLog>();
-                                DateTime CurDateTime = new DateTime(curLog.Timestamp, DateTimeKind.Local);
-                                TimeSpan CurTime = new TimeSpan(CurDateTime.Hour, CurDateTime.Minute, CurDateTime.Second);
-                                if (CurTime >= UserData.StartTime && CurTime <= UserData.EndTime)
-                                {
-                                    if (CurTime > UserData.LateTime)
-                                    {
-                                        curLog.LoginStatus = 2;
-                                        await fc.Child("Logging").Child(keyy.Key).PutAsync(curLog);
-                                    }
-                                }
+                                var LogKeys = await fc.Child("Logging").PostAsync(lmao);
+                                InboundLog curLog = await fc.Child("Logging").Child(LogKeys.Key).OnceSingleAsync<InboundLog>();
+                                curLog.Keys = LogKeys.Key;
+                                await fc.Child("Logging").Child(LogKeys.Key).PutAsync(curLog);
                                 await DisplayAlert("Điểm danh thành công!", Reason, "OK");
                             }
                             else

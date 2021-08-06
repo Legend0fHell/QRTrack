@@ -27,7 +27,6 @@ namespace QRdangcap
             ChoseString.Text = "Chọn học sinh...";
             otherMistake.Text = "";
             DeviceDate.Text = DateTime.Now.ToString("dddd, dd.MM.yyyy", CultureInfo.CreateSpecificCulture("vi-VN"));
-            db.CreateTable<LogListForm>();
             MessagingCenter.Subscribe<Page, UserListForm>(this, "ChoseSTId", (p, resUser) =>
                 {
                     ChoseString.Text = resUser.StId.ToString() + " " + resUser.StClass + " - " + resUser.StName;
@@ -138,8 +137,6 @@ namespace QRdangcap
             {
                 Mode = "6",
                 Contents = UserIDRead.ToString(),
-                Contents2 = UserData.StudentIdDatabase.ToString(),
-                Contents3 = MistakeStringCombined
             };
             var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
             var jsonString = JsonConvert.SerializeObject(model);
@@ -167,20 +164,12 @@ namespace QRdangcap
                     StId = tmpStId,
                     ReporterId = UserData.StudentIdDatabase,
                     Mistake = MistakeStringCombined,
-                    LoginStatus = 1,
+                    LoginStatus = response.Message1,
                 };
-                var keyy = await fc.Child("Logging").PostAsync(lmao);
-                InboundLog curLog = await fc.Child("Logging").Child(keyy.Key).OnceSingleAsync<InboundLog>();
-                DateTime CurDateTime = new DateTime(curLog.Timestamp, DateTimeKind.Local);
-                TimeSpan CurTime = new TimeSpan(CurDateTime.Hour, CurDateTime.Minute, CurDateTime.Second);
-                if (CurTime >= UserData.StartTime && CurTime <= UserData.EndTime)
-                {
-                    if (CurTime > UserData.LateTime)
-                    {
-                        curLog.LoginStatus = 2;
-                        await fc.Child("Logging").Child(keyy.Key).PutAsync(curLog);
-                    }
-                }
+                var LogKeys = await fc.Child("Logging").PostAsync(lmao);
+                InboundLog curLog = await fc.Child("Logging").Child(LogKeys.Key).OnceSingleAsync<InboundLog>();
+                curLog.Keys = LogKeys.Key;
+                await fc.Child("Logging").Child(LogKeys.Key).PutAsync(curLog);
                 DependencyService.Get<IToast>().ShowShort("OK " + Reason + ": " + QueryName);
                 /*
                 LogListForm SentLog = new LogListForm()

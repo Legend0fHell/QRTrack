@@ -4,7 +4,7 @@
              x:Class="QRdangcap.FirebaseLogTesting">
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="Gửi test (FirestoreDatabase)" Clicked="Button_Clicked" />
+            <Label Text="Trang chỉ mang tính chất test thử, hạn chế sử dụng." />
             <Button Text="Gửi test (RealtimeDatabase)" Clicked="Button_Clicked_2" />
         </StackLayout>
     </ContentPage.Content>
