@@ -83,6 +83,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfPicker">
       <Version>19.2.0.48</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout">
+      <Version>19.2.0.48</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Annotation">
       <Version>1.2.0</Version>
     </PackageReference>

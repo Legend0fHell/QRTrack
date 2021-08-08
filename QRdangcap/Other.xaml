@@ -28,7 +28,6 @@
                 <TableSection Title=" "/>
                 <TableSection>
                     <SwitchCell x:Name="IsGPSRequired" Text="Bắt buộc GPS? (Chỉ hiệu lực trong phiên này)" OnChanged="IsGPSRequired_OnChanged" />
-                    <SwitchCell x:Name="IsUsingFirebase" Text="Sử dụng Firebase? (Chỉ hiệu lực trong phiên này)" OnChanged="IsUsingFirebase_OnChanged" />
                 </TableSection>
                 <TableSection Title=" "/>
                 <TableSection>

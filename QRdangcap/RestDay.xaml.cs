@@ -31,7 +31,7 @@ namespace QRdangcap
     public partial class RestDay : ContentPage
     {
         public List<WeekItem> WeekList = new List<WeekItem>();
-
+        public static HttpClient client = new HttpClient();
         public RestDay()
         {
             InitializeComponent();
@@ -44,7 +44,6 @@ namespace QRdangcap
         }
         private async void InitWeek()
         {
-            var client = new HttpClient();
             var model = new FeedbackModel()
             {
                 Mode = "14",
@@ -81,7 +80,6 @@ namespace QRdangcap
                 tmp += WeekList[i].IsChecked ? '1' : '0';
             }
             tmp = (WeekList[6].IsChecked ? '1' : '0') + tmp;
-            var client = new HttpClient();
             var model = new FeedbackModel()
             {
                 Mode = "14",
@@ -114,7 +112,6 @@ namespace QRdangcap
                 return;
             }
             DependencyService.Get<IToast>().ShowShort("Đang đặt...");
-            var client = new HttpClient();
             var model = new FeedbackModel()
             {
                 Mode = "14",

@@ -25,6 +25,7 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DSchoolInfo : ContentPage
     {
+        public static HttpClient client = new HttpClient();
         public ObservableRangeCollection<ClassroomListForm> ItemsList { get; set; }
         public int globalSortStrat = -1;
         public int startDate = DateTime.Now.DayOfYear;
@@ -55,7 +56,6 @@ namespace QRdangcap
                 RefreshAll.IsRefreshing = false;
                 return;
             }
-            var client = new HttpClient();
             var model = new FeedbackModel()
             {
                 Mode = "8",
