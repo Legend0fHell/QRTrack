@@ -1,31 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Net.Http;
-using Newtonsoft.Json;
-using System.IO;
-using System.Net;
-using System.Net.Http.Headers;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Newtonsoft.Json;
 using QRdangcap.GoogleDatabase;
-using ZXing.Net.Mobile.Forms;
-using System.Globalization;
 using QRdangcap.LocalDatabase;
-using SQLite;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using Xamarin.CommunityToolkit.ObjectModel;
+using System.Globalization;
+using System.Net.Http;
 using Xamarin.Essentials;
-using Firebase.Database;
-using Firebase.Database.Query;
+using Xamarin.Forms;
+using ZXing.Net.Mobile.Forms;
 
 namespace QRdangcap
 {
     public partial class MainPage : ContentPage
     {
+        public static HttpClient client = new HttpClient();
 
         public MainPage()
         {
@@ -54,10 +43,11 @@ namespace QRdangcap
                 return true;
             });
         }
-        int IsUserLogin;
+
+        private int IsUserLogin;
+
         public async void GetSchoolLoc()
         {
-            var client = new HttpClient();
             var model = new FeedbackModel()
             {
                 Mode = "18",
@@ -80,10 +70,23 @@ namespace QRdangcap
             double dist = resultt.CalculateDistance(School, DistanceUnits.Kilometers);
             if (dist * 1000 >= UserData.SchoolDist) UserData.IsAtSchool = false;
             else UserData.IsAtSchool = true;
+            model = new FeedbackModel()
+            {
+                Mode = "19",
+            };
+            uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
+            jsonString = JsonConvert.SerializeObject(model);
+            requestContent = new StringContent(jsonString);
+            resultQR = await client.PostAsync(uri, requestContent);
+            resultContent = await resultQR.Content.ReadAsStringAsync();
+            var response2 = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
+            UserData.StartTime = response2.StartTime;
+            UserData.EndTime = response2.EndTime;
+            UserData.LateTime = response2.LateTime;
         }
+
         public async void GetTodayInfo()
         {
-            var client = new HttpClient();
             var model = new FeedbackModel()
             {
                 Mode = "5",
@@ -96,11 +99,17 @@ namespace QRdangcap
             var resultContent = await resultQR.Content.ReadAsStringAsync();
             var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
             if (response.Message == "0") IsUserLogin = 0;
-            else if (response.Message == "1" || response.Message == "-1") IsUserLogin = 1;
-            else if (response.Message == "2" || response.Message == "-2") IsUserLogin = 2;
+            else if (response.Message == "1") IsUserLogin = 1;
+            else if (response.Message == "2") IsUserLogin = 2;
             else if (response.Message == "3") IsUserLogin = 3;
+            else if (response.Message == "-1")
+            {
+                IsUserLogin = 0;
+                UserData.IsTodayOff = true;
+            }
             RefreshingView.IsRefreshing = false;
         }
+
         public void InitStaticText()
         {
             Greeting.Text = "Xin chào, " + UserData.StudentIdDatabase.ToString() + ". " + UserData.StudentFullName + "!";
@@ -131,11 +140,13 @@ namespace QRdangcap
                 LblStatusSubString.Text = "";
             }
         }
+
         private async void Logout_Clicked(object sender, System.EventArgs e)
         {
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
             UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
         }
+
         public void Button_Clicked(object sender, System.EventArgs e)
         {
             if (IsUserLogin > 0)
@@ -144,6 +155,7 @@ namespace QRdangcap
             }
             else Scanner();
         }
+
         public async void Scanner()
         {
             var options = new ZXing.Mobile.MobileBarcodeScanningOptions()
@@ -186,15 +198,13 @@ namespace QRdangcap
                     {
                         DisplayAlert("Điểm danh thất bại!", "Code QR không hợp lệ!", "OK");
                     }
-                    else if(!UserData.IsAtSchool && GlobalVariables.IsGPSRequired)
+                    else if (!UserData.IsAtSchool && GlobalVariables.IsGPSRequired)
                     {
                         instance.UpdateCurLocation();
                         DisplayAlert("Điểm danh thất bại!", "Bạn đang ở ngoài trường! (nếu hệ thống sai, hãy thử lại)", "OK");
                     }
                     else
                     {
-                        
-                        var client = new HttpClient();
                         var model = new FeedbackModel()
                         {
                             Mode = "2",
@@ -226,18 +236,7 @@ namespace QRdangcap
                             else Reason = "Bạn đã điểm danh trước đó!";
                             if (response.Status == "SUCCESS")
                             {
-                                FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
-                                var lmao = new OutboundLog
-                                {
-                                    StId = UserData.StudentIdDatabase,
-                                    ReporterId = UserData.StudentIdDatabase,
-                                    Mistake = "NONE",
-                                    LoginStatus = response.Message1,
-                                };
-                                var LogKeys = await fc.Child("Logging").PostAsync(lmao);
-                                InboundLog curLog = await fc.Child("Logging").Child(LogKeys.Key).OnceSingleAsync<InboundLog>();
-                                curLog.Keys = LogKeys.Key;
-                                await fc.Child("Logging").Child(LogKeys.Key).PutAsync(curLog);
+                                instance.Firebase_SendLog(UserData.StudentIdDatabase, "NONE", false, false);
                                 await DisplayAlert("Điểm danh thành công!", Reason, "OK");
                             }
                             else
@@ -245,7 +244,6 @@ namespace QRdangcap
                                 await DisplayAlert("Điểm danh thất bại!", Reason, "OK");
                             }
                         }
-
                     }
                 });
             };
@@ -259,12 +257,15 @@ namespace QRdangcap
             GetTodayInfo();
             GetSchoolLoc();
         }
-        readonly Stopwatch excTime = new Stopwatch();
+
+        private readonly Stopwatch excTime = new Stopwatch();
+
         private void UpdateUser_Tapped(object sender, EventArgs e)
         {
             RetrieveAllUserDb instance = new RetrieveAllUserDb();
             instance.RetrieveAllUserDatabase();
         }
+
         private void UpdateLog_Tapped(object sender, EventArgs e)
         {
             RetrieveAllUserDb instance = new RetrieveAllUserDb();

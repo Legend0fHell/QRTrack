@@ -22,5 +22,6 @@ namespace QRdangcap.GoogleDatabase
         public static TimeSpan StartTime { get; set; }
         public static TimeSpan LateTime { get; set; }
         public static TimeSpan EndTime { get; set; }
+        public static bool IsTodayOff { get; set; }
     }
 }

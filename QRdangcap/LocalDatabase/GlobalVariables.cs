@@ -16,6 +16,5 @@ namespace QRdangcap.LocalDatabase
         public static string localUserDatabasePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "UserDatabase.db3");
         public static string FirebaseURL = "https://qrdangcap-default-rtdb.asia-southeast1.firebasedatabase.app/";
         public static bool IsGPSRequired { get; set; }
-        public static bool IsUsingFirebase { get; set; }
     }
 }

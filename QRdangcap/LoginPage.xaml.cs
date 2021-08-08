@@ -19,6 +19,7 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+        public static HttpClient client = new HttpClient();
         public LoginPage()
         {
             InitializeComponent();
@@ -71,7 +72,6 @@ namespace QRdangcap
 
             if(Entry_Username.Text.Length > 0 && Entry_Password.Text.Length>0)
             {
-                var client = new HttpClient();
                 var model = new FeedbackModel()
                 {
                     Mode = "0",

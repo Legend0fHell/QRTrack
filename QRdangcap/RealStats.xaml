@@ -35,7 +35,8 @@
                                           HeaderText="Chọn tháng"
                                          ShowHeader="True"
                                          ShowFooter="True"
-                                         ShowColumnHeader="True"/>
+                                         ShowColumnHeader="True"
+                                         />
                     <Frame HasShadow="True" CornerRadius="10" Margin="10,0,10,0" Padding="0" HeightRequest="45" VerticalOptions="Start">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -135,6 +136,36 @@
                                     </chart:StackingBar100Series>
                                     <chart:StackingBar100Series x:Name="series5" Label="Chưa ĐD" XBindingPath="Name" YBindingPath="Value" LegendIcon="SeriesType" EnableAnimation="True">
                                     </chart:StackingBar100Series>
+                                </chart:SfChart.Series>
+                            </chart:SfChart>
+                        </StackLayout>
+                    </Frame>
+                    <Frame x:Name="Frame_Chart4" HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="300" VerticalOptions="Start">
+                        <StackLayout>
+                            <Label x:Name="ErrorDesc"  Text="Số lượt phạm lỗi" FontSize="20" FontAttributes="Bold" Opacity="80" Margin="10,5,10,0"/>
+                            <chart:SfChart x:Name="chartSfError" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="10,5,10,0">
+                                <chart:SfChart.Legend>
+                                    <chart:ChartLegend IconHeight="10" IconWidth="10" OverflowMode="Scroll" DockPosition="Bottom" />
+                                </chart:SfChart.Legend>
+                                <chart:SfChart.PrimaryAxis>
+                                    <chart:CategoryAxis>
+                                        
+                                    </chart:CategoryAxis>
+                                </chart:SfChart.PrimaryAxis>
+                                <chart:SfChart.SecondaryAxis>
+                                    <chart:NumericalAxis/>
+                                </chart:SfChart.SecondaryAxis>
+                                
+                                <chart:SfChart.Series>
+                                    <chart:BarSeries x:Name="ErrorRateSeries" Label="Số lần phạm lỗi" XBindingPath="Name" YBindingPath="Value" LegendIcon="SeriesType" EnableAnimation="True">
+                                        <chart:BarSeries.DataMarker>
+                                            <chart:ChartDataMarker ShowLabel="True">
+                                                <chart:ChartDataMarker.LabelStyle>
+                                                    <chart:DataMarkerLabelStyle LabelFormat="##" LabelPosition="Auto"/>
+                                                </chart:ChartDataMarker.LabelStyle>
+                                            </chart:ChartDataMarker>
+                                        </chart:BarSeries.DataMarker>
+                                    </chart:BarSeries>
                                 </chart:SfChart.Series>
                             </chart:SfChart>
                         </StackLayout>

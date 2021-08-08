@@ -1,29 +1,32 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
 using QRdangcap.GoogleDatabase;
+using QRdangcap.LocalDatabase;
+using SQLite;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing.Net.Mobile.Forms;
-using QRdangcap.LocalDatabase;
-using SQLite;
-using Firebase.Database;
-using Firebase.Database.Query;
 
 namespace QRdangcap
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-
     public partial class SubmitForm : ContentPage
     {
-        int UserIDRead = 0;
+        public static HttpClient client = new HttpClient();
+        private int UserIDRead = 0;
         public SQLiteConnection db = new SQLiteConnection(GlobalVariables.localLogHistDatabasePath);
+
         public SubmitForm()
         {
             InitializeComponent();
+            if (!UserData.IsTodayOff)
+            {
+                Lbl_Availability.IsVisible = false;
+                FormSubmitting.IsVisible = true;
+            }
             ChoseString.Text = "Chọn học sinh...";
             otherMistake.Text = "";
             DeviceDate.Text = DateTime.Now.ToString("dddd, dd.MM.yyyy", CultureInfo.CreateSpecificCulture("vi-VN"));
@@ -42,7 +45,7 @@ namespace QRdangcap
             });
             BindingContext = this;
         }
-        
+
         public async void Scanner()
         {
             var options = new ZXing.Mobile.MobileBarcodeScanningOptions()
@@ -89,11 +92,12 @@ namespace QRdangcap
 
             await Navigation.PushAsync(ScanView);
         }
-        public async void SendToDatabase()
+
+        public void SendToDatabase()
         {
+            RetrieveAllUserDb instance = new RetrieveAllUserDb();
             if (!UserData.IsAtSchool && GlobalVariables.IsGPSRequired)
             {
-                RetrieveAllUserDb instance = new RetrieveAllUserDb();
                 instance.UpdateCurLocation();
                 DependencyService.Get<IToast>().ShowShort("Bạn đang ở ngoài trường! (nếu hệ thống sai, hãy thử lại)");
                 return;
@@ -105,7 +109,7 @@ namespace QRdangcap
                 return;
             }
 
-            if(otherMistake.Text.Contains("NONE") || otherMistake.Text.Contains(";"))
+            if (otherMistake.Text.Contains("NONE") || otherMistake.Text.Contains(";"))
             {
                 DependencyService.Get<IToast>().ShowShort("Lỗi không hợp lệ. Vui lòng nhập lại.");
                 return;
@@ -127,68 +131,13 @@ namespace QRdangcap
                     }
                     MistakeStringCombined = MistakeStringCombined.Substring(0, MistakeStringCombined.Length - 1);
                 }
-
             }
             int tmpStId = UserIDRead;
             string QueryName = ChoseString.Text;
             DependencyService.Get<IToast>().ShowShort("Đang gửi: " + QueryName);
-            var client = new HttpClient();
-            var model = new FeedbackModel()
-            {
-                Mode = "6",
-                Contents = UserIDRead.ToString(),
-            };
-            var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            var jsonString = JsonConvert.SerializeObject(model);
-            var requestContent = new StringContent(jsonString);
-            var resultQR = await client.PostAsync(uri, requestContent);
-            var resultContent = await resultQR.Content.ReadAsStringAsync();
-            var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
-
-            string Reason;
-            if (response.Message1 == 1)
-            {
-                Reason = "(Đúng giờ)";
-            }
-            else if (response.Message1 == 2)
-            {
-                Reason = "(Muộn)";
-            }
-            else if (response.Message1 == -1) Reason = "(Ngoài giờ)";
-            else Reason = "(Trùng)";
-            if (response.Status == "SUCCESS")
-            {
-                FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
-                var lmao = new OutboundLog
-                {
-                    StId = tmpStId,
-                    ReporterId = UserData.StudentIdDatabase,
-                    Mistake = MistakeStringCombined,
-                    LoginStatus = response.Message1,
-                };
-                var LogKeys = await fc.Child("Logging").PostAsync(lmao);
-                InboundLog curLog = await fc.Child("Logging").Child(LogKeys.Key).OnceSingleAsync<InboundLog>();
-                curLog.Keys = LogKeys.Key;
-                await fc.Child("Logging").Child(LogKeys.Key).PutAsync(curLog);
-                DependencyService.Get<IToast>().ShowShort("OK " + Reason + ": " + QueryName);
-                /*
-                LogListForm SentLog = new LogListForm()
-                {
-                    LogId = response.Message2,
-                    LoginStatus = response.Message1,
-                    ReporterId = UserData.StudentIdDatabase,
-                    Mistake = MistakeStringCombined,
-                    StId = tmpStId,
-                    LoginDate = response.DateTimeMessage
-                };
-                db.Insert(SentLog);
-                */
-            }
-            else
-            {
-                DependencyService.Get<IToast>().ShowShort("Lỗi " + Reason + ": " + QueryName);
-            }
+            instance.Firebase_SendLog(tmpStId, MistakeStringCombined, true);
         }
+
         private void ClearContents()
         {
             ChoseString.Text = "Chọn học sinh...";
@@ -198,11 +147,11 @@ namespace QRdangcap
             Reason2.IsChecked = false;
             otherMistake.Text = "";
         }
+
         public void Button_Clicked(object sender, System.EventArgs e)
         {
             Scanner();
-            
-        }   
+        }
 
         private void Button_Clicked_1(object sender, EventArgs e)
         {
@@ -220,6 +169,7 @@ namespace QRdangcap
             var ChoosePage = new QueryInfo();
             await Navigation.PushAsync(ChoosePage);
         }
+
         private async void History_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new LocalLogHistory());

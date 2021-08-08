@@ -19,6 +19,7 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GenQR : ContentPage
     {
+        public static HttpClient client = new HttpClient();
         public GenQR()
         {
             InitializeComponent();
@@ -38,7 +39,6 @@ namespace QRdangcap
         public async void Button2_Clicked(object sender, EventArgs e)
         {
             RefreshingView.IsRefreshing = true;
-            var client = new HttpClient();
             var model = new FeedbackModel()
             {
                 Mode = "1",

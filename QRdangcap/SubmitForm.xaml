@@ -18,20 +18,27 @@
                     <Label x:Name="DeviceDate" Text=" " HorizontalOptions="CenterAndExpand" VerticalOptions="Start" FontSize="22" Margin="0,-15,0,0"/>
                 </StackLayout>
             </Frame>
-            <Frame Grid.Column="0" HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="90" VerticalOptions="Start">
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                </Frame.GestureRecognizers>
+            <Frame x:Name="Lbl_Availability" IsVisible="true" Margin="10,5,10,0" HasShadow="True" CornerRadius="10" Padding="0" HeightRequest="90" VerticalOptions="Start">
                 <StackLayout>
-                    <Label Text="CHỌN HỌC SINH:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,5,0,-10"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column ="0" x:Name="ChoseString" Margin="10,0,0,0" FontSize="17" VerticalOptions="Center" LineBreakMode="HeadTruncation"/>
-                        <Button Grid.Column ="1" 
+                    <Label Text="Chức năng này không khả dụng." HorizontalOptions="CenterAndExpand" VerticalOptions="Start" FontSize="22" Margin="0,0,0,0"/>
+                    <Label Text="Kéo xuống để thử lại." HorizontalOptions="CenterAndExpand" VerticalOptions="Start" FontSize="18" Margin="0,0,0,0"/>
+                </StackLayout>
+            </Frame>
+            <StackLayout x:Name="FormSubmitting" Margin="10,5,10,0" IsVisible="false">
+                <Frame Grid.Column="0" HasShadow="True" CornerRadius="10" Padding="0" HeightRequest="90" VerticalOptions="Start">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                    </Frame.GestureRecognizers>
+                    <StackLayout>
+                        <Label Text="CHỌN HỌC SINH:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,5,0,-10"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column ="0" x:Name="ChoseString" Margin="10,0,0,0" FontSize="17" VerticalOptions="Center" LineBreakMode="HeadTruncation"/>
+                            <Button Grid.Column ="1" 
                                 ImageSource="ic_action_search.png" 
                                 Clicked="TapGestureRecognizer_Tapped" 
                                 BackgroundColor="Transparent" 
@@ -42,7 +49,7 @@
                                 WidthRequest="50"
                                 VerticalOptions="Center"
                                 HorizontalOptions="End"/>
-                        <Button Grid.Column ="2" 
+                            <Button Grid.Column ="2" 
                                 ImageSource="ic_action_center_focus_strong.png" 
                                 Clicked="Button_Clicked" 
                                 BackgroundColor="Transparent" 
@@ -53,38 +60,38 @@
                                 WidthRequest="50"
                                 VerticalOptions="Center"
                                 HorizontalOptions="End"/>
-                    </Grid>
-                </StackLayout>
-            </Frame>
-            <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="200" VerticalOptions="Start">
-                <StackLayout Margin="10,0">
-                    <Label Text="LỖI (NẾU CÓ):" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,5,0,0"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <CheckBox x:Name="Reason0" Grid.Column="0" Grid.Row="0" Scale="1.2"/>
-                        <Label Grid.Column="1" Grid.Row="0" Text="Quên thẻ" FontSize="20" VerticalOptions="Center"/>
-                        <CheckBox x:Name="Reason1" Grid.Column="0" Grid.Row="1" Margin="0,-10,0,0" Scale="1.2"/>
-                        <Label Grid.Column="1" Grid.Row="1" Text="Sai đồng phục" FontSize="20" Margin="0,-10,0,0" VerticalOptions="Center"/>
-                        <CheckBox x:Name="Reason2" Grid.Column="2" Grid.Row="0" Margin="0,0,0,0" Scale="1.2"/>
-                        <Label Grid.Column="3" Grid.Row="0" Text="Lỗi ATGT" FontSize="20" Margin="0,0,0,0" VerticalOptions="Center"/>
-                    </Grid>
-                    <Entry x:Name="otherMistake" Placeholder="Lỗi khác..." Margin="2,-10,0,0" FontSize="20" />
-                </StackLayout>
-            </Frame>
-            <Grid Margin="10,5,10,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column ="0" Text="Gửi" Clicked="Button_Clicked_1" HeightRequest="70" FontSize="30" FontAttributes="Bold" BackgroundColor="#a6dca1" TextColor="#7D7D7D" CornerRadius="15"/>
-                <Button Grid.Column ="1" Text="Hủy" Clicked="Button_Clicked_2" HeightRequest="70" FontSize="30" FontAttributes="Bold" BackgroundColor="#fab8bc" TextColor="#7D7D7D" CornerRadius="15"/>
-            </Grid>
-            
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+                <Frame HasShadow="True" CornerRadius="10" Padding="0" HeightRequest="200" VerticalOptions="Start">
+                    <StackLayout Margin="10,0">
+                        <Label Text="LỖI (NẾU CÓ):" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,5,0,0"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="Reason0" Grid.Column="0" Grid.Row="0" Scale="1.2"/>
+                            <Label Grid.Column="1" Grid.Row="0" Text="Quên thẻ" FontSize="20" VerticalOptions="Center"/>
+                            <CheckBox x:Name="Reason1" Grid.Column="0" Grid.Row="1" Margin="0,-10,0,0" Scale="1.2"/>
+                            <Label Grid.Column="1" Grid.Row="1" Text="Sai đồng phục" FontSize="20" Margin="0,-10,0,0" VerticalOptions="Center"/>
+                            <CheckBox x:Name="Reason2" Grid.Column="2" Grid.Row="0" Margin="0,0,0,0" Scale="1.2"/>
+                            <Label Grid.Column="3" Grid.Row="0" Text="Lỗi ATGT" FontSize="20" Margin="0,0,0,0" VerticalOptions="Center"/>
+                        </Grid>
+                        <Entry x:Name="otherMistake" Placeholder="Lỗi khác..." Margin="2,-10,0,0" FontSize="20" />
+                    </StackLayout>
+                </Frame>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column ="0" Text="Gửi" Clicked="Button_Clicked_1" HeightRequest="70" FontSize="30" FontAttributes="Bold" BackgroundColor="#a6dca1" TextColor="#7D7D7D" CornerRadius="15"/>
+                    <Button Grid.Column ="1" Text="Hủy" Clicked="Button_Clicked_2" HeightRequest="70" FontSize="30" FontAttributes="Bold" BackgroundColor="#fab8bc" TextColor="#7D7D7D" CornerRadius="15"/>
+                </Grid>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

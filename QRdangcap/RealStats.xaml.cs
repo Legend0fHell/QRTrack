@@ -16,6 +16,7 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RealStats : ContentPage
     {
+        public static HttpClient client = new HttpClient();
         public SQLiteConnection db = new SQLiteConnection(GlobalVariables.localDatabasePath);
         private readonly Stopwatch excTime = new Stopwatch();
         public object MonthSelected { get; set; }
@@ -138,7 +139,6 @@ namespace QRdangcap
         {
             excTime.Reset();
             excTime.Start();
-            var client = new HttpClient();
             var model = new FeedbackModel()
             {
                 Mode = "8",
@@ -156,6 +156,7 @@ namespace QRdangcap
                 Frame_Chart1.IsVisible = false;
                 Frame_Chart2.IsVisible = false;
                 Frame_Chart3.IsVisible = false;
+                Frame_Chart4.IsVisible = false;
                 Frame_Info.IsVisible = true;
                 refreshAll.IsRefreshing = false;
                 return;
@@ -165,6 +166,7 @@ namespace QRdangcap
                 Frame_Chart1.IsVisible = true;
                 Frame_Chart2.IsVisible = true;
                 Frame_Chart3.IsVisible = true;
+                Frame_Chart4.IsVisible = true;
                 Frame_Info.IsVisible = false;
             }
             List<ClassroomListForm> classroomListForms = new List<ClassroomListForm>();
@@ -180,6 +182,7 @@ namespace QRdangcap
                     tmpForm.ClrOnTime += response[i][classes].ClrOnTime;
                     tmpForm.ClrLateTime += response[i][classes].ClrLateTime;
                     tmpForm.ClrAbsent += response[i][classes].ClrAbsent;
+                    tmpForm.ClrError += response[i][classes].ClrError;
                 }
                 classroomListForms.Add(tmpForm);
             }
@@ -227,7 +230,12 @@ namespace QRdangcap
             {
                 new ChartForm("Lớp", usrClass.ClrNotYet, usrClass.ClrNoSt),
             };
-
+            ObservableCollection<ChartForm> ClassErrorList = new ObservableCollection<ChartForm>();
+            for (int classes = 1; classes < response[0].Count(); ++classes)
+            {
+                ClassErrorList.Add(new ChartForm(classroomListForms[classes].ClrName, classroomListForms[classes].ClrError, classroomListForms[classes].ClrNoSt));
+            }
+            ErrorRateSeries.ItemsSource = ClassErrorList.OrderByDescending(x => x.Value);
             refreshAll.IsRefreshing = false;
         }
 
