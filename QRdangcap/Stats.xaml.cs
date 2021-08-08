@@ -2,6 +2,7 @@
 using Firebase.Database.Query;
 using QRdangcap.LocalDatabase;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Forms;
@@ -43,10 +44,9 @@ namespace QRdangcap
         {
             refreshAll.IsRefreshing = true;
         }
-
         private void RetrieveLogs()
         {
-            LogListFirebase = fc.Child("Logging").OrderByKey().LimitToLast(10).AsObservable<LogListForm>().AsObservableCollection();
+            LogListFirebase = fc.Child("Logging").OrderByKey().LimitToLast(100).AsObservable<LogListForm>().AsObservableCollection();
             //LogListFirebase = new ObservableCollection<LogListForm>(LogListFirebase2.OrderByDescending(x => x.Timestamp));
             RetrieveLog.Text = _LogListFirebase.Count + " mục, nhấn để tải lại!";
             refreshAll.IsRefreshing = false;

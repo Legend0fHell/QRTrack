@@ -13,6 +13,7 @@ namespace QRdangcap.LocalDatabase
         public int ClrOnTime { get; set; }
         public int ClrLateTime { get; set; }
         public int ClrAbsent { get; set; }
+        public int ClrError { get; set; }
         public int ClrNotYet => ClrNoSt - ClrOnTime - ClrLateTime - ClrAbsent;
     }
 }
