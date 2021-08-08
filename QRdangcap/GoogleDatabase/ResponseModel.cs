@@ -16,6 +16,8 @@ namespace QRdangcap.GoogleDatabase
         public int STPriv { get; set; }
         public int STId { get; set; }
         public DateTimeOffset DateTimeMessage { get; set; }
-        
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
+        public TimeSpan LateTime { get; set; }
     }
 }

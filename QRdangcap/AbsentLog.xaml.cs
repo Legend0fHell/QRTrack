@@ -16,6 +16,7 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AbsentLog : ContentPage
     {
+        public static HttpClient client = new HttpClient();
         public AbsentLog()
         {
             InitializeComponent();
@@ -27,7 +28,6 @@ namespace QRdangcap
         }
         private async void RetrieveAbsent()
         {
-            var client = new HttpClient();
             var model = new FeedbackModel()
             {
                 Mode = "17",

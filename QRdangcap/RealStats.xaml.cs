@@ -16,6 +16,7 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RealStats : ContentPage
     {
+        public static HttpClient client = new HttpClient();
         public SQLiteConnection db = new SQLiteConnection(GlobalVariables.localDatabasePath);
         private readonly Stopwatch excTime = new Stopwatch();
         public object MonthSelected { get; set; }
@@ -138,7 +139,6 @@ namespace QRdangcap
         {
             excTime.Reset();
             excTime.Start();
-            var client = new HttpClient();
             var model = new FeedbackModel()
             {
                 Mode = "8",

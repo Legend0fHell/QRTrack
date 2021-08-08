@@ -24,6 +24,7 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AbsentChanger : ContentPage
     {
+        public static HttpClient client = new HttpClient();
         public AbsentLogForm globalLogList = new AbsentLogForm();
         public AbsentChanger(AbsentLogForm logList)
         {
@@ -39,7 +40,6 @@ namespace QRdangcap
         {
             string QueryName = ChoseString.Text;
             DependencyService.Get<IToast>().ShowShort("Đang sửa: " + QueryName);
-            var client = new HttpClient();
             var model = new FeedbackModel()
             {
                 Mode = "15",
@@ -69,7 +69,6 @@ namespace QRdangcap
         {
             string QueryName = ChoseString.Text;
             DependencyService.Get<IToast>().ShowShort("Đang xóa: " + QueryName);
-            var client = new HttpClient();
             var model = new FeedbackModel()
             {
                 Mode = "16",
@@ -88,7 +87,6 @@ namespace QRdangcap
             else
             {
                 DependencyService.Get<IToast>().ShowShort("Thất bại (Không tồn tại): " + QueryName);
-                await DisplayAlert("wd", response.Message, "OK");
             }
             await Navigation.PopAsync();
         }

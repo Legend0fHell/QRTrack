@@ -17,6 +17,7 @@ namespace QRdangcap
     public partial class SendAbsent : ContentPage
     {
         int UserIDRead = 0;
+        public static HttpClient client = new HttpClient();
         public SendAbsent()
         {
             InitializeComponent();
@@ -96,7 +97,6 @@ namespace QRdangcap
             }
             string QueryName = ChoseString.Text;
             DependencyService.Get<IToast>().ShowShort("Đang gửi: " + QueryName);
-            var client = new HttpClient();
             var model = new FeedbackModel()
             {
                 Mode = "4",
