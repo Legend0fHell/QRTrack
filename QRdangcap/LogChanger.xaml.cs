@@ -24,7 +24,7 @@ namespace QRdangcap
             globalLogList = logList;
             ChoseLogId.Text = logList.Keys;
             ChoseString.Text = logList.StId.ToString() + " " + logList.StClass + " - " + logList.StName;
-            StMistake.Text = logList.Mistake;
+            StMistake.Text = logList.Mistake.Equals("NONE") ? "" : logList.Mistake;
             OnTime.IsChecked = false;
             LateTime.IsChecked = false;
             if (logList.LoginStatus == 1) OnTime.IsChecked = true;
@@ -34,6 +34,10 @@ namespace QRdangcap
 
         public async void Button_Clicked_1(object sender, System.EventArgs e)
         {
+            if(string.IsNullOrEmpty(StMistake.Text) || string.IsNullOrWhiteSpace(StMistake.Text))
+            {
+                StMistake.Text = "NONE";
+            }
             InboundLog NewLog = new InboundLog()
             {
                 StId = globalLogList.StId,
@@ -42,6 +46,7 @@ namespace QRdangcap
                 Mistake = StMistake.Text,
                 Timestamp = globalLogList.Timestamp,
                 LoginStatus = OnTime.IsChecked ? 1 : 2,
+                Id2Id = globalLogList.StId.ToString() + "_" + (OnTime.IsChecked ? 1 : 2).ToString(),
             };
             string QueryName = ChoseString.Text;
             await fc.Child("Logging").Child(globalLogList.Keys).PutAsync(NewLog);

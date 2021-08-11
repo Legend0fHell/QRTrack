@@ -3,7 +3,6 @@ using QRdangcap.GoogleDatabase;
 using QRdangcap.LocalDatabase;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Net.Http;
 using Xamarin.Essentials;
@@ -15,7 +14,7 @@ namespace QRdangcap
     public partial class MainPage : ContentPage
     {
         public static HttpClient client = new HttpClient();
-
+        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public MainPage()
         {
             InitializeComponent();
@@ -32,11 +31,10 @@ namespace QRdangcap
                 {
                     DeviceClock.Text = DateTime.Now.ToString("HH:mm:ss");
                     InitStaticText();
-
                     // Replace with overwriting OnAppearing.
                     if (UserData.StudentPreIdDatabase != UserData.StudentIdDatabase)
                     {
-                        GetTodayInfo();
+                        GetSchoolInfo();
                         UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
                     }
                 });
@@ -46,50 +44,11 @@ namespace QRdangcap
 
         private int IsUserLogin;
 
-        public async void GetSchoolLoc()
+        public async void GetSchoolInfo()
         {
             var model = new FeedbackModel()
             {
                 Mode = "18",
-            };
-            var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            var jsonString = JsonConvert.SerializeObject(model);
-            var requestContent = new StringContent(jsonString);
-            var resultQR = await client.PostAsync(uri, requestContent);
-            var resultContent = await resultQR.Content.ReadAsStringAsync();
-            var response = JsonConvert.DeserializeObject<GPSData>(resultContent);
-            UserData.SchoolLat = response.Latitude;
-            UserData.SchoolLon = response.Longitude;
-            UserData.SchoolDist = response.Distance;
-            Location School = new Location()
-            {
-                Latitude = UserData.SchoolLat,
-                Longitude = UserData.SchoolLon
-            };
-            var resultt = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(30)));
-            double dist = resultt.CalculateDistance(School, DistanceUnits.Kilometers);
-            if (dist * 1000 >= UserData.SchoolDist) UserData.IsAtSchool = false;
-            else UserData.IsAtSchool = true;
-            model = new FeedbackModel()
-            {
-                Mode = "19",
-            };
-            uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            jsonString = JsonConvert.SerializeObject(model);
-            requestContent = new StringContent(jsonString);
-            resultQR = await client.PostAsync(uri, requestContent);
-            resultContent = await resultQR.Content.ReadAsStringAsync();
-            var response2 = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
-            UserData.StartTime = response2.StartTime;
-            UserData.EndTime = response2.EndTime;
-            UserData.LateTime = response2.LateTime;
-        }
-
-        public async void GetTodayInfo()
-        {
-            var model = new FeedbackModel()
-            {
-                Mode = "5",
                 Contents = UserData.StudentIdDatabase.ToString(),
             };
             var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
@@ -98,6 +57,13 @@ namespace QRdangcap
             var resultQR = await client.PostAsync(uri, requestContent);
             var resultContent = await resultQR.Content.ReadAsStringAsync();
             var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
+            UserData.SchoolLat = response.Latitude;
+            UserData.SchoolLon = response.Longitude;
+            UserData.SchoolDist = response.Distance;
+            instance.UpdateCurLocation();
+            UserData.StartTime = response.StartTime;
+            UserData.EndTime = response.EndTime;
+            UserData.LateTime = response.LateTime;
             if (response.Message == "0") IsUserLogin = 0;
             else if (response.Message == "1") IsUserLogin = 1;
             else if (response.Message == "2") IsUserLogin = 2;
@@ -173,7 +139,7 @@ namespace QRdangcap
                     Navigation.PopAsync();
                     bool sepDetect = false, invalidDetect = false;
                     string decodedQRCode = "";
-                    RetrieveAllUserDb instance = new RetrieveAllUserDb();
+                    
                     decodedQRCode = instance.Base64Decode(result.Text);
                     for (int i = 0; i < decodedQRCode.Length; ++i)
                     {
@@ -254,22 +220,13 @@ namespace QRdangcap
         private void RefreshView_Refreshing(object sender, EventArgs e)
         {
             InitStaticText();
-            GetTodayInfo();
-            GetSchoolLoc();
+            GetSchoolInfo();
         }
-
-        private readonly Stopwatch excTime = new Stopwatch();
 
         private void UpdateUser_Tapped(object sender, EventArgs e)
         {
             RetrieveAllUserDb instance = new RetrieveAllUserDb();
             instance.RetrieveAllUserDatabase();
-        }
-
-        private void UpdateLog_Tapped(object sender, EventArgs e)
-        {
-            RetrieveAllUserDb instance = new RetrieveAllUserDb();
-            instance.RetrieveAllLogDatabase();
         }
     }
 }

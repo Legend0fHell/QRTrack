@@ -4,7 +4,7 @@
              x:Class="QRdangcap.DUserInfo">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#e6e6e6">
-            <Frame HeightRequest="50" HorizontalOptions="FillAndExpand">
+            <Frame HeightRequest="75" HorizontalOptions="FillAndExpand">
                 <Frame.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop x:Name="FirstGradient" Color="#11998e" Offset="0.1" />
@@ -16,10 +16,13 @@
                     <Label x:Name="ChoseStClass" FontSize="16" FontAttributes="Bold" />
                 </StackLayout>
             </Frame>
-            <StackLayout Margin="10,0,10,0">
-                <Label Text="Bản ghi:" FontSize="15" />
+            <Label Text="{Binding RetrieveLog}" FontSize="17" Margin="10,5" FontAttributes="Bold"/>
+            <StackLayout Orientation="Horizontal" Margin="10,-20,10,0">
+                <Label Text="Lọc:" FontSize="18" FontAttributes="Bold" VerticalOptions="Center"/>
+                <Picker x:Name="FilterMode" Title="Lọc theo..." SelectedIndexChanged="FilterMode_SelectedIndexChanged" HorizontalOptions="FillAndExpand"/>
             </StackLayout>
             <CollectionView x:Name="LogList"
+                            ItemsSource="{Binding LogListFirebase}"
                                 Margin="10,0,10,0"
                                 VerticalOptions="FillAndExpand"
                                 HorizontalOptions="FillAndExpand"
