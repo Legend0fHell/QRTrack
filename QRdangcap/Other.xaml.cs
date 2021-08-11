@@ -56,12 +56,6 @@ namespace QRdangcap
             instance.RetrieveAllUserDatabase();
         }
 
-        private void UpdateDBLog_Tapped(object sender, EventArgs e)
-        {
-            RetrieveAllUserDb instance = new RetrieveAllUserDb();
-            instance.RetrieveAllLogDatabase();
-        }
-
         private async void Logout_Tapped(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");

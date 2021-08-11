@@ -64,7 +64,7 @@
             </Grid>
 
             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="10,30,10,20">
-                <Label Text="Hệ thống Quản lý Học sinh CYB - Bản Thử nghiệm" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  TextColor="Black"/>
+                <Label Text="Hệ thống Điểm danh Học sinh CYB - Bản Thử nghiệm" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  TextColor="Black"/>
                 <Label x:Name="ClientVer" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  TextColor="Black"/>
             </StackLayout>
         </StackLayout>
