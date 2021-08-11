@@ -19,5 +19,8 @@ namespace QRdangcap.GoogleDatabase
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public TimeSpan LateTime { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double Distance { get; set; }
     }
 }

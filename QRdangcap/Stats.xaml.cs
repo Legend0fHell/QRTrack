@@ -1,6 +1,7 @@
 ﻿using Firebase.Database;
 using Firebase.Database.Query;
 using QRdangcap.LocalDatabase;
+using QRdangcap.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,22 +15,14 @@ namespace QRdangcap
     public partial class Stats : ContentPage
     {
         public static FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
-        public ObservableCollection<LogListForm> _LogListFirebase = new ObservableCollection<LogListForm>();
-
-        public ObservableCollection<LogListForm> LogListFirebase
-        {
-            get { return _LogListFirebase; }
-            set
-            {
-                _LogListFirebase = value;
-                OnPropertyChanged();
-            }
-        }
-
+        readonly StatsViewModel ViewModel;
         public Stats()
         {
             InitializeComponent();
-            refreshAll.IsRefreshing = true;
+            FilterMode.ItemsSource = new List<string>() { "Tất cả", "HS ĐD Đúng giờ", "HS ĐD Muộn giờ" };
+            ViewModel = new StatsViewModel();
+            BindingContext = ViewModel;
+            FilterMode.SelectedIndex = 0;
         }
 
         private async void List_ItemTapped(object sender, SelectionChangedEventArgs e)
@@ -37,23 +30,71 @@ namespace QRdangcap
             if (!(e.CurrentSelection.FirstOrDefault() is LogListForm logIdChose)) return;
             await Navigation.PushAsync(new LogChanger(logIdChose));
             LogList.SelectedItem = null;
-            // OnAppearing reloading
-        }
-
-        private void RetrieveLog_Clicked(object sender, EventArgs e)
-        {
-            refreshAll.IsRefreshing = true;
         }
         private void RetrieveLogs()
         {
-            LogListFirebase = fc.Child("Logging").OrderByKey().LimitToLast(100).AsObservable<LogListForm>().AsObservableCollection();
-            //LogListFirebase = new ObservableCollection<LogListForm>(LogListFirebase2.OrderByDescending(x => x.Timestamp));
-            RetrieveLog.Text = _LogListFirebase.Count + " mục, nhấn để tải lại!";
-            refreshAll.IsRefreshing = false;
-            BindingContext = this;
+            ViewModel.LogListFirebase.Clear();
+            if (FilterMode.SelectedIndex == 0)
+            {
+                int cntLoaded = 0;
+                IDisposable Subscriber = fc.Child("Logging").OrderByKey().LimitToLast(10).AsObservable<LogListForm>().Subscribe(
+                    x => {
+                        int index = ViewModel.LogListFirebase.IndexOf(x.Object);
+                        if (x.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
+                        {
+                            if (index < 0)
+                            {
+                                ViewModel.LogListFirebase.Insert(0, x.Object);
+                                ++cntLoaded;
+                            }
+                            else
+                            {
+                                ViewModel.LogListFirebase[index] = x.Object;
+                            }
+                        }
+                        else
+                        {
+                            ViewModel.LogListFirebase.RemoveAt(index);
+                            --cntLoaded;
+                        }
+                        ViewModel.RetrieveLog = $"Đã tải {cntLoaded}/?? mục. (Dữ liệu cập nhật tự động)";
+                        LogList.ScrollTo(1);
+                    }
+                );
+            }
+            else
+            {
+                int cntLoaded = 0;
+                IDisposable Subscriber = fc.Child("Logging").OrderBy("LoginStatus").EqualTo(FilterMode.SelectedIndex)
+                    .LimitToLast(10).AsObservable<LogListForm>().Subscribe(
+                    x => {
+                        int index = ViewModel.LogListFirebase.IndexOf(x.Object);
+                        if (x.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
+                        {
+                            if (index < 0)
+                            {
+                                ViewModel.LogListFirebase.Insert(0, x.Object);
+                                ++cntLoaded;
+                            }
+                            else
+                            {
+                                ViewModel.LogListFirebase[index] = x.Object;
+                            }
+                        }
+                        else
+                        {
+                            ViewModel.LogListFirebase.RemoveAt(index);
+                            --cntLoaded;
+                        }
+                        ViewModel.RetrieveLog = $"Đã tải {cntLoaded}/?? mục. (Dữ liệu cập nhật tự động)";
+                        LogList.ScrollTo(1);
+                    }
+                );
+            }
+            
         }
 
-        private void RefreshView_Refreshing(object sender, EventArgs e)
+        private void FilterMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             RetrieveLogs();
         }

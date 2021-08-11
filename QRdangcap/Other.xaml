@@ -21,7 +21,6 @@
                 <TableSection Title=" "/>
                 <TableSection>
                     <TextCell x:Name="UpdateDBUser" Tapped="UpdateDBUser_Tapped" Text="Cập nhật DB User" />
-                    <TextCell x:Name="UpdateDBLog" Tapped="UpdateDBLog_Tapped" Text="Cập nhật DB ĐD" />
                     <TextCell x:Name="DelDBLocal" Tapped="DelDBLocal_Tapped" Text="Xóa lịch sử ĐD (cục bộ)" />
                     <TextCell x:Name="FirebaseLogTesting" Tapped="FirebaseLogTesting_Tapped" Text="Thử nghiệm Firebase" />
                 </TableSection>

@@ -46,30 +46,6 @@ namespace QRdangcap.GoogleDatabase
             DependencyService.Get<IToast>().ShowShort("Tải thành công! (" + excTime.ElapsedMilliseconds + "ms)");
         }
 
-        public async void RetrieveAllLogDatabase()
-        {
-            //DependencyService.Get<IToast>().ShowShort("Đang tải dữ liệu...");
-            excTime.Reset();
-            excTime.Start();
-            var model = new FeedbackModel()
-            {
-                Mode = "3",
-            };
-            var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            var jsonString = JsonConvert.SerializeObject(model);
-            var requestContent = new StringContent(jsonString);
-            var result = await client.PostAsync(uri, requestContent);
-            var resultContent = await result.Content.ReadAsStringAsync();
-            var response = JsonConvert.DeserializeObject<LogListForm[]>(resultContent);
-            var db = new SQLiteConnection(GlobalVariables.localDatabasePath);
-            db.CreateTable<LogListForm>();
-            db.DeleteAll<LogListForm>();
-            db.InsertAll(response);
-            excTime.Stop();
-            db.Dispose();
-            //DependencyService.Get<IToast>().ShowShort("Tải thành công! (" + excTime.ElapsedMilliseconds + "ms)");
-        }
-
         public string RetrieveNameUser(int Id)
         {
             var db = new SQLiteConnection(GlobalVariables.localUserDatabasePath);
@@ -154,7 +130,7 @@ namespace QRdangcap.GoogleDatabase
             {
                 List<FirebaseObject<InboundLog>> tmp2 = tmp.ToList();
                 DateTime oldLogTime = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddMilliseconds(tmp2[0].Object.Timestamp).ToLocalTime();
-                if (IsOverwriteOk)
+                if (IsOverwriteOk && tmp2[0].Object.Mistake != Mistake)
                 {
                     Debug.WriteLine($"Phát hiện trùng: {QueryName}");
                     SfPopupLayout OverwritePopup = new SfPopupLayout();
@@ -171,10 +147,10 @@ namespace QRdangcap.GoogleDatabase
                     {
                         StackLayout popupContent = new StackLayout()
                         {
-                            Spacing = 1,
+                            Spacing = 5,
                             Children =
                             {
-                                new Label {Text = "Bạn có thể ghi đè biên bản cũ (không đổi thời gian), hoặc hủy biên bản này.", FontSize=17, HorizontalOptions=LayoutOptions.CenterAndExpand},
+                                new Label {Text = "Bạn có thể ghi đè biên bản cũ (không đổi thời gian), hoặc hủy biên bản này.", FontSize=15, HorizontalOptions=LayoutOptions.CenterAndExpand, Margin=new Thickness(10,0)},
                                 new Frame
                                 {
                                     CornerRadius = 10,
@@ -184,23 +160,23 @@ namespace QRdangcap.GoogleDatabase
                                     {
                                         Orientation = StackOrientation.Horizontal,
                                         Children = {
-                                            new Label {Text = "Cũ", FontSize=20, FontAttributes=FontAttributes.Bold},
+                                            new Label {Text = "Cũ", FontSize=20, FontAttributes=FontAttributes.Bold, MinimumWidthRequest=40},
                                             new StackLayout
                                             {
                                                 HorizontalOptions=LayoutOptions.EndAndExpand,
                                                 Children =
                                                 {
-                                                    new Label {Text = QueryName, FontSize=15 },
+                                                    new Label {Text = QueryName, FontSize=15, LineBreakMode=LineBreakMode.HeadTruncation},
                                                     new StackLayout
                                                     {
                                                         Orientation = StackOrientation.Horizontal,
 
                                                         Children =
                                                         {
-                                                            new Label {Text = tmp2[0].Object.Mistake, TextColor = Color.Red},
+                                                            new Label {Text = tmp2[0].Object.Mistake.Equals("NONE") ? "" : tmp2[0].Object.Mistake, TextColor = Color.Red, LineBreakMode=LineBreakMode.HeadTruncation},
                                                             new Label {
                                                                 Text = oldLogTime.ToString("HH:mm:ss"), FontSize = 20, FontAttributes=FontAttributes.Bold,
-                                                                TextColor=tmp2[0].Object.LoginStatus == 1 ? Color.Green : Color.Orange, HorizontalOptions=LayoutOptions.EndAndExpand},
+                                                                TextColor=tmp2[0].Object.LoginStatus == 1 ? Color.Green : Color.Orange, HorizontalOptions=LayoutOptions.EndAndExpand, MinimumWidthRequest=90},
                                                         }
                                                     }
                                                 }
@@ -217,23 +193,23 @@ namespace QRdangcap.GoogleDatabase
                                     {
                                         Orientation = StackOrientation.Horizontal,
                                         Children = {
-                                            new Label {Text = "Mới", FontSize=20, FontAttributes=FontAttributes.Bold},
+                                            new Label {Text = "Mới", FontSize=20, FontAttributes=FontAttributes.Bold, MinimumWidthRequest=40},
                                             new StackLayout
                                             {
                                                 HorizontalOptions=LayoutOptions.EndAndExpand,
                                                 Children =
                                                 {
-                                                    new Label {Text = QueryName, FontSize=15 },
+                                                    new Label {Text = QueryName, FontSize=15, LineBreakMode=LineBreakMode.HeadTruncation},
                                                     new StackLayout
                                                     {
                                                         Orientation = StackOrientation.Horizontal,
 
                                                         Children =
                                                         {
-                                                            new Label {Text = Mistake, TextColor = Color.Red},
+                                                            new Label {Text = Mistake.Equals("NONE") ? "" : Mistake, TextColor = Color.Red, LineBreakMode=LineBreakMode.HeadTruncation},
                                                             new Label {
                                                                 Text = oldLogTime.ToString("HH:mm:ss"), FontSize = 20, FontAttributes=FontAttributes.Bold,
-                                                                TextColor=tmp2[0].Object.LoginStatus == 1 ? Color.Green : Color.Orange, HorizontalOptions=LayoutOptions.EndAndExpand},
+                                                                TextColor=tmp2[0].Object.LoginStatus == 1 ? Color.Green : Color.Orange, HorizontalOptions=LayoutOptions.EndAndExpand, MinimumWidthRequest=90},
                                                         }
                                                     }
                                                 }
@@ -299,6 +275,7 @@ namespace QRdangcap.GoogleDatabase
         public async void Firebase_SendLog2(int STId, string Mistake = "NONE", bool IsSentToGG = true)
         {
             string ThisIdenId = DateTime.Now.DayOfYear.ToString() + "_" + DateTime.Now.ToString("yyyy") + "_" + STId.ToString();
+            string ThisId2Id = STId.ToString() + "_1";
             string QueryName = RetrieveNameUser(STId);
             OutboundLog SubLog = new OutboundLog()
             {
@@ -306,6 +283,7 @@ namespace QRdangcap.GoogleDatabase
                 ReporterId = UserData.StudentIdDatabase,
                 Mistake = Mistake,
                 IdentityId = ThisIdenId,
+                Id2Id = ThisId2Id,
                 LoginStatus = 1,
             };
             Debug.WriteLine($"Lấy thời gian: {QueryName}");
@@ -316,10 +294,15 @@ namespace QRdangcap.GoogleDatabase
             TimeSpan CurTime = new TimeSpan(CurDateTime.Hour, CurDateTime.Minute, CurDateTime.Second);
             if (CurTime >= UserData.StartTime && CurTime <= UserData.EndTime)
             {
-                if (CurTime > UserData.LateTime) curLog.LoginStatus = 2;
+                if (CurTime > UserData.LateTime)
+                {
+                    curLog.LoginStatus = 2;
+                    curLog.Id2Id = STId.ToString() + "_2";
+                }
                 await fc.Child("Logging").Child(LogKeys.Key).PutAsync(curLog);
                 if (!IsSentToGG) return;
                 Debug.WriteLine($"Gửi lên GG Sheet: {QueryName}");
+                DependencyService.Get<IToast>().ShowShort("Đã gửi: " + QueryName);
                 var model = new FeedbackModel()
                 {
                     Mode = "6",
@@ -341,7 +324,6 @@ namespace QRdangcap.GoogleDatabase
                 }
                 else
                 {
-                    DependencyService.Get<IToast>().ShowShort("OK: " + QueryName);
                     db2.CreateTable<LogListForm>();
                     Debug.WriteLine($"Thêm vào db local: {QueryName}");
                     LogListForm SentLog = new LogListForm()
