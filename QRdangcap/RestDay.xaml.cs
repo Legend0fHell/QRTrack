@@ -1,23 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using QRdangcap.GoogleDatabase;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
 using System.Net.Http;
-using Newtonsoft.Json;
-using System.IO;
-using System.Net;
-using System.Net.Http.Headers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using QRdangcap.GoogleDatabase;
-using ZXing.Net.Mobile.Forms;
-using System.Globalization;
-using QRdangcap.LocalDatabase;
-using SQLite;
-using System.Diagnostics;
-using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace QRdangcap
 {
@@ -32,6 +19,7 @@ namespace QRdangcap
     {
         public List<WeekItem> WeekList = new List<WeekItem>();
         public static HttpClient client = new HttpClient();
+
         public RestDay()
         {
             InitializeComponent();
@@ -42,6 +30,7 @@ namespace QRdangcap
             SetMode.SelectedIndex = 0;
             InitWeek();
         }
+
         private async void InitWeek()
         {
             var model = new FeedbackModel()
@@ -136,5 +125,4 @@ namespace QRdangcap
             }
         }
     }
-
 }

@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using Newtonsoft.Json;
+using QRdangcap.GoogleDatabase;
+using System;
 using System.Net.Http;
-using Newtonsoft.Json;
-using System.IO;
-using System.Net;
-using System.Net.Http.Headers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using QRdangcap.GoogleDatabase;
-using ZXing.Net.Mobile.Forms;
 
 namespace QRdangcap
 {
@@ -20,10 +11,12 @@ namespace QRdangcap
     public partial class GenQR : ContentPage
     {
         public static HttpClient client = new HttpClient();
+
         public GenQR()
         {
             InitializeComponent();
         }
+
         public void RetrieveAndGenQR(string plainText)
         {
             randomQRCode.Text = plainText;
@@ -32,10 +25,12 @@ namespace QRdangcap
             QRCodeImg.BarcodeValue = encodedQRCode.Text;
             QRCodeImg.IsVisible = true;
         }
+
         public void Button_Clicked(object sender, EventArgs e)
         {
             RetrieveAndGenQR(entryQRCode.Text);
         }
+
         public async void Button2_Clicked(object sender, EventArgs e)
         {
             RefreshingView.IsRefreshing = true;

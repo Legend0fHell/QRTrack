@@ -2,7 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QRdangcap.DClassInfo"
+             xmlns:local="clr-namespace:QRdangcap"
              Title="Tra cứu - Học sinh">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BarConverter x:Key="intConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <RefreshView x:Name="RefreshAll" Refreshing="RefreshAll_Refreshing">
             <ScrollView>
@@ -14,16 +20,25 @@
                                 <GradientStop x:Name="SecondGradient" Color="#6A82FB" Offset="0.1" />
                             </LinearGradientBrush>
                         </Frame.Background>
-                        <Label x:Name="ChoseClass" FontSize="Title" FontAttributes="Bold"/>
+                        <Label x:Name="ChoseClass" FontSize="Title" FontAttributes="Bold" />
                     </Frame>
-                    <StackLayout Orientation="Horizontal" Margin="10,0,10,0">
-                        <Label Text="Sắp xếp theo:" FontSize="17" FontAttributes="Bold" VerticalOptions="Center"/>
-                        <Picker x:Name="SortMode" Title="Sắp xếp theo..." SelectedIndexChanged="SortMode_SelectedIndexChanged"/>
-                    </StackLayout>
-                    
+                    <Grid Margin="10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="0.4*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="Sắp xếp theo:" FontSize="17" FontAttributes="Bold" VerticalOptions="Center" MinimumWidthRequest="70" />
+                        <Picker Grid.Column="1" x:Name="SortMode" Title="Sắp xếp theo..." SelectedIndexChanged="SortMode_SelectedIndexChanged" />
+                        <Label Grid.Column="2" Text="Lọc theo:" FontSize="17" FontAttributes="Bold" VerticalOptions="Center" />
+                        <Picker Grid.Column="3" x:Name="FilterMode" Title="Sắp xếp theo..." SelectedIndexChanged="FilterMode_SelectedIndexChanged" />
+                    </Grid>
+
+                    <Button x:Name="LoginStatUpdate" Text="Cập nhật thông tin đăng nhập" Clicked="LoginStatUpdate_Clicked" />
                     <CollectionView x:Name="ClrList" Grid.Row="3"
-                                    Margin="10,0,10,0" 
-                                    VerticalOptions="FillAndExpand" 
+                                    Margin="10,0,10,0"
+                                    VerticalOptions="FillAndExpand"
                                     HorizontalOptions="FillAndExpand"
                                     SelectionMode="Single"
                                     SelectionChanged="ClrList_SelectionChanged">
@@ -32,17 +47,21 @@
                                 <Frame BackgroundColor="White" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="True">
                                     <Grid HeightRequest="30" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <StackLayout Grid.Column="0" Orientation="Vertical" Margin="0,0" HorizontalOptions="Start" VerticalOptions="Center">
-                                            <Label Text="{Binding StId}" TextColor="#7D7D7D" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" Margin="10,5,0,0"/>
+                                            <Label Text="{Binding StId}" TextColor="#7D7D7D" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" Margin="10,5,0,0" />
                                         </StackLayout>
                                         <StackLayout Grid.Column="1" Orientation="Vertical" Margin="0,0" HorizontalOptions="Start" VerticalOptions="Center">
-                                            <Label Text="{Binding StName}" TextColor="Black" FontSize="17" FontAttributes="Bold" VerticalOptions="Center" Margin="5,5,0,0" LineBreakMode="HeadTruncation"/>
+                                            <Label Text="{Binding StName}" TextColor="Black" FontSize="17" FontAttributes="Bold" VerticalOptions="Center" Margin="5,5,0,0" LineBreakMode="HeadTruncation" />
                                         </StackLayout>
                                         <StackLayout Grid.Column="2" VerticalOptions="Center">
+                                            <Ellipse Fill="{Binding LogStatus, Converter={StaticResource intConverter}}" WidthRequest="15" HeightRequest="15"/>
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="3" VerticalOptions="Center">
                                             <Image Source="ic_action_arrow_forward_ios.png" />
                                         </StackLayout>
                                     </Grid>
@@ -50,7 +69,7 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                </StackLayout>  
+                </StackLayout>
             </ScrollView>
         </RefreshView>
     </ContentPage.Content>

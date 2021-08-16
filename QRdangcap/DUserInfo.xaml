@@ -16,10 +16,10 @@
                     <Label x:Name="ChoseStClass" FontSize="16" FontAttributes="Bold" />
                 </StackLayout>
             </Frame>
-            <Label Text="{Binding RetrieveLog}" FontSize="17" Margin="10,5" FontAttributes="Bold"/>
+            <Label Text="{Binding RetrieveLog}" FontSize="17" Margin="10,5" FontAttributes="Bold" />
             <StackLayout Orientation="Horizontal" Margin="10,-20,10,0">
-                <Label Text="Lọc:" FontSize="18" FontAttributes="Bold" VerticalOptions="Center"/>
-                <Picker x:Name="FilterMode" Title="Lọc theo..." SelectedIndexChanged="FilterMode_SelectedIndexChanged" HorizontalOptions="FillAndExpand"/>
+                <Label Text="Lọc:" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
+                <Picker x:Name="FilterMode" Title="Lọc theo..." SelectedIndexChanged="FilterMode_SelectedIndexChanged" HorizontalOptions="FillAndExpand" />
             </StackLayout>
             <CollectionView x:Name="LogList"
                             ItemsSource="{Binding LogListFirebase}"
@@ -52,6 +52,8 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <Button x:Name="LoadMoreData" Text="Nhấn để tải thêm" Clicked="LoadMoreData_Clicked" VerticalOptions="Center" HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding IsVisi}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

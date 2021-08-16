@@ -1,8 +1,8 @@
 ﻿using Firebase.Database;
 using Firebase.Database.Query;
 using Newtonsoft.Json;
+using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
-using QRdangcap.LocalDatabase;
 using SQLite;
 using System.Net.Http;
 using Xamarin.Forms;
@@ -34,7 +34,8 @@ namespace QRdangcap
 
         public async void Button_Clicked_1(object sender, System.EventArgs e)
         {
-            if(string.IsNullOrEmpty(StMistake.Text) || string.IsNullOrWhiteSpace(StMistake.Text))
+            RetrieveAllUserDb instance = new RetrieveAllUserDb();
+            if (string.IsNullOrEmpty(StMistake.Text) || string.IsNullOrWhiteSpace(StMistake.Text))
             {
                 StMistake.Text = "NONE";
             }
@@ -46,7 +47,9 @@ namespace QRdangcap
                 Mistake = StMistake.Text,
                 Timestamp = globalLogList.Timestamp,
                 LoginStatus = OnTime.IsChecked ? 1 : 2,
-                Id2Id = globalLogList.StId.ToString() + "_" + (OnTime.IsChecked ? 1 : 2).ToString(),
+                Id2Id = (OnTime.IsChecked ? 1 : 2).ToString() + "_" + instance.To4DigitString(globalLogList.StId) + "_" + globalLogList.Timestamp,
+                IdentityId = instance.To4DigitString(globalLogList.StId) + "_" + globalLogList.LoginDate.Year.ToString()
+                + "_" + instance.To4DigitString(globalLogList.LoginDate.DayOfYear)
             };
             string QueryName = ChoseString.Text;
             await fc.Child("Logging").Child(globalLogList.Keys).PutAsync(NewLog);

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Xamarin.Essentials;
 
 namespace QRdangcap.GoogleDatabase
 {
@@ -23,5 +22,7 @@ namespace QRdangcap.GoogleDatabase
         public static TimeSpan LateTime { get; set; }
         public static TimeSpan EndTime { get; set; }
         public static bool IsTodayOff { get; set; }
+        public static Location LastMockLoc { get; set; }
+        public static bool IsLastTimeMock { get; set; }
     }
 }

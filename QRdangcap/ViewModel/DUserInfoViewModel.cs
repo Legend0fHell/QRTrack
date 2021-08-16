@@ -1,17 +1,17 @@
-﻿using QRdangcap.LocalDatabase;
-using System;
-using System.Collections.Generic;
+﻿using QRdangcap.DatabaseModel;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Text;
 
 namespace QRdangcap.ViewModel
 {
     public class DUserInfoViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
         public ObservableCollection<LogListForm> _LogListFirebase = new ObservableCollection<LogListForm>();
         public string _RetrieveLog = "Đang lấy dữ liệu...";
+        public bool _IsVisi = false;
+
         public ObservableCollection<LogListForm> LogListFirebase
         {
             get => _LogListFirebase;
@@ -21,6 +21,7 @@ namespace QRdangcap.ViewModel
                 OnPropertyChanged(nameof(LogListFirebase));
             }
         }
+
         public string RetrieveLog
         {
             get => _RetrieveLog;
@@ -30,7 +31,16 @@ namespace QRdangcap.ViewModel
                 OnPropertyChanged(nameof(RetrieveLog));
             }
         }
-        void OnPropertyChanged(string name)
+        public bool IsVisi
+        {
+            get => _IsVisi;
+            set
+            {
+                _IsVisi = value;
+                OnPropertyChanged(nameof(IsVisi));
+            }
+        }
+        private void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }

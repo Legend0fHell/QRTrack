@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace QRdangcap.LocalDatabase
+﻿namespace QRdangcap.DatabaseModel
 {
     public class ChartForm
     {
         public string Name { get; set; }
         public double Value { get; set; }
         public string Percentage { get; set; }
+
         public ChartForm(string name, double value, double totalValue)
         {
             Name = name;

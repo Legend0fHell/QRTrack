@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SQLite;
+﻿using SQLite;
+using System;
 
-namespace QRdangcap.LocalDatabase
+namespace QRdangcap.DatabaseModel
 {
     public class AbsentLogForm
     {
@@ -19,6 +17,7 @@ namespace QRdangcap.LocalDatabase
         public string StringCED => DateCED.ToString("dd.MM.yyyy");
         public int ReporterId { get; set; }
         public string RpString => GetInfo(1, ReporterId) + " - " + GetInfo(2, ReporterId);
+
         public string GetInfo(int type, int Id)
         {
             var db = new SQLiteConnection(GlobalVariables.localUserDatabasePath);

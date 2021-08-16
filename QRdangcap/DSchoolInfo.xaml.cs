@@ -1,25 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using QRdangcap.DatabaseModel;
+using QRdangcap.GoogleDatabase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
 using System.Net.Http;
-using Newtonsoft.Json;
-using System.IO;
-using System.Net;
-using System.Net.Http.Headers;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using QRdangcap.GoogleDatabase;
-using QRdangcap.LocalDatabase;
-using ZXing.Net.Mobile.Forms;
-using System.Globalization;
 
-using SQLite;
-using System.Diagnostics;
-using System.Collections.ObjectModel;
-using Xamarin.CommunityToolkit.ObjectModel;
 namespace QRdangcap
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -31,6 +20,7 @@ namespace QRdangcap
         public int startDate = DateTime.Now.DayOfYear;
         public int endDate = DateTime.Now.DayOfYear;
         public List<ClassroomListForm> classroomListForms = new List<ClassroomListForm>();
+
         public DSchoolInfo(int startDate2, int endDate2)
         {
             InitializeComponent();
@@ -49,7 +39,8 @@ namespace QRdangcap
             await Navigation.PushAsync(ChoosePage);
             ClrList.SelectedItem = null;
         }
-        public async void UpdateSumLog(int SortStrat) 
+
+        public async void UpdateSumLog(int SortStrat)
         {
             if (SortStrat == globalSortStrat)
             {
@@ -97,6 +88,7 @@ namespace QRdangcap
             ClrList.ItemsSource = ItemsList;
             RefreshAll.IsRefreshing = false;
         }
+
         private void RefreshAll_Refreshing(object sender, EventArgs e)
         {
             UpdateSumLog(SortMode.SelectedIndex);
@@ -116,6 +108,6 @@ namespace QRdangcap
             }
             globalSortStrat = SortMode.SelectedIndex;
             ClrList.ItemsSource = ItemsList;
-        } 
+        }
     }
 }

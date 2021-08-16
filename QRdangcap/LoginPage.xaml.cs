@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using Newtonsoft.Json;
+using QRdangcap.DatabaseModel;
+using QRdangcap.GoogleDatabase;
 using System.Net.Http;
-using Newtonsoft.Json;
-using System.IO;
-using System.Net;
-using System.Net.Http.Headers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using QRdangcap.GoogleDatabase;
-using QRdangcap.LocalDatabase;
 
 namespace QRdangcap
 {
@@ -20,6 +11,7 @@ namespace QRdangcap
     public partial class LoginPage : ContentPage
     {
         public static HttpClient client = new HttpClient();
+
         public LoginPage()
         {
             InitializeComponent();
@@ -28,29 +20,34 @@ namespace QRdangcap
             ClientVer.Text = "Phiên bản: " + GlobalVariables.ClientVersion + " (Dựng lúc " + GlobalVariables.ClientVersionDate.ToString("G") + ")";
             Init();
         }
-        int isInstantLogin = 0;
-        void Init()
+
+        private int isInstantLogin = 0;
+
+        private void Init()
         {
             Entry_Username.Completed += (s, e) => Entry_Password.Focus();
             Entry_Password.Completed += (s, e) => LoginProcedure(s, e);
             isInstantLogin = 0;
         }
+
         private void InstantLoginProcedure(object sender, System.EventArgs e)
         {
             isInstantLogin = 1;
             LoginProcedure(sender, e);
             isInstantLogin = 0;
         }
+
         private void InstantLoginProcedureBypass(object sender, System.EventArgs e)
         {
             isInstantLogin = 2;
             LoginProcedure(sender, e);
             isInstantLogin = 0;
         }
+
         private async void LoginProcedure(object sender, System.EventArgs e)
         {
             // debugging account
-            if(isInstantLogin > 0)
+            if (isInstantLogin > 0)
             {
                 Entry_Username.Text = "InstantLoginAdmin";
                 Entry_Password.Text = "LoliIsLoveLoliIsLife";
@@ -70,7 +67,7 @@ namespace QRdangcap
             Entry_Username.IsReadOnly = true;
             Entry_Password.IsReadOnly = true;
 
-            if(Entry_Username.Text.Length > 0 && Entry_Password.Text.Length>0)
+            if (Entry_Username.Text.Length > 0 && Entry_Password.Text.Length > 0)
             {
                 var model = new FeedbackModel()
                 {
@@ -97,8 +94,8 @@ namespace QRdangcap
                 else LoginFailed("");
             }
             else LoginFailed("");
-
         }
+
         private void LoginFailed(string exc)
         {
             ActivityIndicator.IsRunning = false;
@@ -106,9 +103,9 @@ namespace QRdangcap
             Entry_Password.IsReadOnly = false;
             DependencyService.Get<IToast>().Show("Thất bại! Tên đăng nhập hoặc mật khẩu không đúng." + exc);
         }
+
         private async void LoginSucceeded()
         {
-            
             RetrieveAllUserDb instance = new RetrieveAllUserDb();
             instance.CheckUserTableExist();
             ActivityIndicator.IsRunning = false;

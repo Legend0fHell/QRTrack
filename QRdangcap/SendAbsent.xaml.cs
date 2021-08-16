@@ -1,23 +1,21 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
+using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using System;
-using System.Globalization;
+using System.Collections.Generic;
 using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing.Net.Mobile.Forms;
-using QRdangcap.LocalDatabase;
-using SQLite;
 
 namespace QRdangcap
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SendAbsent : ContentPage
     {
-        int UserIDRead = 0;
+        private int UserIDRead = 0;
         public static HttpClient client = new HttpClient();
+
         public SendAbsent()
         {
             InitializeComponent();
@@ -30,6 +28,7 @@ namespace QRdangcap
             FromDate.Date = DateTime.Now;
             ToDate.Date = DateTime.Now;
         }
+
         public async void Scanner()
         {
             var options = new ZXing.Mobile.MobileBarcodeScanningOptions()
@@ -76,19 +75,21 @@ namespace QRdangcap
 
             await Navigation.PushAsync(ScanView);
         }
+
         public void Button_Clicked(object sender, System.EventArgs e)
         {
             Scanner();
-
         }
+
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             var ChoosePage = new QueryInfo();
             await Navigation.PushAsync(ChoosePage);
         }
+
         private async void Button_Clicked_1(object sender, EventArgs e)
         {
-            if(FromDate.Date > ToDate.Date)
+            if (FromDate.Date > ToDate.Date)
             {
                 DependencyService.Get<IToast>().ShowShort("Lỗi: Ngày giờ không hợp lệ!");
                 FromDate.Date = DateTime.Now;

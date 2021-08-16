@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
+using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
-using QRdangcap.LocalDatabase;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using ZXing.Net.Mobile.Forms;
 
@@ -15,6 +14,7 @@ namespace QRdangcap
     {
         public static HttpClient client = new HttpClient();
         public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+
         public MainPage()
         {
             InitializeComponent();
@@ -60,7 +60,7 @@ namespace QRdangcap
             UserData.SchoolLat = response.Latitude;
             UserData.SchoolLon = response.Longitude;
             UserData.SchoolDist = response.Distance;
-            instance.UpdateCurLocation();
+            await instance.UpdateCurLocation();
             UserData.StartTime = response.StartTime;
             UserData.EndTime = response.EndTime;
             UserData.LateTime = response.LateTime;
@@ -139,7 +139,7 @@ namespace QRdangcap
                     Navigation.PopAsync();
                     bool sepDetect = false, invalidDetect = false;
                     string decodedQRCode = "";
-                    
+
                     decodedQRCode = instance.Base64Decode(result.Text);
                     for (int i = 0; i < decodedQRCode.Length; ++i)
                     {
@@ -166,8 +166,16 @@ namespace QRdangcap
                     }
                     else if (!UserData.IsAtSchool && GlobalVariables.IsGPSRequired)
                     {
-                        instance.UpdateCurLocation();
-                        DisplayAlert("Điểm danh thất bại!", "Bạn đang ở ngoài trường! (nếu hệ thống sai, hãy thử lại)", "OK");
+                        LocationTmpUpdating();
+                        async void LocationTmpUpdating()
+                        {
+                            await instance.UpdateCurLocation();
+                            if(UserData.IsLastTimeMock)
+                            {
+                                await DisplayAlert("Điểm danh thất bại!", "Phát hiện GPS đang bị làm giả!", "OK");
+                            }
+                            await DisplayAlert("Điểm danh thất bại!", "Bạn đang ở ngoài trường! (nếu hệ thống sai, hãy thử lại)", "OK");
+                        }
                     }
                     else
                     {

@@ -1,6 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
-using QRdangcap.LocalDatabase;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -93,13 +92,17 @@ namespace QRdangcap
             await Navigation.PushAsync(ScanView);
         }
 
-        public void SendToDatabase()
+        public async void SendToDatabase()
         {
             RetrieveAllUserDb instance = new RetrieveAllUserDb();
             if (!UserData.IsAtSchool && GlobalVariables.IsGPSRequired)
             {
-                instance.UpdateCurLocation();
-                DependencyService.Get<IToast>().ShowShort("Bạn đang ở ngoài trường! (nếu hệ thống sai, hãy thử lại)");
+                await instance.UpdateCurLocation();
+                if (UserData.IsLastTimeMock)
+                {
+                    await DisplayAlert("Điểm danh thất bại!", "Phát hiện GPS đang bị làm giả!", "OK");
+                }
+                else DependencyService.Get<IToast>().ShowShort("Bạn đang ở ngoài trường! (nếu hệ thống sai, hãy thử lại)");
                 return;
             }
             string MistakeStringCombined;

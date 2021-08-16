@@ -2,13 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QRdangcap.QueryInfo"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:local="clr-namespace:QRdangcap"
              Title="Tra cứu thông tin">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BarConverter x:Key="intConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <RefreshView x:Name="refreshAll" Refreshing="RefreshView_Refreshing">
             <ScrollView>
                 <StackLayout>
-                    <Button x:Name ="updateUser" Text="C/nhật DB" Clicked="Button_Clicked" />
+                    <Button x:Name="LoginStatUpdate" Text="Cập nhật thông tin đăng nhập" Clicked="LoginStatUpdate_Clicked" />
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -34,6 +39,7 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackLayout Grid.Column="0" Orientation="Vertical" Margin="0,0" HorizontalOptions="Start" VerticalOptions="Center">
                                             <Label Text="{Binding StId}" TextColor="#7D7D7D" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" Margin="10,5,0,0"/>
@@ -45,6 +51,9 @@
                                             <Label Text="{Binding StClass}" TextColor="#7D7D7D" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" Margin="0,5,10,0"/>
                                         </StackLayout>
                                         <StackLayout Grid.Column="3" VerticalOptions="Center">
+                                            <Ellipse Fill="{Binding LogStatus, Converter={StaticResource intConverter}}" WidthRequest="15" HeightRequest="15"/>
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="4" VerticalOptions="Center">
                                             <Image Source="ic_action_arrow_forward_ios.png" />
                                         </StackLayout>
                                     </Grid>

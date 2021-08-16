@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
+using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
-using QRdangcap.LocalDatabase;
-using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,7 +16,6 @@ namespace QRdangcap
     public partial class RealStats : ContentPage
     {
         public static HttpClient client = new HttpClient();
-        public SQLiteConnection db = new SQLiteConnection(GlobalVariables.localDatabasePath);
         private readonly Stopwatch excTime = new Stopwatch();
         public object MonthSelected { get; set; }
         public ObservableCollection<ChartForm> DoughnutSeriesData { get; set; }
@@ -26,7 +24,9 @@ namespace QRdangcap
         {
             InitializeComponent();
             DatePicked.MaximumDate = DateTime.Now;
-            WatchMode.ItemsSource = new List<string>() { "Ngày", "Tháng" };
+            EndDatePicked.MaximumDate = DateTime.Now;
+            StartDatePicked.MaximumDate = DateTime.Now;
+            WatchMode.ItemsSource = new List<string>() { "Ngày", "Tháng", "Cụ thể" };
             WatchMode.SelectedIndex = 0;
             ObservableCollection<string> Headers = new ObservableCollection<string>()
             {
@@ -53,7 +53,7 @@ namespace QRdangcap
         }
 
         private int StOnTime = 0, StNum = 0, StLateTime = 0, StNotYet = 0, StAbsent = 0;
-
+        // TODO: Config these button to work based on current mode.
         private void PrevDate_Clicked(object sender, EventArgs e)
         {
             DatePicked.Date = DatePicked.Date.Subtract(TimeSpan.FromDays(1));
@@ -65,6 +65,7 @@ namespace QRdangcap
             {
                 DatePicked.Date = DatePicked.Date.Add(TimeSpan.FromDays(1));
             }
+            // TODO: Check if out of bounds, if thats true, prevent them.
         }
 
         private async void Details_Clicked(object sender, EventArgs e)
@@ -74,7 +75,7 @@ namespace QRdangcap
                 var ChoosePage = new DSchoolInfo(DatePicked.Date.DayOfYear, DatePicked.Date.DayOfYear);
                 await Navigation.PushAsync(ChoosePage);
             }
-            else
+            else if (WatchMode.SelectedIndex == 1)
             {
                 ObservableCollection<object> source = MonthPicker.SelectedItem as ObservableCollection<object>;
                 DateTime curBeginSelection = new DateTime((int)source[1], (int)source[0], 1);
@@ -82,6 +83,11 @@ namespace QRdangcap
                     (DateTime.Now.Month > (int)source[0]) ? DateTime.DaysInMonth((int)source[1], (int)source[0]) : DateTime.Now.Day);
                 MonthView.Text = curBeginSelection.ToString("dd.MM.yyyy") + " - " + curEndSelection.ToString("dd.MM.yyyy");
                 var ChoosePage = new DSchoolInfo(curBeginSelection.DayOfYear, curEndSelection.DayOfYear);
+                await Navigation.PushAsync(ChoosePage);
+            }
+            else
+            {
+                var ChoosePage = new DSchoolInfo(StartDatePicked.Date.DayOfYear, EndDatePicked.Date.DayOfYear);
                 await Navigation.PushAsync(ChoosePage);
             }
         }
@@ -92,7 +98,7 @@ namespace QRdangcap
             await Navigation.PushAsync(ChoosePage);
         }
 
-        private async void ClrList_SelectionChanged(object sender, Xamarin.Forms.SelectionChangedEventArgs e)
+        private async void ClrList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!(e.CurrentSelection.FirstOrDefault() is ClassroomListForm ClrUserChose)) return;
             var ChoosePage = new DClassInfo(ClrUserChose.ClrName);
@@ -106,12 +112,21 @@ namespace QRdangcap
             {
                 MonthView.IsVisible = false;
                 DailyView.IsVisible = true;
+                CustomView.IsVisible = false;
+                refreshAll.IsRefreshing = true;
+            }
+            else if (WatchMode.SelectedIndex == 1)
+            {
+                MonthView.IsVisible = true;
+                DailyView.IsVisible = false;
+                CustomView.IsVisible = false;
                 refreshAll.IsRefreshing = true;
             }
             else
             {
-                MonthView.IsVisible = true;
+                MonthView.IsVisible = false;
                 DailyView.IsVisible = false;
+                CustomView.IsVisible = true;
                 refreshAll.IsRefreshing = true;
             }
         }
@@ -245,7 +260,7 @@ namespace QRdangcap
             {
                 UpdateChart(DatePicked.Date.DayOfYear, DatePicked.Date.DayOfYear);
             }
-            else
+            else if (WatchMode.SelectedIndex == 1)
             {
                 ObservableCollection<object> source = MonthPicker.SelectedItem as ObservableCollection<object>;
                 DateTime curBeginSelection = new DateTime((int)source[1], (int)source[0], 1);
@@ -253,6 +268,10 @@ namespace QRdangcap
                     (DateTime.Now.Month > (int)source[0]) ? DateTime.DaysInMonth((int)source[1], (int)source[0]) : DateTime.Now.Day);
                 MonthView.Text = curBeginSelection.ToString("dd.MM.yyyy") + " - " + curEndSelection.ToString("dd.MM.yyyy");
                 UpdateChart(curBeginSelection.DayOfYear, curEndSelection.DayOfYear);
+            }
+            else
+            {
+                UpdateChart(StartDatePicked.Date.DayOfYear, EndDatePicked.Date.DayOfYear);
             }
         }
     }

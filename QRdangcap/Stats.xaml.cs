@@ -1,10 +1,10 @@
 ﻿using Firebase.Database;
 using Firebase.Database.Query;
-using QRdangcap.LocalDatabase;
+using QRdangcap.DatabaseModel;
+using QRdangcap.GoogleDatabase;
 using QRdangcap.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,7 +15,13 @@ namespace QRdangcap
     public partial class Stats : ContentPage
     {
         public static FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
-        readonly StatsViewModel ViewModel;
+        private readonly StatsViewModel ViewModel;
+        public IDisposable Subscriber;
+        public bool FirstTime = true;
+        public int cntLoaded = 0;
+        public int Step = 10;
+        public int ExpectLoadedLog { get; set; }
+
         public Stats()
         {
             InitializeComponent();
@@ -31,21 +37,38 @@ namespace QRdangcap
             await Navigation.PushAsync(new LogChanger(logIdChose));
             LogList.SelectedItem = null;
         }
-        private void RetrieveLogs()
+
+        private void RetrieveLogs(int StartingPoint = 0)
         {
-            ViewModel.LogListFirebase.Clear();
             if (FilterMode.SelectedIndex == 0)
             {
-                int cntLoaded = 0;
-                IDisposable Subscriber = fc.Child("Logging").OrderByKey().LimitToLast(10).AsObservable<LogListForm>().Subscribe(
-                    x => {
+                Subscriber = fc.Child("Logging").OrderByKey()
+                    .EndAt(ViewModel.LogListFirebase.Count > 0 ? ViewModel.LogListFirebase.Last().Keys : "ZZZZZZZZZZZZZZZZZZZZ")
+                    .LimitToLast(Step).AsObservable<LogListForm>().Subscribe(
+                    x =>
+                    {
                         int index = ViewModel.LogListFirebase.IndexOf(x.Object);
+                        System.Diagnostics.Debug.WriteLine($" Firebase update at 1 (index {index}): {x.EventType} - {x.Object}");
                         if (x.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
                         {
                             if (index < 0)
                             {
-                                ViewModel.LogListFirebase.Insert(0, x.Object);
-                                ++cntLoaded;
+                                // got this weird error but ok heres the hack
+                                if (StartingPoint - 1 >= 0)
+                                {
+                                    if (ViewModel.LogListFirebase[StartingPoint - 1].Keys != x.Key)
+                                    {
+                                        ViewModel.LogListFirebase.Insert(StartingPoint, x.Object);
+                                        ++cntLoaded;
+                                        LogList.ScrollTo(StartingPoint + 1);
+                                    }
+                                }
+                                else
+                                {
+                                    ViewModel.LogListFirebase.Insert(StartingPoint, x.Object);
+                                    ++cntLoaded;
+                                    LogList.ScrollTo(StartingPoint + 1);
+                                }
                             }
                             else
                             {
@@ -58,45 +81,87 @@ namespace QRdangcap
                             --cntLoaded;
                         }
                         ViewModel.RetrieveLog = $"Đã tải {cntLoaded}/?? mục. (Dữ liệu cập nhật tự động)";
-                        LogList.ScrollTo(1);
+
+                        ViewModel.IsVisi = (cntLoaded >= ExpectLoadedLog);
                     }
                 );
             }
             else
             {
-                int cntLoaded = 0;
-                IDisposable Subscriber = fc.Child("Logging").OrderBy("LoginStatus").EqualTo(FilterMode.SelectedIndex)
-                    .LimitToLast(10).AsObservable<LogListForm>().Subscribe(
-                    x => {
+                RetrieveAllUserDb instance = new RetrieveAllUserDb();
+                string ConvStId = FilterMode.SelectedIndex.ToString();
+                string ThisStartIdenId = ConvStId + "_0000_0000000000000";
+                string ThisEndInitIdenId = ConvStId + "_9999_9999999999999";
+                Subscriber = fc.Child("Logging").OrderBy("Id2Id").StartAt(ThisStartIdenId)
+                    .EndAt(ViewModel.LogListFirebase.Count == 0 ? ThisEndInitIdenId : ConvStId + "_"
+                    + instance.To4DigitString(ViewModel.LogListFirebase.Last().StId) + "_" + ViewModel.LogListFirebase.Last().Timestamp)
+                    .LimitToLast(Step).AsObservable<LogListForm>().Subscribe(
+                    x =>
+                    {
                         int index = ViewModel.LogListFirebase.IndexOf(x.Object);
-                        if (x.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
+
+                        if (x.Object.LoginStatus != FilterMode.SelectedIndex)
                         {
-                            if (index < 0)
-                            {
-                                ViewModel.LogListFirebase.Insert(0, x.Object);
-                                ++cntLoaded;
-                            }
-                            else
-                            {
-                                ViewModel.LogListFirebase[index] = x.Object;
-                            }
-                        }
-                        else
-                        {
+                            System.Diagnostics.Debug.WriteLine($" Firebase update (index {index}): {x.EventType} - DETECTED WRONG TYPE, DELETING..");
                             ViewModel.LogListFirebase.RemoveAt(index);
                             --cntLoaded;
                         }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine($" Firebase update (index {index}): {x.EventType} - {x.Object.LoginStatus}");
+                            if (x.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
+                            {
+                                if (index < 0)
+                                {
+                                    // got this weird error but ok heres the hack
+                                    if (StartingPoint - 1 >= 0)
+                                    {
+                                        if (ViewModel.LogListFirebase[StartingPoint - 1].Keys != x.Key)
+                                        {
+                                            ViewModel.LogListFirebase.Insert(StartingPoint, x.Object);
+                                            ++cntLoaded;
+                                            LogList.ScrollTo(StartingPoint + 1);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        ViewModel.LogListFirebase.Insert(StartingPoint, x.Object);
+                                        ++cntLoaded;
+                                        LogList.ScrollTo(StartingPoint + 1);
+                                    }
+                                }
+                                else
+                                {
+                                    ViewModel.LogListFirebase[index] = x.Object;
+                                }
+                            }
+                            else
+                            {
+                                ViewModel.LogListFirebase.RemoveAt(index);
+                                --cntLoaded;
+                            }
+                        }
                         ViewModel.RetrieveLog = $"Đã tải {cntLoaded}/?? mục. (Dữ liệu cập nhật tự động)";
-                        LogList.ScrollTo(1);
+                        ViewModel.IsVisi = (cntLoaded >= ExpectLoadedLog);
                     }
                 );
             }
-            
+            FirstTime = false;
         }
 
         private void FilterMode_SelectedIndexChanged(object sender, EventArgs e)
         {
+            cntLoaded = 0;
+            ExpectLoadedLog = Step;
+            ViewModel.LogListFirebase.Clear();
+            if (!FirstTime) Subscriber.Dispose();
             RetrieveLogs();
+        }
+
+        private void LoadMoreData_Clicked(object sender, EventArgs e)
+        {
+            ExpectLoadedLog += Step;
+            RetrieveLogs(ViewModel.LogListFirebase.Count);
         }
     }
 }

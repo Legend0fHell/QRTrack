@@ -1,33 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Net.Http;
-using Newtonsoft.Json;
-using System.IO;
-using System.Net;
-using System.Net.Http.Headers;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using ZXing.Net.Mobile.Forms;
-using System.Globalization;
-using QRdangcap.LocalDatabase;
+﻿using Newtonsoft.Json;
+using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using SQLite;
-using System.Diagnostics;
+using System;
+using System.ComponentModel;
+using System.Net.Http;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace QRdangcap
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Other : ContentPage
     {
+        public string _CurAcc = "Không có thông tin!";
+        public string CurAcc
+        {
+            get => _CurAcc;
+            set
+            {
+                _CurAcc = value;
+                OnPropertyChanged(nameof(CurAcc));
+            }
+        }
         public Other()
         {
             InitializeComponent();
-            LoginStatusText.Detail = "Tên: " + UserData.StudentFullName + ", ID: " + UserData.StudentIdDatabase.ToString();
+            // OnAppearing
+            CurAcc = "Tên: " + UserData.StudentFullName + ", ID: " + UserData.StudentIdDatabase.ToString();
             ClientVerText.Detail = GlobalVariables.ClientVersion + " (dựng lúc: " + GlobalVariables.ClientVersionDate.ToString("G") + ")";
+            BindingContext = this;
         }
 
         private async void GenQR_Tapped(object sender, EventArgs e)
@@ -125,6 +127,7 @@ namespace QRdangcap
         {
             GlobalVariables.IsGPSRequired = IsGPSRequired.On;
         }
+
         private async void FirebaseLogTesting_Tapped(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new FirebaseLogTesting());

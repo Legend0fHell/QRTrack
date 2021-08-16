@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SQLite;
+﻿using SQLite;
 
-namespace QRdangcap.LocalDatabase
+namespace QRdangcap.DatabaseModel
 {
     public class ClassroomListForm
     {
         [PrimaryKey, Unique]
         public string ClrName { get; set; }
+
         public int ClrNoSt { get; set; }
         public int ClrOnTime { get; set; }
         public int ClrLateTime { get; set; }

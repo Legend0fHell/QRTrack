@@ -1,23 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using Newtonsoft.Json;
+using QRdangcap.DatabaseModel;
+using QRdangcap.GoogleDatabase;
 using System.Net.Http;
-using Newtonsoft.Json;
-using System.IO;
-using System.Net;
-using System.Net.Http.Headers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using QRdangcap.GoogleDatabase;
-using ZXing.Net.Mobile.Forms;
-using System.Globalization;
-using QRdangcap.LocalDatabase;
-using SQLite;
-using System.Diagnostics;
-using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace QRdangcap
 {
@@ -26,6 +12,7 @@ namespace QRdangcap
     {
         public static HttpClient client = new HttpClient();
         public AbsentLogForm globalLogList = new AbsentLogForm();
+
         public AbsentChanger(AbsentLogForm logList)
         {
             InitializeComponent();
@@ -54,7 +41,7 @@ namespace QRdangcap
             var resultQR = await client.PostAsync(uri, requestContent);
             var resultContent = await resultQR.Content.ReadAsStringAsync();
             var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
-            if(response.Status == "SUCCESS")
+            if (response.Status == "SUCCESS")
             {
                 DependencyService.Get<IToast>().ShowShort("Sửa thành công: " + QueryName);
             }
@@ -65,6 +52,7 @@ namespace QRdangcap
             }
             await Navigation.PopAsync();
         }
+
         public async void Button_Clicked_2(object sender, System.EventArgs e)
         {
             string QueryName = ChoseString.Text;

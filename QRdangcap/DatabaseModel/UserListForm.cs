@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Globalization;
-using SQLite;
+﻿using SQLite;
 
-namespace QRdangcap.LocalDatabase
+namespace QRdangcap.DatabaseModel
 {
     public class UserListForm
     {
@@ -14,5 +10,6 @@ namespace QRdangcap.LocalDatabase
         public string StName { get; set; }
         public string StClass { get; set; }
         public int Priv { get; set; }
+        public int LogStatus { get; set; }
     }
 }

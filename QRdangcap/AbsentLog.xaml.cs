@@ -1,15 +1,11 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
+using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using System;
-using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using ZXing.Net.Mobile.Forms;
-using QRdangcap.LocalDatabase;
-using SQLite;
 
 namespace QRdangcap
 {
@@ -17,15 +13,18 @@ namespace QRdangcap
     public partial class AbsentLog : ContentPage
     {
         public static HttpClient client = new HttpClient();
+
         public AbsentLog()
         {
             InitializeComponent();
             refreshAll.IsRefreshing = true;
         }
+
         private void RetrieveLog_Clicked(object sender, EventArgs e)
         {
             refreshAll.IsRefreshing = true;
         }
+
         private async void RetrieveAbsent()
         {
             var model = new FeedbackModel()
@@ -41,10 +40,10 @@ namespace QRdangcap
             LogList.ItemsSource = response.Reverse();
             refreshAll.IsRefreshing = false;
         }
+
         private void RefreshView_Refreshing(object sender, EventArgs e)
         {
             RetrieveAbsent();
-
         }
 
         private async void LogList_SelectionChanged(object sender, SelectionChangedEventArgs e)

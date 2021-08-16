@@ -1,23 +1,13 @@
-﻿using System;
+﻿using QRdangcap.DatabaseModel;
+using SQLite;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Net.Http;
-using Newtonsoft.Json;
+using System.Diagnostics;
 using System.IO;
-using System.Net;
-using System.Net.Http.Headers;
+using System.Linq;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using QRdangcap.GoogleDatabase;
-using ZXing.Net.Mobile.Forms;
-using System.Globalization;
-using QRdangcap.LocalDatabase;
-using SQLite;
-using System.Diagnostics;
-using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace QRdangcap
 {
@@ -31,6 +21,7 @@ namespace QRdangcap
         public List<LogListForm> resLogList = new List<LogListForm>();
         public ObservableRangeCollection<LogListForm> PrntLogList { get; set; }
         public SQLiteConnection db = new SQLiteConnection(GlobalVariables.localLogHistDatabasePath);
+
         public LocalLogHistory()
         {
             InitializeComponent();
@@ -41,6 +32,7 @@ namespace QRdangcap
             LogList.RemainingItemsThreshold = 5;
             LogList.RemainingItemsThresholdReached += LogList_RemainingItemsThresholdReached;
         }
+
         private void LogList_RemainingItemsThresholdReached(object sender, EventArgs e)
         {
             if (resLogList == null)
@@ -60,6 +52,7 @@ namespace QRdangcap
                 skip += intervalSkip;
             }
         }
+
         private async void List_ItemTapped(object sender, SelectionChangedEventArgs e)
         {
             if (!(e.CurrentSelection.FirstOrDefault() is LogListForm logIdChose)) return;
@@ -67,16 +60,16 @@ namespace QRdangcap
             LogList.SelectedItem = null;
         }
 
-        readonly Stopwatch excTime = new Stopwatch();
+        private readonly Stopwatch excTime = new Stopwatch();
+
         public void RetrieveTotal()
         {
             excTime.Reset();
             excTime.Start();
-            
+
             LogList.ItemsSource = "";
             if (db.Table<LogListForm>().Count() > 0)
             {
-
                 long size = new FileInfo(GlobalVariables.localLogHistDatabasePath).Length;
                 size /= 1024;
                 RetrieveLog.Text = db.Table<LogListForm>().Count() + " mục (" + size + "KB), nhấn để tải lại!";
@@ -90,18 +83,16 @@ namespace QRdangcap
             else RetrieveLog.Text = "Không có dữ liệu! Nhấn để tải lại!";
             excTime.Stop();
             refreshAll.IsRefreshing = false;
-
         }
 
         private void RetrieveLog_Clicked(object sender, EventArgs e)
         {
             refreshAll.IsRefreshing = true;
-
         }
+
         private void RefreshView_Refreshing(object sender, EventArgs e)
         {
             RetrieveTotal();
         }
-
     }
 }
