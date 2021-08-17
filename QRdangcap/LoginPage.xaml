@@ -1,68 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             mc:Ignorable="d"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
              x:Class="QRdangcap.LoginPage"
              Shell.FlyoutBehavior="Disabled"
              Shell.NavBarIsVisible="False">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style x:Key="InvalidStyle" TargetType="Entry">
-                <Setter Property="TextColor" Value="Red" />
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#e6e6e6">
+        <StackLayout>
+            <StackLayout.Background>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop Color="#313fb5" Offset="0.15"/>
+                    <GradientStop Color="#9d2f85" Offset="1"/>
+                </LinearGradientBrush>
+            </StackLayout.Background>
             <Grid>
-                <StackLayout Padding="0" Margin="0">
-                    <Frame BackgroundColor="LightPink" HeightRequest="190" HorizontalOptions="FillAndExpand">
-                    </Frame>
-                </StackLayout>
-                <StackLayout HorizontalOptions="Center" VerticalOptions="StartAndExpand" Margin="0,10,0,0">
+                <StackLayout HorizontalOptions="Center" VerticalOptions="StartAndExpand" Margin="0,70,0,0">
                     <Image Source="ResourcesImg/logo.jpg" HeightRequest="150" WidthRequest="150" />
                 </StackLayout>
+                <Label Margin="40,290,40,0" FontSize="Subtitle" FontAttributes="Bold" x:Name="LoginStat" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" TextColor="White"/>
                 <StackLayout Margin="10,170,10,0">
-                    <Frame BackgroundColor="White" HasShadow="True" HeightRequest="280" HorizontalOptions="FillAndExpand">
+                    <StackLayout Margin="40,90,40,0" x:Name="EntryField">
+                        <inputLayout:SfTextInputLayout  Hint="Tài khoản"
+                                                       BackgroundColor="Transparent" ContainerBackgroundColor="Transparent"
+                                                       FocusedColor="#E6E6E6" UnfocusedColor="#b5b5b5" InputViewPadding="5" Margin="0,5">
+                            <Entry x:Name="Entry_Username" BackgroundColor="Transparent" TextColor="White" IsSpellCheckEnabled="False"/>
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout  Hint="Mật khẩu" EnablePasswordVisibilityToggle="true" 
+                                                       BackgroundColor="Transparent" ContainerBackgroundColor="Transparent"
+                                                       FocusedColor="#E6E6E6" UnfocusedColor="#b5b5b5" InputViewPadding="5">
+                            <Entry x:Name="Entry_Password" BackgroundColor="Transparent" TextColor="White" IsPassword="True" IsSpellCheckEnabled="False"/>
+                        </inputLayout:SfTextInputLayout>
+                        <StackLayout Orientation="Horizontal" Margin="0,-7">
+                            <CheckBox Color="White" Scale="1.2"/>
+                            <Label Text="Ghi nhớ đăng nhập" TextColor="White" VerticalOptions="Center" FontSize="Subtitle"/>
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Padding="0" Margin="35,20,35,0" VerticalOptions="EndAndExpand">
                         <Grid>
-                            <StackLayout HorizontalOptions="CenterAndExpand">
-                                <Label Text="ĐĂNG NHẬP HỆ THỐNG" TextColor="Black" FontSize="Large" FontAttributes="Bold" />
-                            </StackLayout>
-                            <StackLayout Margin="10,50,10,0">
-                                <Entry x:Name="Entry_Username"
-                                       Placeholder="Tên đăng nhập"
-                                       PlaceholderColor="DarkGray">
-                                </Entry>
-                                <Entry x:Name="Entry_Password"
-                                       Placeholder="Mật khẩu"
-                                       PlaceholderColor="DarkGray"
-                                       IsPassword="True">
-                                </Entry>
-                            </StackLayout>
-                            <StackLayout Padding="0" Margin="15,10" VerticalOptions="EndAndExpand">
-                                <Button x:Name="LoginBtn" Text="ĐĂNG NHẬP" BackgroundColor="HotPink" TextColor="White" CornerRadius="30" Clicked="LoginProcedure" />
-                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                    <Button x:Name="DebugInstantBtn" Text="InstantLogin" BackgroundColor="HotPink" TextColor="White" CornerRadius="30" Clicked="InstantLoginProcedure" />
-                                    <Button x:Name="DebugInstantBtnByp" Text="InstantLoginBypass" BackgroundColor="HotPink" TextColor="White" CornerRadius="30" Clicked="InstantLoginProcedureBypass" />
-                                </StackLayout>
-                            </StackLayout>
-                        </Grid>
-                    </Frame>
-                </StackLayout>
-                <ActivityIndicator x:Name="ActivityIndicator"
+                            <Button Grid.Column="0"  x:Name="LoginBtn" Text="ĐĂNG NHẬP" FontSize="Subtitle" BackgroundColor="Transparent" BorderColor="White" 
+                                BorderWidth="1" TextColor="White" CornerRadius="30" Clicked="LoginProcedure" HeightRequest="40"/>
+                            <ActivityIndicator Grid.Column="0" x:Name="ActivityIndicator"
                                    IsRunning="False"
-                                   Color="Red"
+                                   Color="White"
                                    HorizontalOptions="CenterAndExpand"
                                    VerticalOptions="CenterAndExpand"
                                    HeightRequest="50"
                                    WidthRequest="50" />
+                        </Grid>
+                    </StackLayout>
+                </StackLayout>
             </Grid>
-
-            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="10,30,10,20">
-                <Label Text="Hệ thống Điểm danh Học sinh CYB - Bản Thử nghiệm" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  TextColor="Black" />
-                <Label x:Name="ClientVer" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  TextColor="Black" />
+            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="10,0,10,20">
+                <Button x:Name="InstantLogin2" Text="Dev: InstantLogin" FontSize="Subtitle" BackgroundColor="Transparent" BorderColor="White" 
+                                BorderWidth="1" TextColor="White" CornerRadius="30" Clicked="InstantLoginProcedureBypass" HeightRequest="43" Margin="15,-10,15,3"/>
+                    <Label Text="Hệ thống Điểm danh Học sinh CYB - Bản Thử nghiệm" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  TextColor="#c9c9c9" />
+                <Label x:Name="ClientVer" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  TextColor="#c9c9c9" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

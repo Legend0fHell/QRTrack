@@ -24,5 +24,6 @@ namespace QRdangcap.GoogleDatabase
         public static bool IsTodayOff { get; set; }
         public static Location LastMockLoc { get; set; }
         public static bool IsLastTimeMock { get; set; }
+        public static int IsUserLogin { get; set; }
     }
 }
