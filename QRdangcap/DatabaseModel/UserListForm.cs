@@ -11,5 +11,7 @@ namespace QRdangcap.DatabaseModel
         public string StClass { get; set; }
         public int Priv { get; set; }
         public int LogStatus { get; set; }
+        public int RankingPoint { get; set; }
+        public int Ranking { get; set; }
     }
 }

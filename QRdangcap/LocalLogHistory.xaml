@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <RefreshView x:Name="refreshAll" Refreshing="RefreshView_Refreshing">
             <ScrollView>
-                <StackLayout BackgroundColor="#e6e6e6">
+                <StackLayout BackgroundColor="#f2f4f6">
                     <Button Text="Lấy dữ liệu" x:Name="RetrieveLog" Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Clicked="RetrieveLog_Clicked" />
                     <CollectionView x:Name="LogList" Grid.Row="1"
                                 Margin="10,0,10,0"

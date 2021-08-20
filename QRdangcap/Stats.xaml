@@ -5,7 +5,7 @@
              Title="Lịch sử quét toàn hệ thống"
              x:Name="PageRoot">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#e6e6e6">
+        <StackLayout BackgroundColor="#f2f4f6">
             <Label Text="{Binding RetrieveLog}" FontSize="17" Margin="10,5" FontAttributes="Bold" />
             <StackLayout Orientation="Horizontal" Margin="10,-20,10,0">
                 <Label Text="Lọc:" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />

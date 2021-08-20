@@ -60,14 +60,13 @@ namespace QRdangcap
                                     {
                                         ViewModel.LogListFirebase.Insert(StartingPoint, x.Object);
                                         ++cntLoaded;
-                                        LogList.ScrollTo(StartingPoint + 1);
+                                        
                                     }
                                 }
                                 else
                                 {
                                     ViewModel.LogListFirebase.Insert(StartingPoint, x.Object);
                                     ++cntLoaded;
-                                    LogList.ScrollTo(StartingPoint + 1);
                                 }
                             }
                             else
@@ -80,6 +79,7 @@ namespace QRdangcap
                             ViewModel.LogListFirebase.RemoveAt(index);
                             --cntLoaded;
                         }
+                        LogList.ScrollTo(StartingPoint + 1);
                         ViewModel.RetrieveLog = $"Đã tải {cntLoaded}/?? mục. (Dữ liệu cập nhật tự động)";
 
                         ViewModel.IsVisi = (cntLoaded >= ExpectLoadedLog);
@@ -120,14 +120,12 @@ namespace QRdangcap
                                         {
                                             ViewModel.LogListFirebase.Insert(StartingPoint, x.Object);
                                             ++cntLoaded;
-                                            LogList.ScrollTo(StartingPoint + 1);
                                         }
                                     }
                                     else
                                     {
                                         ViewModel.LogListFirebase.Insert(StartingPoint, x.Object);
                                         ++cntLoaded;
-                                        LogList.ScrollTo(StartingPoint + 1);
                                     }
                                 }
                                 else
@@ -141,6 +139,7 @@ namespace QRdangcap
                                 --cntLoaded;
                             }
                         }
+                        LogList.ScrollTo(StartingPoint + 1);
                         ViewModel.RetrieveLog = $"Đã tải {cntLoaded}/?? mục. (Dữ liệu cập nhật tự động)";
                         ViewModel.IsVisi = (cntLoaded >= ExpectLoadedLog);
                     }

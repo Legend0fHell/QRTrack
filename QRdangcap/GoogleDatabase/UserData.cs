@@ -25,5 +25,9 @@ namespace QRdangcap.GoogleDatabase
         public static Location LastMockLoc { get; set; }
         public static bool IsLastTimeMock { get; set; }
         public static int IsUserLogin { get; set; }
+        public static string SchoolName => "THPT Chuyên Nguyễn Tất Thành";
+        public static int UserRankingPoint { get; set; }
+        public static int UserRanking { get; set; }
+        public static int NoUserRanked { get; set; }
     }
 }

@@ -10,7 +10,7 @@
     </Shell.TitleView>
 
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#e6e6e6">
+        <StackLayout BackgroundColor="#f2f4f6">
             <Frame HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="100" VerticalOptions="Start">
                 <StackLayout Margin="10,0,10,5">
                     <Label x:Name="DeviceClock" HorizontalOptions="CenterAndExpand" FontSize="55" Margin="0,0,0,0" />

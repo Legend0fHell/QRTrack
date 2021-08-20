@@ -4,7 +4,7 @@
              x:Class="QRdangcap.RestDay"
              Title="Đặt ngày nghỉ">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#e6e6e6">
+        <StackLayout BackgroundColor="#f2f4f6">
             <Frame HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="170" VerticalOptions="Start">
                 <StackLayout Margin="10,0">
                     <Label Text="Cấu hình hàng tuần" FontSize="20" FontAttributes="Bold" Opacity="80"/>

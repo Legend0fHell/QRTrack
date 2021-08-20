@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -47,7 +48,11 @@ namespace QRdangcap
         public DClassInfo(string Clr)
         {
             InitializeComponent();
-            instance.CheckUserTableExist();
+            Checking();
+            async void Checking()
+            {
+                await instance.CheckUserTableExist();
+            }
             db.CreateTable<UserListForm>();
             string[] SortingMode = { "Tên", "ID" };
             globalClrCheck = Clr;

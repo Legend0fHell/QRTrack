@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QRdangcap.DUserInfo">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#e6e6e6">
+        <StackLayout BackgroundColor="#f2f4f6">
             <Frame HeightRequest="75" HorizontalOptions="FillAndExpand">
                 <Frame.Background>
                     <LinearGradientBrush EndPoint="0,1">

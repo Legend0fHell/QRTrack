@@ -4,7 +4,7 @@
              x:Class="QRdangcap.SendAbsent"
              Title="Báo nghỉ học sinh">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#e6e6e6">
+        <StackLayout BackgroundColor="#f2f4f6">
             <Frame HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="90" VerticalOptions="Start">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />

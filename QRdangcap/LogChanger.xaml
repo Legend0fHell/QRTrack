@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <RefreshView x:Name ="RefreshingView">
             <ScrollView>
-                <StackLayout BackgroundColor="#e6e6e6">
+                <StackLayout BackgroundColor="#f2f4f6">
                     <Frame HasShadow="True" CornerRadius="10" Margin="10,20,10,0" Padding="0" HeightRequest="70" VerticalOptions="Start">
                         <StackLayout Margin="10,5,10,0">
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">

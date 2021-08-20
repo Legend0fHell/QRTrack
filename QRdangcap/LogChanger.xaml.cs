@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using SQLite;
+using System.Linq;
 using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -59,7 +60,7 @@ namespace QRdangcap
                 Contents = globalLogList.StId.ToString(),
                 Contents2 = globalLogList.LoginDate.DayOfYear.ToString(),
                 Contents3 = OnTime.IsChecked ? "1" : "2",
-                Contents4 = globalLogList.Mistake.Equals("NONE") ? "0" : "1",
+                Contents4 = StMistake.Text.Equals("NONE") ? "0" : (StMistake.Text.Count(x => x.Equals(';')) + 1).ToString(),
             };
             db.CreateTable<LogListForm>();
             var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";

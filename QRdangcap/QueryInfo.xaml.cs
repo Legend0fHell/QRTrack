@@ -27,7 +27,12 @@ namespace QRdangcap
         {
             InitializeComponent();
             RetrieveAllUserDb instance = new RetrieveAllUserDb();
-            instance.CheckUserTableExist();
+            Checking();
+            async void Checking()
+            {
+                await instance.CheckUserTableExist();
+            }
+            
             refreshAll.IsRefreshing = true;
         }
 

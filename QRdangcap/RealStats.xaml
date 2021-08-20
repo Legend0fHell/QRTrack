@@ -19,7 +19,7 @@
     <ContentPage.Content>
         <RefreshView x:Name="refreshAll" Refreshing="RefreshView_Refreshing">
             <ScrollView>
-                <StackLayout BackgroundColor="#e6e6e6">
+                <StackLayout BackgroundColor="#f2f4f6">
                     <StackLayout Orientation="Horizontal" Margin="10,0,10,-5">
                         <Label Text="Xem theo:" FontSize="17" FontAttributes="Bold" VerticalOptions="Center"/>
                         <Picker x:Name="WatchMode" Title="Xem theo..." SelectedIndexChanged="WatchMode_SelectedIndexChanged" HorizontalOptions="FillAndExpand"/>
@@ -157,7 +157,7 @@
                     </Frame>
                     <Frame x:Name="Frame_Chart4" HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="300" VerticalOptions="Start">
                         <StackLayout>
-                            <Label x:Name="ErrorDesc"  Text="Số lượt phạm lỗi" FontSize="20" FontAttributes="Bold" Opacity="80" Margin="10,5,10,0"/>
+                            <Label x:Name="ErrorDesc"  Text="Phạm lỗi" FontSize="20" FontAttributes="Bold" Opacity="80" Margin="10,5,10,0"/>
                             <chart:SfChart x:Name="chartSfError" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="10,5,10,0">
                                 <chart:SfChart.Legend>
                                     <chart:ChartLegend IconHeight="10" IconWidth="10" OverflowMode="Scroll" DockPosition="Bottom" />
@@ -172,7 +172,7 @@
                                 </chart:SfChart.SecondaryAxis>
                                 
                                 <chart:SfChart.Series>
-                                    <chart:BarSeries x:Name="ErrorRateSeries" Label="Số lần phạm lỗi" XBindingPath="Name" YBindingPath="Value" LegendIcon="SeriesType" EnableAnimation="True">
+                                    <chart:BarSeries x:Name="ErrorRateSeries" Label="Lỗi" XBindingPath="Name" YBindingPath="Value" LegendIcon="SeriesType" EnableAnimation="True">
                                         <chart:BarSeries.DataMarker>
                                             <chart:ChartDataMarker ShowLabel="True">
                                                 <chart:ChartDataMarker.LabelStyle>

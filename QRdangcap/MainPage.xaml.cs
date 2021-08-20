@@ -19,7 +19,7 @@ namespace QRdangcap
         {
             InitializeComponent();
             Wishes.Text = "Chúc bạn có một ngày vui vẻ!";
-            DeviceDate.Text = DateTime.Now.ToString("ddd, dd.MM.yyyy", CultureInfo.CreateSpecificCulture("vi-VN"));
+            DeviceDate.Text = DateTime.Now.ToString("dddd, dd.MM.yyyy", CultureInfo.CreateSpecificCulture("vi-VN"));
             VerText.Text = GlobalVariables.ClientVersion + " (" + GlobalVariables.ClientVersionDate.ToString("dd.MM") + ")";
             RefreshingView.IsRefreshing = true;
             Device.StartTimer(TimeSpan.FromMilliseconds(500), () =>
@@ -39,9 +39,16 @@ namespace QRdangcap
         }
         public void InitStaticText()
         {
-            Greeting.Text = "Xin chào, " + UserData.StudentIdDatabase.ToString() + ". " + UserData.StudentFullName + "!";
-            Priv.Text = UserData.StudentPriv.ToString();
-            LblClass.Text = UserData.StudentClass;
+            // Limit is 14 characters.
+            Greeting.Text = UserData.StudentFullName;
+            Details.Text = "Lớp " + UserData.StudentClass + " - " + UserData.SchoolName;
+            UserRankingPointLbl.Text = UserData.UserRankingPoint.ToString();
+            UserRankingLbl.Text = UserData.UserRanking.ToString() + "/" + UserData.NoUserRanked;
+            if (UserData.StudentPriv == 0) Priv.Text = "Học sinh";
+            else if (UserData.StudentPriv == 1) Priv.Text = "Xung kích";
+            else if (UserData.StudentPriv == 2) Priv.Text = "Giáo viên";
+            else if (UserData.StudentPriv == 3) Priv.Text = "Quản trị viên";
+            else Priv.Text = "Hảo hán";
             if (UserData.IsUserLogin == 0)
             {
                 LblStatusToday.Text = "Bạn chưa điểm danh ngày hôm nay!";
@@ -69,7 +76,7 @@ namespace QRdangcap
             RefreshingView.IsRefreshing = false;
         }
 
-        private async void Logout_Clicked(object sender, System.EventArgs e)
+        private async void Logout_Clicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
             UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
@@ -192,10 +199,78 @@ namespace QRdangcap
             InitStaticText();
         }
 
-        private void UpdateUser_Tapped(object sender, EventArgs e)
+        private async void UpdateUser_Tapped(object sender, EventArgs e)
         {
             RetrieveAllUserDb instance = new RetrieveAllUserDb();
-            instance.RetrieveAllUserDatabase();
+            await instance.RetrieveAllUserDatabase();
+        }
+
+        private void C00_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new LocalLogHistory());
+        }
+
+        private void C01_Tapped(object sender, EventArgs e)
+        {
+            DependencyService.Get<IToast>().ShowShort("Chức năng sắp ra mắt");
+        }
+
+        private async void C02_Tapped(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync($"//main/QueryInfo");
+        }
+
+        private async void C10_Tapped(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync($"//main/RealStats");
+        }
+
+        private void C11_Tapped(object sender, EventArgs e)
+        {
+            DependencyService.Get<IToast>().ShowShort("Chức năng sắp ra mắt");
+        }
+
+        private async void C12_Tapped(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync($"//main/Other");
+        }
+
+        private void C20_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new GenQR());
+        }
+
+        private void C21_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new SendAbsent());
+        }
+
+        private void C22_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new AbsentLog());
+        }
+
+        private void C30_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new RestDay());
+        }
+
+        private void C31_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Stats());
+        }
+        private void C32_Tapped(object sender, EventArgs e)
+        {
+            DependencyService.Get<IToast>().ShowShort("Chức năng sắp ra mắt");
+        }
+
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            DependencyService.Get<IToast>().ShowShort("Đang cập nhật xếp hạng..");
+            UserData.NoUserRanked = await instance.GetGlobalUserRanking();
+            UserRankingPointLbl.Text = UserData.UserRankingPoint.ToString();
+            UserRankingLbl.Text = UserData.UserRanking.ToString() + "/" + UserData.NoUserRanked;
+            DependencyService.Get<IToast>().ShowShort("Cập nhật xếp hạng thành công!");
         }
     }
 }

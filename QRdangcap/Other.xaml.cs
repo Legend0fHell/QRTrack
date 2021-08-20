@@ -52,10 +52,10 @@ namespace QRdangcap
             await Navigation.PushAsync(new LocalLogHistory());
         }
 
-        private void UpdateDBUser_Tapped(object sender, EventArgs e)
+        private async void UpdateDBUser_Tapped(object sender, EventArgs e)
         {
             RetrieveAllUserDb instance = new RetrieveAllUserDb();
-            instance.RetrieveAllUserDatabase();
+            await instance.RetrieveAllUserDatabase();
         }
 
         private async void Logout_Tapped(object sender, EventArgs e)

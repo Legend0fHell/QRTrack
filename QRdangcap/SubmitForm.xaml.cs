@@ -112,7 +112,7 @@ namespace QRdangcap
                 return;
             }
 
-            if (otherMistake.Text.Contains("NONE") || otherMistake.Text.Contains(";"))
+            if (otherMistake.Text.Contains("NONE"))
             {
                 DependencyService.Get<IToast>().ShowShort("Lỗi không hợp lệ. Vui lòng nhập lại.");
                 return;
@@ -123,6 +123,7 @@ namespace QRdangcap
                 if (Reason0.IsChecked) MistakeString.Add("Quên thẻ");
                 if (Reason1.IsChecked) MistakeString.Add("Sai đồng phục");
                 if (Reason2.IsChecked) MistakeString.Add("Lỗi ATGT");
+                if (otherMistake.Text.Equals("NONE")) otherMistake.Text = "";
                 if (!(otherMistake.Text.Equals(null) || otherMistake.Text.Equals(""))) MistakeString.Add(otherMistake.Text);
                 MistakeStringCombined = "";
                 if (MistakeString.Count == 0) MistakeStringCombined = "NONE";

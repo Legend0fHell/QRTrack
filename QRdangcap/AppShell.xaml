@@ -7,20 +7,20 @@
         <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" />
     </ShellItem>
     <TabBar Route="main">
-        <Tab Title="Cá nhân" Icon="ic_action_account_circle.png">
+        <Tab Title="Cá nhân" Icon="ic_action_account_circle.png" Route="MainPage">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
         </Tab>
-        <Tab Title="Thống kê" Icon="ic_action_insert_chart.png">
+        <Tab Title="Thống kê" Icon="ic_action_insert_chart.png" Route="RealStats">
             <ShellContent ContentTemplate="{DataTemplate local:RealStats}" />
         </Tab>
-        <Tab Title="Ghi nhận" Icon="ic_action_assignment.png">
+        <Tab Title="Ghi nhận" Icon="ic_action_assignment_turned_in.png" Route="SubmitForm">
             <ShellContent ContentTemplate="{DataTemplate local:SubmitForm}" />
         </Tab>
-        <Tab Title="TC HS" Icon="ic_action_search.png">
+        <Tab Title="Tra cứu" Icon="ic_action_search.png" Route="QueryInfo">
             <ShellContent ContentTemplate="{DataTemplate local:QueryInfo}" />
         </Tab>
-        <Tab Title="Khác" Icon="ic_action_dehaze.png">
-            <ShellContent ContentTemplate="{DataTemplate local:Other}" />
+        <Tab Title="Khác" Icon="ic_action_dehaze.png" Route="Other">
+            <ShellContent ContentTemplate="{DataTemplate local:Other}"/>
         </Tab>
     </TabBar>
 </Shell>

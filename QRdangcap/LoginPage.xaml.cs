@@ -181,7 +181,8 @@ namespace QRdangcap
         {
             isInstantLogin = 0;
             LoginStat.Text = "Đang lấy dữ liệu của trường...";
-            instance.CheckUserTableExist();
+            await instance.CheckUserTableExist();
+            UserData.NoUserRanked = await instance.GetGlobalUserRanking();
             var model = new FeedbackModel()
             {
                 Mode = "18",

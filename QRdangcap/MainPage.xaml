@@ -2,58 +2,198 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QRdangcap.MainPage"
-             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
              Title="Hệ thống Điểm danh Học sinh CYB">
-
 
     <ContentPage.Content>
         <RefreshView x:Name ="RefreshingView" Refreshing="RefreshView_Refreshing">
             <ScrollView>
-                <StackLayout BackgroundColor="#e6e6e6">
-                    <Frame HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="70" VerticalOptions="Start">
+                <StackLayout BackgroundColor="#f2f4f6">
+                    <Frame HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="90" VerticalOptions="Start">
                         <StackLayout Margin="10,5,10,5">
                             <Label x:Name="Greeting" FontSize="17" HorizontalOptions="Start" FontAttributes="Bold" VerticalOptions="Start" TextColor="Black"/>
-                            <Label x:Name="Wishes" HorizontalOptions="Start" VerticalOptions="Start" TextColor="#757575"/>
+                            <Label x:Name="Details" FontSize="15" TextColor="Black" Margin="0,-5,0,0"/>
+                            <Label x:Name="Wishes" HorizontalOptions="Start" VerticalOptions="EndAndExpand" TextColor="#757575" FontSize="15"/>
                         </StackLayout>
                     </Frame>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Frame Grid.Column="1" HasShadow="True" CornerRadius="10" Margin="5,10,10,0" Padding="0" HeightRequest="85" VerticalOptions="Start">
+                        <Frame Grid.Column="0" HasShadow="True" CornerRadius="10" Margin="10,5,5,0" Padding="0" HeightRequest="85" VerticalOptions="Start">
                             <StackLayout Margin="10,5,10,5">
                                 <Label x:Name="DeviceClock" Text="07:27:27" FontSize="26" HorizontalOptions="Start" FontAttributes="Bold" TextColor="Black"/>
                                 <Label x:Name="DeviceDate" Text="07:27:27" HorizontalOptions="Start" Margin="0,-10,0,0" TextColor="#757575"/>
                                 <Label Text="Thời gian" VerticalOptions="EndAndExpand" Margin="0,-5,0,0" TextColor="#757575"/>
                             </StackLayout>
                         </Frame>
-                        <Frame Grid.Column="2" HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="85" VerticalOptions="Start">
-                            <StackLayout Margin="10,5,10,5">
-
-                                <Label x:Name="LblClass" HorizontalOptions="StartAndExpand" FontSize="26" FontAttributes="Bold" TextColor="Black"/>
-                                <Label Text="Lớp học" VerticalOptions="EndAndExpand"  TextColor="#757575"/>
-                            </StackLayout>
-                        </Frame>
-                        <Frame Grid.Column="3" HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="85" VerticalOptions="Start">
+                        <Frame Grid.Column="1" HasShadow="True" CornerRadius="10" Margin="0,5,10,0" Padding="0" HeightRequest="85" VerticalOptions="Start">
                             <StackLayout Margin="10,5,10,5">
                                 <Label x:Name="Priv" HorizontalOptions="StartAndExpand" FontSize="26" FontAttributes="Bold" TextColor="Black"/>
-                                <Label Text="Quyền hạn" VerticalOptions="EndAndExpand"  TextColor="#757575"/>
+                                <Label Text="Loại tài khoản" VerticalOptions="EndAndExpand"  TextColor="#757575"/>
                             </StackLayout>
                         </Frame>
                     </Grid>
-                    <Frame HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="90" VerticalOptions="Start">
+                    <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="160" VerticalOptions="Start">
+                        <Grid Margin="10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackLayout Grid.Column="0" Grid.Row="0" VerticalOptions="Center">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer x:Name="C00" Tapped="C00_Tapped" />
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="ic_action_access_time.png" HorizontalOptions="Center" Scale="1.3"/>
+                                <Label Text="Lịch sử ĐD" HorizontalOptions="Center" TextColor="Black"/>
+                            </StackLayout>
+                            <StackLayout Grid.Column="1" Grid.Row="0" VerticalOptions="Center">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer x:Name="C01" Tapped="C01_Tapped" />
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="ic_action_calendar_today.png" HorizontalOptions="Center" Scale="1.3"/>
+                                <Label Text="Thời khóa biểu" HorizontalOptions="Center" TextColor="Black"/>
+                            </StackLayout>
+                            <StackLayout Grid.Column="2" Grid.Row="0" VerticalOptions="Center">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer x:Name="C02" Tapped="C02_Tapped" />
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="ic_action_search.png" HorizontalOptions="Center" Scale="1.3"/>
+                                <Label Text="Tra cứu HS" HorizontalOptions="Center" TextColor="Black"/>
+                            </StackLayout>
+                            <StackLayout Grid.Column="0" Grid.Row="1" VerticalOptions="Center">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer x:Name="C10" Tapped="C10_Tapped" />
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="ic_action_insert_chart.png" HorizontalOptions="Center" Scale="1.3"/>
+                                <Label Text="Thống kê" HorizontalOptions="Center" TextColor="Black"/>
+                            </StackLayout>
+                            <StackLayout Grid.Column="1" Grid.Row="1" VerticalOptions="Center">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer x:Name="C11" Tapped="C11_Tapped" />
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="ic_action_emoji_events.png" HorizontalOptions="Center" Scale="1.3"/>
+                                <Label Text="Bảng xếp hạng" HorizontalOptions="Center" TextColor="Black"/>
+                            </StackLayout>
+                            <StackLayout Grid.Column="2" Grid.Row="1" VerticalOptions="Center">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer x:Name="C12" Tapped="C12_Tapped" />
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="ic_action_more_horiz.png" HorizontalOptions="Center" Scale="1.3"/>
+                                <Label Text="Khác" HorizontalOptions="Center" TextColor="Black"/>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                    <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="160" VerticalOptions="Start">
+                        <StackLayout Margin="10,5">
+                            <Label Text="Quản trị" FontSize="20" FontAttributes="Bold" Opacity="80"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <StackLayout Grid.Column="0" Grid.Row="0" VerticalOptions="Center">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer x:Name="C20" Tapped="C20_Tapped" />
+                                    </StackLayout.GestureRecognizers>
+                                    <Image Source="ic_action_center_focus_strong.png" HorizontalOptions="Center" Scale="1.3"/>
+                                    <Label Text="Tạo mã QR" HorizontalOptions="Center" TextColor="Black"/>
+                                </StackLayout>
+                                <StackLayout Grid.Column="1" Grid.Row="0" VerticalOptions="Center">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer x:Name="C21" Tapped="C21_Tapped" />
+                                    </StackLayout.GestureRecognizers>
+                                    <Image Source="ic_action_person_remove.png" HorizontalOptions="Center" Scale="1.3"/>
+                                    <Label Text="Báo nghỉ HS" HorizontalOptions="Center" TextColor="Black"/>
+                                </StackLayout>
+                                <StackLayout Grid.Column="2" Grid.Row="0" VerticalOptions="Center">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer x:Name="C22" Tapped="C22_Tapped" />
+                                    </StackLayout.GestureRecognizers>
+                                    <Image Source="ic_action_assignment.png" HorizontalOptions="Center" Scale="1.3"/>
+                                    <Label Text="QL HS Báo nghỉ" HorizontalOptions="Center" TextColor="Black"/>
+                                </StackLayout>
+                                <StackLayout Grid.Column="0" Grid.Row="1" VerticalOptions="Center">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer x:Name="C30" Tapped="C30_Tapped" />
+                                    </StackLayout.GestureRecognizers>
+                                    <Image Source="ic_action_airline_seat_flat.png" HorizontalOptions="Center" Scale="1.3"/>
+                                    <Label Text="Đặt ngày nghỉ" HorizontalOptions="Center" TextColor="Black"/>
+                                </StackLayout>
+                                <StackLayout Grid.Column="1" Grid.Row="1" VerticalOptions="Center">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer x:Name="C31" Tapped="C31_Tapped" />
+                                    </StackLayout.GestureRecognizers>
+                                    <Image Source="ic_action_more_time.png" HorizontalOptions="Center" Scale="1.3"/>
+                                    <Label Text="Lịch sử ĐD (HT)" HorizontalOptions="Center" TextColor="Black"/>
+                                </StackLayout>
+                                <StackLayout Grid.Column="2" Grid.Row="1" VerticalOptions="Center">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer x:Name="C32" Tapped="C32_Tapped" />
+                                    </StackLayout.GestureRecognizers>
+                                    <Image Source="ic_action_message.png" HorizontalOptions="Center" Scale="1.3"/>
+                                    <Label Text="Gửi thông báo" HorizontalOptions="Center" TextColor="Black"/>
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                        
+                    </Frame>
+                    <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="100" VerticalOptions="Start">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="Button_Clicked"/>
                         </Frame.GestureRecognizers>
                         <StackLayout Margin="10,5,10,5">
-                            <Label x:Name="LblStatusToday" HorizontalOptions="StartAndExpand" FontSize="20" FontAttributes="Bold"/>
-                            <Label x:Name="LblStatusSubString" HorizontalOptions="StartAndExpand" FontSize="16" VerticalOptions="EndAndExpand" TextColor="#757575"/>
-                           
+                            <Label Text="Điểm danh" FontSize="20" FontAttributes="Bold" Opacity="80"/>
+                            <Label x:Name="LblStatusToday" FontSize="18" FontAttributes="Bold" HorizontalOptions="End"/>
+                            <Label x:Name="LblStatusSubString" HorizontalOptions="End" FontSize="16" TextColor="#757575" Margin="0,-5,0,10"/>
                         </StackLayout>
                     </Frame>
-                    <Grid>
+                    <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="100" VerticalOptions="Start">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                        </Frame.GestureRecognizers>
+                        <StackLayout Margin="10,5,10,5">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Xếp hạng" FontSize="20" FontAttributes="Bold" Opacity="80" HorizontalOptions="StartAndExpand"/>
+                                <Label Text="Nhấn để cập nhật" FontSize="17" FontAttributes="Italic" Opacity="80" HorizontalOptions="EndAndExpand" TextColor="Blue" VerticalOptions="Center"/>
+                            </StackLayout>
+                            
+                            <Grid VerticalOptions="StartAndExpand" Margin="0,0,0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="1.7*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Grid.Column="0">
+                                    <Label Text="Điểm" HorizontalOptions="Center" TextColor="Black"/>
+                                    <Label x:Name="UserRankingPointLbl" Text="727" HorizontalOptions="Center" TextColor="Red" FontAttributes="Bold" FontSize="30" Margin="0,-7,0,0"/>
+                                </StackLayout>
+                                <Line Grid.Column="1" Y2="50" Stroke="#757575" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                <StackLayout Grid.Column="2">
+                                    <Label Text="Hạng Cá nhân" HorizontalOptions="Center" TextColor="Black"/>
+                                    <Label x:Name="UserRankingLbl" Text="727/1337" HorizontalOptions="Center" TextColor="Red" FontAttributes="Bold" FontSize="30" Margin="0,-7,0,0"/>
+                                </StackLayout>
+                                <Line Grid.Column="3" Y2="50" Stroke="#757575" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                <StackLayout Grid.Column="4">
+                                    <Label Text="Hạng Lớp" HorizontalOptions="Center" TextColor="Black"/>
+                                    <Label x:Name="UserClassRanking" Text="N/A" HorizontalOptions="Center" TextColor="Red" FontAttributes="Bold" FontSize="30" Margin="0,-7,0,0"/>
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+                    <Grid Margin="0,0,0,20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -74,20 +214,6 @@
                             </StackLayout>
                         </Frame>
                     </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Frame Grid.Column="0" HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="70" VerticalOptions="Start">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="UpdateUser_Tapped"/>
-                            </Frame.GestureRecognizers>
-                            <StackLayout Margin="10,5,10,5">
-                                <Label Text="C/nhật DB User" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
-                            </StackLayout>
-                        </Frame>
-                    </Grid>
-
                 </StackLayout>
             </ScrollView>
         </RefreshView>
