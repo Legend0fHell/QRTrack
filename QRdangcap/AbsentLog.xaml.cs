@@ -36,8 +36,15 @@ namespace QRdangcap
             var requestContent = new StringContent(jsonString);
             var resultQR = await client.PostAsync(uri, requestContent);
             var resultContent = await resultQR.Content.ReadAsStringAsync();
-            var response = JsonConvert.DeserializeObject<AbsentLogForm[]>(resultContent);
-            LogList.ItemsSource = response.Reverse();
+            try
+            {
+                var response = JsonConvert.DeserializeObject<AbsentLogForm[]>(resultContent);
+                LogList.ItemsSource = response.Reverse();
+            }
+            catch (JsonReaderException)
+            {
+                DependencyService.Get<IToast>().ShowShort("Không có dữ liệu!");
+            }
             refreshAll.IsRefreshing = false;
         }
 

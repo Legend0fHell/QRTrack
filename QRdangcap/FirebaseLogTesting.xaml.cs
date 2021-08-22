@@ -18,6 +18,7 @@ namespace QRdangcap
     {
         public string IdentityId { get; set; }
         public string Id2Id { get; set; }
+        public string Id3Id { get; set; }
         public int StId { get; set; }
         public int ReporterId { get; set; }
         public string Mistake { get; set; }
@@ -54,12 +55,11 @@ namespace QRdangcap
 
         private async void Button_Clicked_2(object sender, EventArgs e)
         {
-            for (int i = 4; i <= 100; ++i)
+            for (int i = int.Parse(From.Text); i <= int.Parse(To.Text); ++i)
             {
                 await System.Threading.Tasks.Task.Delay(100);
-                DependencyService.Get<IToast>().ShowShort("Đang gửi: " + i.ToString());
+                Sending.Text = $"Đang gửi: {i}";
                 instance.Firebase_SendLog(i);
-                System.Diagnostics.Debug.WriteLine($"Đã nộp: {i}");
             }
         }
     }

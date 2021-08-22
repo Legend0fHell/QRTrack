@@ -4,8 +4,11 @@
              x:Class="QRdangcap.FirebaseLogTesting">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Trang chỉ mang tính chất test thử, không sử dụng." />
-            <Button Text="Gửi test (UID 4-100)" Clicked="Button_Clicked_2" />
+            <Label Text="Trang chỉ mang tính chất kiểm tra chống chịu, không sử dụng." />
+            <Entry x:Name="From" Placeholder="Từ..." />
+            <Entry x:Name="To" Placeholder="Đến..."/>
+            <Label x:Name="Sending" Text="Đang gửi: " />
+            <Button Text="Gửi test" Clicked="Button_Clicked_2" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

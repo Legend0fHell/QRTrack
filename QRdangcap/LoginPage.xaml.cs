@@ -198,6 +198,7 @@ namespace QRdangcap
             UserData.SchoolLon = response2.Longitude;
             UserData.SchoolDist = response2.Distance;
             LoginStat.Text = "Đang cập nhật vị trí...";
+            GlobalVariables.IsGPSRequired = true;
             await instance.UpdateCurLocation();
             UserData.StartTime = response2.StartTime;
             UserData.EndTime = response2.EndTime;

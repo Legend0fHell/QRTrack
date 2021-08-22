@@ -27,15 +27,18 @@ namespace QRdangcap
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     DeviceClock.Text = DateTime.Now.ToString("HH:mm:ss");
-                    InitStaticText();
-                    // Replace with overwriting OnAppearing.
-                    if (UserData.StudentPreIdDatabase != UserData.StudentIdDatabase)
-                    {
-                        UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
-                    }
                 });
                 return true;
             });
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            InitStaticText();
+            if (UserData.StudentPreIdDatabase != UserData.StudentIdDatabase)
+            {
+                UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
+            }
         }
         public void InitStaticText()
         {

@@ -6,8 +6,6 @@
     <ContentPage.Content>
         <TableView Intent="Data">
             <TableRoot>
-                <TableSection Title="Menu có layout chống cháy." />
-                <TableSection Title=" " />
                 <TableSection>
                     <TextCell x:Name="GenQR" Tapped="GenQR_Tapped" Text="Tạo mã QR" />
                     <TextCell x:Name="SendAbs" Tapped="SendAbs_Tapped" Text="Báo nghỉ học sinh" />
@@ -17,6 +15,7 @@
                     <TextCell x:Name="TCClr" Tapped="TCClr_Tapped" Text="Tra cứu theo lớp" />
                     <TextCell x:Name="HistDB" Tapped="HistDB_Tapped" Text="Lịch sử ĐD (toàn hệ thống)" />
                     <TextCell x:Name="HistLocal" Tapped="HistLocal_Tapped" Text="Lịch sử ĐD (cục bộ)" />
+                    <TextCell x:Name="ReportGene" Tapped="ReportGene_Tapped" Text="Xuất báo cáo lớp (Demo, sẽ thay thế)" />
                 </TableSection>
                 <TableSection Title=" " />
                 <TableSection>

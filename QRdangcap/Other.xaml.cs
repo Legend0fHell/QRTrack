@@ -2,6 +2,7 @@
 using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using SQLite;
+using Syncfusion.XForms.PopupLayout;
 using System;
 using System.ComponentModel;
 using System.Net.Http;
@@ -27,11 +28,16 @@ namespace QRdangcap
         {
             InitializeComponent();
             // OnAppearing
-            CurAcc = "Tên: " + UserData.StudentFullName + ", ID: " + UserData.StudentIdDatabase.ToString();
+            
             ClientVerText.Detail = GlobalVariables.ClientVersion + " (dựng lúc: " + GlobalVariables.ClientVersionDate.ToString("G") + ")";
+            IsGPSRequired.On = true;
             BindingContext = this;
         }
-
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            CurAcc = "Tên: " + UserData.StudentFullName + ", ID: " + UserData.StudentIdDatabase.ToString();
+        }
         private async void GenQR_Tapped(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new GenQR());
@@ -70,29 +76,82 @@ namespace QRdangcap
             instance.CheckUpdates();
         }
 
-        private async void ChangePassword_Tapped(object sender, EventArgs e)
+        private void ChangePassword_Tapped(object sender, EventArgs e)
         {
-            string NewPassword = await DisplayPromptAsync("Nhập mật khẩu mới:", "Chỉ là PoC, mọi thứ có thể thay đổi.");
-            if (NewPassword != null)
+            //string NewPassword = await DisplayPromptAsync("Nhập mật khẩu mới:", "Chỉ là PoC, mọi thứ có thể thay đổi.");
+            SfPopupLayout OverwritePopup = new SfPopupLayout();
+            OverwritePopup.PopupView.HeaderTitle = "Đổi mật khẩu";
+            OverwritePopup.PopupView.AppearanceMode = AppearanceMode.TwoButton;
+            OverwritePopup.PopupView.AcceptButtonText = "Xác nhận";
+            OverwritePopup.PopupView.DeclineButtonText = "Hủy";
+            OverwritePopup.PopupView.AnimationMode = AnimationMode.Fade;
+            OverwritePopup.PopupView.PopupStyle.OverlayColor = Color.Black;
+            OverwritePopup.PopupView.PopupStyle.OverlayOpacity = 0.35;
+            OverwritePopup.BackgroundColor = new Color(230, 230, 230);
+            OverwritePopup.PopupView.HeightRequest = 320;
+            Entry InitPass = new Entry { Placeholder = "Nhập mật khẩu cũ...", HorizontalOptions=LayoutOptions.FillAndExpand, IsPassword = true };
+            Entry NewPass1 = new Entry { Placeholder = "Nhập mật khẩu mới...", HorizontalOptions = LayoutOptions.FillAndExpand, IsPassword = true };
+            Entry NewPass2 = new Entry { Placeholder = "Nhập lại mật khẩu mới...", HorizontalOptions = LayoutOptions.FillAndExpand, IsPassword = true };
+            DataTemplate contentTemplateView = new DataTemplate(() =>
             {
-                var client = new HttpClient();
-                var model = new FeedbackModel()
+                StackLayout popupContent = new StackLayout()
                 {
-                    Mode = "12",
-                    Contents = UserData.StudentIdDatabase.ToString(),
-                    Contents2 = NewPassword
+                    Margin = new Thickness(10,10),
+                    Children =
+                    {
+                        new Label {Text = "Nhập mật khẩu cũ:", Margin = new Thickness(10,0,0,-10)},
+                        InitPass,
+                        new Label {Text = "Nhập mật khẩu mới:", Margin = new Thickness(10,0,0,-10)},
+                        NewPass1,
+                        new Label {Text = "Nhập lại mật khẩu mới:", Margin = new Thickness(10,0,0,-10)},
+                        NewPass2,
+                    }
                 };
-                var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-                var jsonString = JsonConvert.SerializeObject(model);
-                var requestContent = new StringContent(jsonString);
-                var result = await client.PostAsync(uri, requestContent);
-                var resultContent = await result.Content.ReadAsStringAsync();
-                var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
-                if (response.Status.Equals("SUCCESS"))
+                return popupContent;
+            });
+            OverwritePopup.PopupView.ContentTemplate = contentTemplateView;
+            OverwritePopup.ClosePopupOnBackButtonPressed = true;
+            OverwritePopup.PopupView.AcceptCommand = new Command(PopupAcp);
+            OverwritePopup.PopupView.DeclineCommand = new Command(PopupDecl);
+            OverwritePopup.Show();
+            async void PopupAcp()
+            {
+                if (NewPass1.Text != null && NewPass1.Text.Equals(NewPass2.Text))
                 {
-                    DependencyService.Get<IToast>().ShowShort("Đổi mật khẩu thành công.");
+                    var client = new HttpClient();
+                    var model = new FeedbackModel()
+                    {
+                        Mode = "12",
+                        Contents = UserData.StudentIdDatabase.ToString(),
+                        Contents2 = NewPass1.Text,
+                        Contents3 = InitPass.Text
+                    };
+                    var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
+                    var jsonString = JsonConvert.SerializeObject(model);
+                    var requestContent = new StringContent(jsonString);
+                    var result = await client.PostAsync(uri, requestContent);
+                    var resultContent = await result.Content.ReadAsStringAsync();
+                    var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
+                    if (response.Status.Equals("SUCCESS"))
+                    {
+                        DependencyService.Get<IToast>().ShowShort("Đổi mật khẩu thành công.");
+                    }
+                    else
+                    {
+                        DependencyService.Get<IToast>().ShowShort("Thất bại: Mật khẩu không hợp lệ.");
+                    }
                 }
+                else
+                {
+                    DependencyService.Get<IToast>().ShowShort("Thất bại: Mật khẩu không hợp lệ.");
+                }
+                return;
             }
+            void PopupDecl()
+            {
+                return;
+            }
+
         }
 
         private async void SendAbs_Tapped(object sender, EventArgs e)
@@ -131,6 +190,11 @@ namespace QRdangcap
         private async void FirebaseLogTesting_Tapped(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new FirebaseLogTesting());
+        }
+
+        private async void ReportGene_Tapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ReportGen());
         }
     }
 }
