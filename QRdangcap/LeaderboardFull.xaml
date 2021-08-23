@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QRdangcap.LeaderboardFull">
+    <Shell.TitleView>
+        <Grid Margin="0,0,10,0">
+            <Label Text="Bảng xếp hạng" FontSize="22" TextColor="White" VerticalOptions="Center" />
+            <Button Text="Cập nhật" FontSize="15" VerticalOptions="Center" HorizontalOptions="End" Clicked="TapGestureRecognizer_Tapped" />
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <RefreshView x:Name="refreshAll" Refreshing="RefreshAll_Refreshing">
+            <ScrollView>
+                <StackLayout Margin="10,5,10,5">
+                    <Grid VerticalOptions="StartAndExpand" Margin="0,0,0,5" HeightRequest="50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="1.7*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Điểm" HorizontalOptions="Center" TextColor="Black"/>
+                            <Label x:Name="UserRankingPointLbl" Text="727" HorizontalOptions="Center" TextColor="Red" FontAttributes="Bold" FontSize="30" Margin="0,-7,0,0"/>
+                        </StackLayout>
+                        <Line Grid.Column="1" Y2="50" Stroke="#757575" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        <StackLayout Grid.Column="2">
+                            <Label Text="Hạng Cá nhân" HorizontalOptions="Center" TextColor="Black"/>
+                            <Label x:Name="UserRankingLbl" Text="727/1337" HorizontalOptions="Center" TextColor="Red" FontAttributes="Bold" FontSize="30" Margin="0,-7,0,0"/>
+                        </StackLayout>
+                        <Line Grid.Column="3" Y2="50" Stroke="#757575" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        <StackLayout Grid.Column="4">
+                            <Label Text="Hạng Lớp" HorizontalOptions="Center" TextColor="Black"/>
+                            <Label x:Name="UserClassRanking" Text="N/A" HorizontalOptions="Center" TextColor="Red" FontAttributes="Bold" FontSize="30" Margin="0,-7,0,0"/>
+                        </StackLayout>
+                    </Grid>
+                    <CollectionView x:Name="LeaderboardView"
+                                            VerticalOptions="FillAndExpand"
+                                            HorizontalOptions="FillAndExpand">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BackgroundColor="White" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="True">
+                                    <Grid VerticalOptions="Center" HeightRequest="40">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Text="{Binding Ranking, StringFormat='#{0}'}" TextColor="Orange" FontSize="30" FontAttributes="Bold" VerticalOptions="StartAndExpand" HorizontalOptions="Center"/>
+                                        <StackLayout Grid.Column="1">
+                                            <Label Text="{Binding StName}" TextColor="Black" FontSize="16" FontAttributes="Bold" Margin="10,5,0,0" LineBreakMode="HeadTruncation" />
+                                            <Label Text="{Binding StClass}" TextColor="#757575" FontSize="12" Margin="10,-5,0,0" />
+                                        </StackLayout>
+                                        <Label Grid.Column="2" Text="{Binding RankingPoint}" TextColor="Red" FontSize="32" HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>

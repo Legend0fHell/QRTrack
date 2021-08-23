@@ -46,7 +46,7 @@ namespace QRdangcap
 
         private async void LoginProcedure(object sender, System.EventArgs e)
         {
-            LoginStat.Text = "Đang đăng nhập...";
+            LoginStat.Text = "Đang đăng nhập... (1/6)";
             AnimateField();
             void AnimateField()
             {
@@ -180,9 +180,12 @@ namespace QRdangcap
         private async void LoginSucceeded()
         {
             isInstantLogin = 0;
-            LoginStat.Text = "Đang lấy dữ liệu của trường...";
+            LoginStat.Text = "Đang tải dữ liệu của trường... (2/6)";
             await instance.CheckUserTableExist();
+            LoginStat.Text = "Đang tải dữ liệu của trường... (3/6)";
             UserData.NoUserRanked = await instance.GetGlobalUserRanking();
+            LoginStat.Text = "Đang tải dữ liệu của trường... (4/6)";
+            await instance.GetGlobalLogStat();
             var model = new FeedbackModel()
             {
                 Mode = "18",
@@ -197,7 +200,7 @@ namespace QRdangcap
             UserData.SchoolLat = response2.Latitude;
             UserData.SchoolLon = response2.Longitude;
             UserData.SchoolDist = response2.Distance;
-            LoginStat.Text = "Đang cập nhật vị trí...";
+            LoginStat.Text = "Đang cập nhật vị trí... (5/6)";
             GlobalVariables.IsGPSRequired = true;
             await instance.UpdateCurLocation();
             UserData.StartTime = response2.StartTime;
@@ -212,9 +215,9 @@ namespace QRdangcap
                 UserData.IsUserLogin = 0;
                 UserData.IsTodayOff = true;
             }
-            LoginStat.Text = "Đang kiểm tra cập nhật mới...";
+            LoginStat.Text = "Đang kiểm tra cập nhật mới... (6/6)";
             instance.CheckUpdates();
-            LoginStat.Text = "Đăng nhập thành công!";
+            LoginStat.Text = "Đăng nhập thành công! (6/6)";
             Entry_Username.Text = "";
             Entry_Password.Text = "";
             Entry_Username.IsReadOnly = false;

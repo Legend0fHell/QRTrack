@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
 using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
+using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using Xamarin.Forms;
 using ZXing.Net.Mobile.Forms;
@@ -14,7 +17,7 @@ namespace QRdangcap
     {
         public static HttpClient client = new HttpClient();
         public RetrieveAllUserDb instance = new RetrieveAllUserDb();
-
+        public ObservableCollection<UserListForm> Leaderboard { get; set; }
         public MainPage()
         {
             InitializeComponent();
@@ -47,6 +50,10 @@ namespace QRdangcap
             Details.Text = "Lớp " + UserData.StudentClass + " - " + UserData.SchoolName;
             UserRankingPointLbl.Text = UserData.UserRankingPoint.ToString();
             UserRankingLbl.Text = UserData.UserRanking.ToString() + "/" + UserData.NoUserRanked;
+            SQLiteConnection db = new SQLiteConnection(GlobalVariables.localUserDatabasePath);
+            Leaderboard = new ObservableCollection<UserListForm>(db.Table<UserListForm>().ToList().OrderByDescending(x => x.RankingPoint).Take(10));
+            LeaderboardView.ItemsSource = Leaderboard;
+            db.Dispose();
             if (UserData.StudentPriv == 0) Priv.Text = "Học sinh";
             else if (UserData.StudentPriv == 1) Priv.Text = "Xung kích";
             else if (UserData.StudentPriv == 2) Priv.Text = "Giáo viên";
@@ -183,6 +190,7 @@ namespace QRdangcap
                             if (response.Status == "SUCCESS")
                             {
                                 instance.Firebase_SendLog(UserData.StudentIdDatabase, "NONE", false, false);
+                                UserData.NoUserRanked = await instance.GetGlobalUserRanking();
                                 await DisplayAlert("Điểm danh thành công!", Reason, "OK");
                             }
                             else
@@ -230,7 +238,7 @@ namespace QRdangcap
 
         private void C11_Tapped(object sender, EventArgs e)
         {
-            DependencyService.Get<IToast>().ShowShort("Chức năng sắp ra mắt");
+            Navigation.PushAsync(new LeaderboardFull());
         }
 
         private async void C12_Tapped(object sender, EventArgs e)
@@ -267,13 +275,9 @@ namespace QRdangcap
             DependencyService.Get<IToast>().ShowShort("Chức năng sắp ra mắt");
         }
 
-        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        public async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            DependencyService.Get<IToast>().ShowShort("Đang cập nhật xếp hạng..");
-            UserData.NoUserRanked = await instance.GetGlobalUserRanking();
-            UserRankingPointLbl.Text = UserData.UserRankingPoint.ToString();
-            UserRankingLbl.Text = UserData.UserRanking.ToString() + "/" + UserData.NoUserRanked;
-            DependencyService.Get<IToast>().ShowShort("Cập nhật xếp hạng thành công!");
+            await Navigation.PushAsync(new LeaderboardFull());
         }
     }
 }
