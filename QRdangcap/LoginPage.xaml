@@ -17,7 +17,7 @@
                 <StackLayout HorizontalOptions="Center" VerticalOptions="StartAndExpand" Margin="0,70,0,0">
                     <Image Source="ResourcesImg/logo.jpg" HeightRequest="150" WidthRequest="150" />
                 </StackLayout>
-                <Label Margin="40,290,40,0" FontSize="Subtitle" FontAttributes="Bold" x:Name="LoginStat" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" TextColor="White"/>
+                <Label Margin="40,290,40,0" FontSize="Subtitle" FontAttributes="Bold" x:Name="LoginStat" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" TextColor="White"/>
                 <StackLayout Margin="10,170,10,0">
                     <StackLayout Margin="40,90,40,0" x:Name="EntryField">
                         <inputLayout:SfTextInputLayout  Hint="Tài khoản"
@@ -53,8 +53,8 @@
             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="10,0,10,20">
                 <Button x:Name="InstantLogin2" Text="Dev: InstantLogin" FontSize="Subtitle" BackgroundColor="Transparent" BorderColor="White" 
                                 BorderWidth="1" TextColor="White" CornerRadius="30" Clicked="InstantLoginProcedureBypass" HeightRequest="43" Margin="15,-10,15,3"/>
-                    <Label Text="Hệ thống Điểm danh Học sinh CYB - Bản Thử nghiệm" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  TextColor="#c9c9c9" />
-                <Label x:Name="ClientVer" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  TextColor="#c9c9c9" />
+                <Label Text="Hệ thống Điểm danh Học sinh CYB - Bản Thử nghiệm" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"  TextColor="#c9c9c9" />
+                <Label x:Name="ClientVer" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"  TextColor="#c9c9c9" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

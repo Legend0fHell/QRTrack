@@ -60,7 +60,6 @@ namespace QRdangcap
                                     {
                                         ViewModel.LogListFirebase.Insert(StartingPoint, x.Object);
                                         ++cntLoaded;
-                                        
                                     }
                                 }
                                 else

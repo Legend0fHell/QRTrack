@@ -206,12 +206,12 @@
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
                                         <StackLayout>
-                                            <Label Text="{Binding ClrNoSt}" TextColor="Black" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                            <Label Text="{Binding ClrOnTime}" TextColor="Green" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                            <Label Text="{Binding ClrLateTime}" TextColor="Orange" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                            <Label Text="{Binding ClrAbsent}" TextColor="Magenta" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                            <Label Text="{Binding ClrNotYet}" TextColor="Red" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                            <Label Text="{Binding ClrName}" TextColor="#7D7D7D" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding ClrNoSt}" TextColor="Black" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                            <Label Text="{Binding ClrOnTime}" TextColor="Green" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                            <Label Text="{Binding ClrLateTime}" TextColor="Orange" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                            <Label Text="{Binding ClrAbsent}" TextColor="Magenta" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                            <Label Text="{Binding ClrNotYet}" TextColor="Red" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                            <Label Text="{Binding ClrName}" TextColor="#7D7D7D" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                                         </StackLayout>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>

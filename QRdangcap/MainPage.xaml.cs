@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using QRdangcap.DatabaseModel;
+﻿using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using SQLite;
 using System;
@@ -7,7 +6,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Net.Http;
 using Xamarin.Forms;
 using ZXing.Net.Mobile.Forms;
 
@@ -15,9 +13,9 @@ namespace QRdangcap
 {
     public partial class MainPage : ContentPage
     {
-        public static HttpClient client = new HttpClient();
         public RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public ObservableCollection<UserListForm> Leaderboard { get; set; }
+
         public MainPage()
         {
             InitializeComponent();
@@ -34,6 +32,7 @@ namespace QRdangcap
                 return true;
             });
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -43,6 +42,7 @@ namespace QRdangcap
                 UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
             }
         }
+
         public void InitStaticText()
         {
             // Limit is 14 characters.
@@ -149,7 +149,7 @@ namespace QRdangcap
                         async void LocationTmpUpdating()
                         {
                             await instance.UpdateCurLocation();
-                            if(UserData.IsLastTimeMock)
+                            if (UserData.IsLastTimeMock)
                             {
                                 await DisplayAlert("Điểm danh thất bại!", "Phát hiện GPS đang bị làm giả!", "OK");
                             }
@@ -158,21 +158,15 @@ namespace QRdangcap
                     }
                     else
                     {
-                        var model = new FeedbackModel()
-                        {
-                            Mode = "2",
-                            Contents = QRRandCode,
-                            Contents2 = UserData.StudentIdDatabase.ToString(),
-                        };
-                        var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-                        var jsonString = JsonConvert.SerializeObject(model);
-                        var requestContent = new StringContent(jsonString);
                         SendData();
                         async void SendData()
                         {
-                            var resultQR = await client.PostAsync(uri, requestContent);
-                            var resultContent = await resultQR.Content.ReadAsStringAsync();
-                            var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
+                            ResponseModel response = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
+                            {
+                                Mode = "2",
+                                Contents = QRRandCode,
+                                Contents2 = UserData.StudentIdDatabase.ToString(),
+                            });
                             string Reason = "";
                             if (response.Message1 == 1)
                             {
@@ -216,9 +210,9 @@ namespace QRdangcap
             await instance.RetrieveAllUserDatabase();
         }
 
-        private void C00_Tapped(object sender, EventArgs e)
+        private async void C00_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new LocalLogHistory());
+            await Navigation.PushAsync(new LocalLogHistory());
         }
 
         private void C01_Tapped(object sender, EventArgs e)
@@ -236,9 +230,9 @@ namespace QRdangcap
             await Shell.Current.GoToAsync($"//main/RealStats");
         }
 
-        private void C11_Tapped(object sender, EventArgs e)
+        private async void C11_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new LeaderboardFull());
+            await Navigation.PushAsync(new LeaderboardFull());
         }
 
         private async void C12_Tapped(object sender, EventArgs e)
@@ -246,30 +240,31 @@ namespace QRdangcap
             await Shell.Current.GoToAsync($"//main/Other");
         }
 
-        private void C20_Tapped(object sender, EventArgs e)
+        private async void C20_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new GenQR());
+            await Navigation.PushAsync(new GenQR());
         }
 
-        private void C21_Tapped(object sender, EventArgs e)
+        private async void C21_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new SendAbsent());
+            await Navigation.PushAsync(new SendAbsent());
         }
 
-        private void C22_Tapped(object sender, EventArgs e)
+        private async void C22_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new AbsentLog());
+            await Navigation.PushAsync(new AbsentLog());
         }
 
-        private void C30_Tapped(object sender, EventArgs e)
+        private async void C30_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new RestDay());
+            await Navigation.PushAsync(new RestDay());
         }
 
-        private void C31_Tapped(object sender, EventArgs e)
+        private async void C31_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new Stats());
+            await Navigation.PushAsync(new Stats());
         }
+
         private void C32_Tapped(object sender, EventArgs e)
         {
             DependencyService.Get<IToast>().ShowShort("Chức năng sắp ra mắt");

@@ -10,7 +10,7 @@
                     <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="70" VerticalOptions="Start">
                         <StackLayout Margin="10,5,10,0">
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                                <Label Text="ID Biên bản:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                                <Label Text="ID Biên bản:" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                                 <Label x:Name="ChoseLogId" FontSize="18" LineBreakMode="HeadTruncation"/>
                             </StackLayout>
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
@@ -22,7 +22,7 @@
                     </Frame>
                     <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="190" VerticalOptions="Start">
                         <StackLayout Margin="10,0,10,0">
-                            <Label Text="NỘI DUNG:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,5,0,-10"/>
+                            <Label Text="NỘI DUNG:" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,5,0,-10"/>
                             <StackLayout Orientation="Horizontal" Spacing="10">
                                 <Label Text="Từ ngày: " FontSize="20" VerticalOptions="Center"/>
                                 <DatePicker x:Name="FromDate" 
@@ -39,7 +39,7 @@
                                     MinimumWidthRequest="300" 
                                     HorizontalOptions="FillAndExpand"/>
                             </StackLayout>
-                            <Label Text="CẢNH BÁO: Nội dung điểm danh nằm trong khoảng thời gian này sẽ bị ghi đè và không thể khôi phục lại." HorizontalOptions="CenterAndExpand" FontSize="15" />
+                            <Label Text="CẢNH BÁO: Nội dung điểm danh nằm trong khoảng thời gian này sẽ bị ghi đè và không thể khôi phục lại." HorizontalTextAlignment="Center" FontSize="15" />
                         </StackLayout>
                     </Frame>
                     <Grid Margin="10,5,10,0">

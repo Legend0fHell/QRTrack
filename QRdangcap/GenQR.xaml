@@ -8,8 +8,8 @@
         <RefreshView x:Name ="RefreshingView">
             <ScrollView>
                 <StackLayout x:Name="stackRenderQRCode" Margin="10,5,10,0">
-                    <Label x:Name="randomQRCode" HorizontalOptions="CenterAndExpand" FontSize="Large" FontAttributes="Bold"  TextColor="Black"/>
-                    <Label x:Name="encodedQRCode" HorizontalOptions="CenterAndExpand" FontSize="Medium" TextColor="Black"/>
+                    <Label x:Name="randomQRCode" HorizontalTextAlignment="Center" FontSize="Large" FontAttributes="Bold"  TextColor="Black"/>
+                    <Label x:Name="encodedQRCode" HorizontalTextAlignment="Center" FontSize="Medium" TextColor="Black"/>
                     <Entry x:Name="entryQRCode" Placeholder="Nội dung cần tạo..." />
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,0,0,-20">
                         <Button Text="Tạo QR" Clicked="Button_Clicked"/>

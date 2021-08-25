@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -24,6 +22,7 @@ namespace QRdangcap
         public static FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
         public RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public IDisposable Subscriber;
+
         public ReportGen()
         {
             InitializeComponent();
@@ -44,7 +43,8 @@ namespace QRdangcap
             string ThisId3IdBegin = ThisId3Id + ((new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0).Subtract(new DateTime(1970, 1, 1)).Ticks) / TimeSpan.TicksPerMillisecond).ToString();
             string ThisId3IdEnd = ThisId3Id + ((new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59, 999).Subtract(new DateTime(1970, 1, 1)).Ticks) / TimeSpan.TicksPerMillisecond).ToString();
             Subscriber = fc.Child("Logging").OrderBy("Id3Id").StartAt(ThisId3IdBegin).EndAt(ThisId3IdEnd).AsObservable<LogListForm>().Subscribe(
-            x => {
+            x =>
+            {
                 System.Diagnostics.Debug.WriteLine($" Firebase update): {x.EventType} - {x.Object.StId}");
                 if (x.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate && !x.Object.Mistake.Equals("NONE"))
                 {
@@ -62,7 +62,6 @@ namespace QRdangcap
         private void TreeView_Loaded(object sender, Syncfusion.XForms.TreeView.TreeViewLoadedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("Loaded");
-            
         }
     }
 }

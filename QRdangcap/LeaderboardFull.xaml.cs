@@ -2,11 +2,8 @@
 using QRdangcap.GoogleDatabase;
 using SQLite;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -18,15 +15,18 @@ namespace QRdangcap
     {
         public ObservableCollection<UserListForm> Leaderboard { get; set; }
         public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+
         public LeaderboardFull()
         {
             InitializeComponent();
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
             refreshAll.IsRefreshing = true;
         }
+
         public void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             refreshAll.IsRefreshing = true;

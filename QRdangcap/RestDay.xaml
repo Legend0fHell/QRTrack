@@ -52,7 +52,7 @@
                     <Button Text="Đặt" Clicked="Button_Clicked_1" Margin="10,0,10,0"/>
                 </StackLayout>
             </Frame>
-            
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

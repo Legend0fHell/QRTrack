@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json;
-using QRdangcap.DatabaseModel;
+﻿using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using System;
 using System.Linq;
-using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,7 +10,7 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AbsentLog : ContentPage
     {
-        public static HttpClient client = new HttpClient();
+        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
 
         public AbsentLog()
         {
@@ -27,24 +25,11 @@ namespace QRdangcap
 
         private async void RetrieveAbsent()
         {
-            var model = new FeedbackModel()
+            AbsentLogForm[] response = (AbsentLogForm[])await instance.HttpPolly(new FeedbackModel()
             {
                 Mode = "17",
-            };
-            var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            var jsonString = JsonConvert.SerializeObject(model);
-            var requestContent = new StringContent(jsonString);
-            var resultQR = await client.PostAsync(uri, requestContent);
-            var resultContent = await resultQR.Content.ReadAsStringAsync();
-            try
-            {
-                var response = JsonConvert.DeserializeObject<AbsentLogForm[]>(resultContent);
-                LogList.ItemsSource = response.Reverse();
-            }
-            catch (JsonReaderException)
-            {
-                DependencyService.Get<IToast>().ShowShort("Không có dữ liệu!");
-            }
+            }, true, "AbsentLogForm[]", 5, "Không có dữ liệu!");
+            LogList.ItemsSource = response.Reverse();
             refreshAll.IsRefreshing = false;
         }
 

@@ -1,11 +1,9 @@
 ﻿using Firebase.Database;
 using Firebase.Database.Query;
-using Newtonsoft.Json;
 using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using SQLite;
 using System.Linq;
-using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,8 +13,8 @@ namespace QRdangcap
     public partial class LogChanger : ContentPage
     {
         public LogListForm globalLogList = new LogListForm();
+        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
-        public static HttpClient client = new HttpClient();
         public SQLiteConnection db = new SQLiteConnection(GlobalVariables.localLogHistDatabasePath);
 
         public LogChanger(LogListForm logList)
@@ -35,7 +33,6 @@ namespace QRdangcap
 
         public async void Button_Clicked_1(object sender, System.EventArgs e)
         {
-            RetrieveAllUserDb instance = new RetrieveAllUserDb();
             if (string.IsNullOrEmpty(StMistake.Text) || string.IsNullOrWhiteSpace(StMistake.Text))
             {
                 StMistake.Text = "NONE";
@@ -54,21 +51,15 @@ namespace QRdangcap
             };
             string QueryName = ChoseString.Text;
             await fc.Child("Logging").Child(globalLogList.Keys).PutAsync(NewLog);
-            var model = new FeedbackModel()
+            _ = await instance.HttpPolly(new FeedbackModel()
             {
                 Mode = "13",
                 Contents = globalLogList.StId.ToString(),
                 Contents2 = globalLogList.LoginDate.DayOfYear.ToString(),
                 Contents3 = OnTime.IsChecked ? "1" : "2",
                 Contents4 = StMistake.Text.Equals("NONE") ? "0" : (StMistake.Text.Count(x => x.Equals(';')) + 1).ToString(),
-            };
-            db.CreateTable<LogListForm>();
-            var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            var jsonString = JsonConvert.SerializeObject(model);
-            var requestContent = new StringContent(jsonString);
-            _ = await client.PostAsync(uri, requestContent);
+            }, false);
             DependencyService.Get<IToast>().ShowShort("Sửa thành công: " + QueryName);
-
             await Navigation.PopAsync();
         }
 
@@ -76,18 +67,14 @@ namespace QRdangcap
         {
             string QueryName = ChoseString.Text;
             await fc.Child("Logging").Child(globalLogList.Keys).DeleteAsync();
-            var model = new FeedbackModel()
+            _ = await instance.HttpPolly(new FeedbackModel()
             {
                 Mode = "13",
                 Contents = globalLogList.StId.ToString(),
                 Contents2 = globalLogList.LoginDate.DayOfYear.ToString(),
                 Contents3 = "",
                 Contents4 = "",
-            };
-            var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            var jsonString = JsonConvert.SerializeObject(model);
-            var requestContent = new StringContent(jsonString);
-            _ = await client.PostAsync(uri, requestContent);
+            }, false);
             DependencyService.Get<IToast>().ShowShort("Xóa thành công: " + QueryName);
             await Navigation.PopAsync();
         }

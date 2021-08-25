@@ -4,7 +4,6 @@ using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing.Net.Mobile.Forms;
@@ -14,7 +13,6 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SubmitForm : ContentPage
     {
-        public static HttpClient client = new HttpClient();
         private int UserIDRead = 0;
         public SQLiteConnection db = new SQLiteConnection(GlobalVariables.localLogHistDatabasePath);
 

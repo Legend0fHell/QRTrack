@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,19 +12,21 @@ using Xamarin.Forms.Xaml;
 namespace QRdangcap
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    class BarConverter : IValueConverter
+    internal class BarConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
             switch (value)
             {
                 case 1:
                     return Brush.Green;
+
                 case 2:
                     return Brush.Orange;
+
                 case 3:
                     return Brush.Magenta;
+
                 default:
                     return Brush.Red;
             }
@@ -45,6 +46,7 @@ namespace QRdangcap
         public int globalSortStrat = -1;
         public string globalClrCheck = "";
         public bool ForcedReload { get; set; }
+
         public DClassInfo(string Clr)
         {
             InitializeComponent();
@@ -57,7 +59,7 @@ namespace QRdangcap
             string[] SortingMode = { "Tên", "ID" };
             globalClrCheck = Clr;
             ChoseClass.Text = Clr;
-            FilterMode.ItemsSource = new List<string>() { "Tất cả", "HS Chưa ĐD" , "HS Đúng giờ", "HS Muộn giờ", "HS Báo nghỉ"};
+            FilterMode.ItemsSource = new List<string>() { "Tất cả", "HS Chưa ĐD", "HS Đúng giờ", "HS Muộn giờ", "HS Báo nghỉ" };
             FilterMode.SelectedIndex = 0;
             SortMode.ItemsSource = SortingMode.ToList();
             SortMode.SelectedIndex = 1;
@@ -123,7 +125,6 @@ namespace QRdangcap
                 ForcedReload = true;
                 RefreshAll.IsRefreshing = true;
             }
-
         }
     }
 }

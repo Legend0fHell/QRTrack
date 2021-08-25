@@ -1,8 +1,6 @@
-﻿using Firebase.Database.Query;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using QRdangcap.GoogleDatabase;
 using System;
-using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -46,8 +44,6 @@ namespace QRdangcap
     public partial class FirebaseLogTesting : ContentPage
     {
         public RetrieveAllUserDb instance = new RetrieveAllUserDb();
-        public static HttpClient client = new HttpClient();
-
         public FirebaseLogTesting()
         {
             InitializeComponent();

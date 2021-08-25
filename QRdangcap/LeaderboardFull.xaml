@@ -21,18 +21,18 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <StackLayout Grid.Column="0">
-                            <Label Text="Điểm" HorizontalOptions="Center" TextColor="Black"/>
-                            <Label x:Name="UserRankingPointLbl" Text="727" HorizontalOptions="Center" TextColor="Red" FontAttributes="Bold" FontSize="30" Margin="0,-7,0,0"/>
+                            <Label Text="Điểm" HorizontalTextAlignment="Center" TextColor="Black"/>
+                            <Label x:Name="UserRankingPointLbl" Text="727" HorizontalTextAlignment="Center" TextColor="Red" FontAttributes="Bold" FontSize="30" Margin="0,-7,0,0"/>
                         </StackLayout>
                         <Line Grid.Column="1" Y2="50" Stroke="#757575" VerticalOptions="Center" HorizontalOptions="Center"/>
                         <StackLayout Grid.Column="2">
-                            <Label Text="Hạng Cá nhân" HorizontalOptions="Center" TextColor="Black"/>
-                            <Label x:Name="UserRankingLbl" Text="727/1337" HorizontalOptions="Center" TextColor="Red" FontAttributes="Bold" FontSize="30" Margin="0,-7,0,0"/>
+                            <Label Text="Hạng Cá nhân" HorizontalTextAlignment="Center" TextColor="Black"/>
+                            <Label x:Name="UserRankingLbl" Text="727/1337" HorizontalTextAlignment="Center" TextColor="Red" FontAttributes="Bold" FontSize="30" Margin="0,-7,0,0"/>
                         </StackLayout>
                         <Line Grid.Column="3" Y2="50" Stroke="#757575" VerticalOptions="Center" HorizontalOptions="Center"/>
                         <StackLayout Grid.Column="4">
-                            <Label Text="Hạng Lớp" HorizontalOptions="Center" TextColor="Black"/>
-                            <Label x:Name="UserClassRanking" Text="N/A" HorizontalOptions="Center" TextColor="Red" FontAttributes="Bold" FontSize="30" Margin="0,-7,0,0"/>
+                            <Label Text="Hạng Lớp" HorizontalTextAlignment="Center" TextColor="Black"/>
+                            <Label x:Name="UserClassRanking" Text="N/A" HorizontalTextAlignment="Center" TextColor="Red" FontAttributes="Bold" FontSize="30" Margin="0,-7,0,0"/>
                         </StackLayout>
                     </Grid>
                     <CollectionView x:Name="LeaderboardView"
@@ -47,12 +47,12 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Text="{Binding Ranking, StringFormat='#{0}'}" TextColor="Orange" FontSize="30" FontAttributes="Bold" VerticalOptions="StartAndExpand" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="0" Text="{Binding Ranking, StringFormat='#{0}'}" TextColor="Orange" FontSize="30" FontAttributes="Bold" VerticalOptions="StartAndExpand" HorizontalTextAlignment="Center"/>
                                         <StackLayout Grid.Column="1">
                                             <Label Text="{Binding StName}" TextColor="Black" FontSize="16" FontAttributes="Bold" Margin="10,5,0,0" LineBreakMode="HeadTruncation" />
                                             <Label Text="{Binding StClass}" TextColor="#757575" FontSize="12" Margin="10,-5,0,0" />
                                         </StackLayout>
-                                        <Label Grid.Column="2" Text="{Binding RankingPoint}" TextColor="Red" FontSize="32" HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
+                                        <Label Grid.Column="2" Text="{Binding RankingPoint}" TextColor="Red" FontSize="32" HorizontalTextAlignment="Start" FontAttributes="Bold"/>
                                     </Grid>
                                 </Frame>
                             </DataTemplate>

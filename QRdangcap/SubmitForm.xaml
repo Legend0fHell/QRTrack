@@ -13,14 +13,14 @@
         <StackLayout BackgroundColor="#f2f4f6">
             <Frame HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="100" VerticalOptions="Start">
                 <StackLayout Margin="10,0,10,5">
-                    <Label x:Name="DeviceClock" HorizontalOptions="CenterAndExpand" FontSize="55" Margin="0,0,0,0" />
-                    <Label x:Name="DeviceDate" Text=" " HorizontalOptions="CenterAndExpand" VerticalOptions="Start" FontSize="22" Margin="0,-15,0,0" />
+                    <Label x:Name="DeviceClock" HorizontalTextAlignment="Center" FontSize="55" Margin="0,0,0,0" />
+                    <Label x:Name="DeviceDate" Text=" " HorizontalTextAlignment="Center" VerticalOptions="Start" FontSize="22" Margin="0,-15,0,0" />
                 </StackLayout>
             </Frame>
             <Frame x:Name="Lbl_Availability" IsVisible="true" Margin="10,5,10,0" HasShadow="True" CornerRadius="10" Padding="0" HeightRequest="90" VerticalOptions="Start">
                 <StackLayout>
-                    <Label Text="Chức năng này không khả dụng." HorizontalOptions="CenterAndExpand" VerticalOptions="Start" FontSize="22" Margin="0,0,0,0" />
-                    <Label Text="Kéo xuống để thử lại." HorizontalOptions="CenterAndExpand" VerticalOptions="Start" FontSize="18" Margin="0,0,0,0" />
+                    <Label Text="Chức năng này không khả dụng." HorizontalTextAlignment="Center" VerticalOptions="Start" FontSize="22" Margin="0,0,0,0" />
+                    <Label Text="Kéo xuống để thử lại." HorizontalTextAlignment="Center" VerticalOptions="Start" FontSize="18" Margin="0,0,0,0" />
                 </StackLayout>
             </Frame>
             <StackLayout x:Name="FormSubmitting" Margin="10,5,10,0" IsVisible="false">
@@ -29,7 +29,7 @@
                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                     </Frame.GestureRecognizers>
                     <StackLayout>
-                        <Label Text="CHỌN HỌC SINH:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,5,0,-10" />
+                        <Label Text="CHỌN HỌC SINH:" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,5,0,-10" />
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -64,7 +64,7 @@
                 </Frame>
                 <Frame HasShadow="True" CornerRadius="10" Padding="0" HeightRequest="200" VerticalOptions="Start">
                     <StackLayout Margin="10,0">
-                        <Label Text="LỖI (NẾU CÓ):" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,5,0,0" />
+                        <Label Text="LỖI (NẾU CÓ):" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,5,0,0" />
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />

@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
-using QRdangcap.DatabaseModel;
+﻿using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Xamanimation;
 using Xamarin.Forms;
@@ -12,8 +10,8 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        public static HttpClient client = new HttpClient();
         public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+
         public LoginPage()
         {
             InitializeComponent();
@@ -104,18 +102,12 @@ namespace QRdangcap
 
             if (Entry_Username.Text.Length > 0 && Entry_Password.Text.Length > 0)
             {
-                var model = new FeedbackModel()
+                ResponseModel response = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
                 {
                     Mode = "0",
                     Contents = Entry_Username.Text,
                     Contents2 = Entry_Password.Text,
-                };
-                var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-                var jsonString = JsonConvert.SerializeObject(model);
-                var requestContent = new StringContent(jsonString);
-                var result = await client.PostAsync(uri, requestContent);
-                var resultContent = await result.Content.ReadAsStringAsync();
-                var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
+                });
                 if (response.Status == "SUCCESS")
                 {
                     if (response.Message == "OK")
@@ -186,17 +178,11 @@ namespace QRdangcap
             UserData.NoUserRanked = await instance.GetGlobalUserRanking();
             LoginStat.Text = "Đang tải dữ liệu của trường... (4/6)";
             await instance.GetGlobalLogStat();
-            var model = new FeedbackModel()
+            ResponseModel response2 = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
             {
                 Mode = "18",
                 Contents = UserData.StudentIdDatabase.ToString(),
-            };
-            var jsonString = JsonConvert.SerializeObject(model);
-            var requestContent = new StringContent(jsonString);
-            var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            var resultQR2 = await client.PostAsync(uri, requestContent);
-            var resultContent2 = await resultQR2.Content.ReadAsStringAsync();
-            var response2 = JsonConvert.DeserializeObject<ResponseModel>(resultContent2);
+            });
             UserData.SchoolLat = response2.Latitude;
             UserData.SchoolLon = response2.Longitude;
             UserData.SchoolDist = response2.Distance;

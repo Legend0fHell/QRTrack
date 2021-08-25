@@ -1,11 +1,8 @@
-﻿using Newtonsoft.Json;
-using QRdangcap.DatabaseModel;
+﻿using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using SQLite;
 using Syncfusion.XForms.PopupLayout;
 using System;
-using System.ComponentModel;
-using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,7 +11,9 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Other : ContentPage
     {
+        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public string _CurAcc = "Không có thông tin!";
+
         public string CurAcc
         {
             get => _CurAcc;
@@ -24,20 +23,23 @@ namespace QRdangcap
                 OnPropertyChanged(nameof(CurAcc));
             }
         }
+
         public Other()
         {
             InitializeComponent();
             // OnAppearing
-            
+
             ClientVerText.Detail = GlobalVariables.ClientVersion + " (dựng lúc: " + GlobalVariables.ClientVersionDate.ToString("G") + ")";
             IsGPSRequired.On = true;
             BindingContext = this;
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
             CurAcc = "Tên: " + UserData.StudentFullName + ", ID: " + UserData.StudentIdDatabase.ToString();
         }
+
         private async void GenQR_Tapped(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new GenQR());
@@ -89,14 +91,14 @@ namespace QRdangcap
             OverwritePopup.PopupView.PopupStyle.OverlayOpacity = 0.35;
             OverwritePopup.BackgroundColor = new Color(230, 230, 230);
             OverwritePopup.PopupView.HeightRequest = 320;
-            Entry InitPass = new Entry { Placeholder = "Nhập mật khẩu cũ...", HorizontalOptions=LayoutOptions.FillAndExpand, IsPassword = true };
+            Entry InitPass = new Entry { Placeholder = "Nhập mật khẩu cũ...", HorizontalOptions = LayoutOptions.FillAndExpand, IsPassword = true };
             Entry NewPass1 = new Entry { Placeholder = "Nhập mật khẩu mới...", HorizontalOptions = LayoutOptions.FillAndExpand, IsPassword = true };
             Entry NewPass2 = new Entry { Placeholder = "Nhập lại mật khẩu mới...", HorizontalOptions = LayoutOptions.FillAndExpand, IsPassword = true };
             DataTemplate contentTemplateView = new DataTemplate(() =>
             {
                 StackLayout popupContent = new StackLayout()
                 {
-                    Margin = new Thickness(10,10),
+                    Margin = new Thickness(10, 10),
                     Children =
                     {
                         new Label {Text = "Nhập mật khẩu cũ:", Margin = new Thickness(10,0,0,-10)},
@@ -118,20 +120,13 @@ namespace QRdangcap
             {
                 if (NewPass1.Text != null && NewPass1.Text.Equals(NewPass2.Text))
                 {
-                    var client = new HttpClient();
-                    var model = new FeedbackModel()
+                    ResponseModel response = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
                     {
                         Mode = "12",
                         Contents = UserData.StudentIdDatabase.ToString(),
                         Contents2 = NewPass1.Text,
                         Contents3 = InitPass.Text
-                    };
-                    var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-                    var jsonString = JsonConvert.SerializeObject(model);
-                    var requestContent = new StringContent(jsonString);
-                    var result = await client.PostAsync(uri, requestContent);
-                    var resultContent = await result.Content.ReadAsStringAsync();
-                    var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
+                    });
                     if (response.Status.Equals("SUCCESS"))
                     {
                         DependencyService.Get<IToast>().ShowShort("Đổi mật khẩu thành công.");
@@ -151,7 +146,6 @@ namespace QRdangcap
             {
                 return;
             }
-
         }
 
         private async void SendAbs_Tapped(object sender, EventArgs e)

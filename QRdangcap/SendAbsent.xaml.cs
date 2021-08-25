@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using QRdangcap.DatabaseModel;
+﻿using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using System;
 using System.Collections.Generic;
@@ -15,6 +14,7 @@ namespace QRdangcap
     {
         private int UserIDRead = 0;
         public static HttpClient client = new HttpClient();
+        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
 
         public SendAbsent()
         {
@@ -47,7 +47,6 @@ namespace QRdangcap
                     bool invalidDetect = false;
                     UserIDRead = 0;
                     string decodedQRCode = "";
-                    RetrieveAllUserDb instance = new RetrieveAllUserDb();
                     decodedQRCode = instance.Base64Decode(result.Text);
                     for (int i = 0; i < decodedQRCode.Length; ++i)
                     {
@@ -98,20 +97,14 @@ namespace QRdangcap
             }
             string QueryName = ChoseString.Text;
             DependencyService.Get<IToast>().ShowShort("Đang gửi: " + QueryName);
-            var model = new FeedbackModel()
+            ResponseModel response = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
             {
                 Mode = "4",
                 Contents = UserIDRead.ToString(),
                 ContentStartTime = FromDate.Date.DayOfYear,
                 ContentEndTime = ToDate.Date.DayOfYear,
                 Contents2 = UserData.StudentIdDatabase.ToString(),
-            };
-            var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            var jsonString = JsonConvert.SerializeObject(model);
-            var requestContent = new StringContent(jsonString);
-            var resultQR = await client.PostAsync(uri, requestContent);
-            var resultContent = await resultQR.Content.ReadAsStringAsync();
-            var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
+            });
             if (response.Status == "SUCCESS")
             {
                 DependencyService.Get<IToast>().ShowShort("OK: " + QueryName);

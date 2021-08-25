@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
-using QRdangcap.GoogleDatabase;
+﻿using QRdangcap.GoogleDatabase;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,7 +16,7 @@ namespace QRdangcap
     public partial class RestDay : ContentPage
     {
         public List<WeekItem> WeekList = new List<WeekItem>();
-        public static HttpClient client = new HttpClient();
+        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
 
         public RestDay()
         {
@@ -33,17 +31,11 @@ namespace QRdangcap
 
         private async void InitWeek()
         {
-            var model = new FeedbackModel()
+            ResponseModel response = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
             {
                 Mode = "14",
                 Contents = "1"
-            };
-            var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            var jsonString = JsonConvert.SerializeObject(model);
-            var requestContent = new StringContent(jsonString);
-            var result = await client.PostAsync(uri, requestContent);
-            var resultContent = await result.Content.ReadAsStringAsync();
-            var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
+            });
             string WeekStatus = response.Message;
             WeekStatus += WeekStatus[0];
             for (int i = 0; i < 7; ++i)
@@ -69,18 +61,12 @@ namespace QRdangcap
                 tmp += WeekList[i].IsChecked ? '1' : '0';
             }
             tmp = (WeekList[6].IsChecked ? '1' : '0') + tmp;
-            var model = new FeedbackModel()
+            ResponseModel response = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
             {
                 Mode = "14",
                 Contents = "2",
                 Contents2 = tmp
-            };
-            var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            var jsonString = JsonConvert.SerializeObject(model);
-            var requestContent = new StringContent(jsonString);
-            var result = await client.PostAsync(uri, requestContent);
-            var resultContent = await result.Content.ReadAsStringAsync();
-            var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
+            });
             if (response.Status == "SUCCESS")
             {
                 DependencyService.Get<IToast>().ShowShort("Thành công!");
@@ -101,20 +87,14 @@ namespace QRdangcap
                 return;
             }
             DependencyService.Get<IToast>().ShowShort("Đang đặt...");
-            var model = new FeedbackModel()
+            ResponseModel response = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
             {
                 Mode = "14",
                 Contents = "3",
                 Contents2 = SetMode.SelectedIndex.ToString(),
                 ContentStartTime = FromDate.Date.DayOfYear,
                 ContentEndTime = ToDate.Date.DayOfYear,
-            };
-            var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            var jsonString = JsonConvert.SerializeObject(model);
-            var requestContent = new StringContent(jsonString);
-            var resultQR = await client.PostAsync(uri, requestContent);
-            var resultContent = await resultQR.Content.ReadAsStringAsync();
-            var response = JsonConvert.DeserializeObject<ResponseModel>(resultContent);
+            });
             if (response.Status == "SUCCESS")
             {
                 DependencyService.Get<IToast>().ShowShort("Thành công!");

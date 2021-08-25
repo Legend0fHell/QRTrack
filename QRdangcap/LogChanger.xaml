@@ -10,18 +10,18 @@
                     <Frame HasShadow="True" CornerRadius="10" Margin="10,20,10,0" Padding="0" HeightRequest="70" VerticalOptions="Start">
                         <StackLayout Margin="10,5,10,0">
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                                <Label Text="ID Biên bản:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                                <Label Text="ID Biên bản:" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                                 <Label x:Name="ChoseLogId" FontSize="18" LineBreakMode="HeadTruncation" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                                <Label Text="Học sinh:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" MinimumWidthRequest="70" />
+                                <Label Text="Học sinh:" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" MinimumWidthRequest="70" />
                                 <Label x:Name="ChoseString" FontSize="18" LineBreakMode="HeadTruncation" />
                             </StackLayout>
                         </StackLayout>
                     </Frame>
                     <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="200" VerticalOptions="Start">
                         <StackLayout>
-                            <Label Text="BIÊN BẢN:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,5,0,-10" />
+                            <Label Text="BIÊN BẢN:" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,5,0,-10" />
                             <StackLayout Orientation="Horizontal" Margin="10,5,10,-10" VerticalOptions="Center">
                                 <Label Text="Lỗi:" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" MinimumWidthRequest="30" />
                                 <Entry x:Name="StMistake" FontSize="15" HorizontalOptions="FillAndExpand" IsSpellCheckEnabled="false" Placeholder="Điền lỗi..." />

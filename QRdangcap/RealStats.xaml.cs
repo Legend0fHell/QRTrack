@@ -1,12 +1,10 @@
-﻿using Newtonsoft.Json;
-using QRdangcap.DatabaseModel;
+﻿using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,10 +13,10 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RealStats : ContentPage
     {
-        public static HttpClient client = new HttpClient();
         private readonly Stopwatch excTime = new Stopwatch();
         public object MonthSelected { get; set; }
         public ObservableCollection<ChartForm> DoughnutSeriesData { get; set; }
+        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
 
         public RealStats()
         {
@@ -53,6 +51,7 @@ namespace QRdangcap
         }
 
         private int StOnTime = 0, StNum = 0, StLateTime = 0, StNotYet = 0, StAbsent = 0;
+
         // TODO: Config these button to work based on current mode.
         private void PrevDate_Clicked(object sender, EventArgs e)
         {
@@ -154,18 +153,12 @@ namespace QRdangcap
         {
             excTime.Reset();
             excTime.Start();
-            var model = new FeedbackModel()
+            List<ClassroomListForm[]> response = (List<ClassroomListForm[]>)await instance.HttpPolly(new FeedbackModel()
             {
                 Mode = "8",
                 ContentStartTime = StartTime,
                 ContentEndTime = EndTime
-            };
-            var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            var jsonString = JsonConvert.SerializeObject(model);
-            var requestContent = new StringContent(jsonString);
-            var result = await client.PostAsync(uri, requestContent);
-            var resultContent = await result.Content.ReadAsStringAsync();
-            var response = JsonConvert.DeserializeObject<List<ClassroomListForm[]>>(resultContent);
+            }, true, "List<ClassroomListForm[]>");
             if (response[0][0].ClrName.Equals("NoInfo"))
             {
                 Frame_Chart1.IsVisible = false;

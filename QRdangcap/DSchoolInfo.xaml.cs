@@ -1,10 +1,8 @@
-﻿using Newtonsoft.Json;
-using QRdangcap.DatabaseModel;
+﻿using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,7 +12,7 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DSchoolInfo : ContentPage
     {
-        public static HttpClient client = new HttpClient();
+        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public ObservableRangeCollection<ClassroomListForm> ItemsList { get; set; }
         public int globalSortStrat = -1;
         public int startDate = DateTime.Now.DayOfYear;
@@ -47,18 +45,12 @@ namespace QRdangcap
                 RefreshAll.IsRefreshing = false;
                 return;
             }
-            var model = new FeedbackModel()
+            List<ClassroomListForm[]> response = (List<ClassroomListForm[]>)await instance.HttpPolly(new FeedbackModel()
             {
                 Mode = "8",
                 ContentStartTime = startDate,
                 ContentEndTime = endDate
-            };
-            var uri = "https://script.google.com/macros/s/AKfycbz-788uVtNyd9408r92pHXnI6H4QfMVWrey6biV2zhdz60hoQauo1a4Y3YwuJuQ1UhKAg/exec";
-            var jsonString = JsonConvert.SerializeObject(model);
-            var requestContent = new StringContent(jsonString);
-            var result = await client.PostAsync(uri, requestContent);
-            var resultContent = await result.Content.ReadAsStringAsync();
-            var response = JsonConvert.DeserializeObject<List<ClassroomListForm[]>>(resultContent);
+            }, true, "List<ClassroomListForm[]>");
             classroomListForms = new List<ClassroomListForm>();
             for (int classes = response[0][0].ClrName.Equals("NoInfo") ? 1 : 0; classes < response[0].Count(); ++classes)
             {

@@ -4,7 +4,6 @@ using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
@@ -23,6 +22,7 @@ namespace QRdangcap
         public int intervalSkip = 30;
         public int queryStat = -1;
         public bool ForcedReload { get; set; }
+
         public QueryInfo()
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace QRdangcap
             {
                 await instance.CheckUserTableExist();
             }
-            
+
             refreshAll.IsRefreshing = true;
         }
 
@@ -120,6 +120,7 @@ namespace QRdangcap
             }
             myCollectionView.SelectedItem = null;
         }
+
         private async void LoginStatUpdate_Clicked(object sender, EventArgs e)
         {
             RetrieveAllUserDb instance = new RetrieveAllUserDb();

@@ -24,6 +24,7 @@ namespace QRdangcap
         public int cntLoaded = 0;
         public int Step = 10;
         public int ExpectLoadedLog { get; set; }
+
         public DUserInfo(UserListForm St)
         {
             InitializeComponent();
@@ -164,6 +165,7 @@ namespace QRdangcap
             if (!FirstTime) Subscriber.Dispose();
             UpdateLog();
         }
+
         private void LoadMoreData_Clicked(object sender, EventArgs e)
         {
             ExpectLoadedLog += Step;

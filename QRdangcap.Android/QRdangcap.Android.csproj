@@ -60,6 +60,8 @@
     <MandroidI18n />
     <AndroidSupportedAbis />
     <AndroidLinkTool>r8</AndroidLinkTool>
+    <AndroidLinkSkip>
+    </AndroidLinkSkip>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
