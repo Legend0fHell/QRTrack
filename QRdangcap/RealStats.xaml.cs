@@ -213,37 +213,46 @@ namespace QRdangcap
             DoughnutAllSchool.ItemsSource = DoughnutSeriesData;
             usrClassDesc.Text = "Lớp của bạn (" + UserData.StudentClass + ")";
             ClassroomListForm usrClass = classroomListForms.Find(x => x.ClrName.Equals(UserData.StudentClass));
-            series1.Label = "Lớp (" + usrClass.ClrNoSt + ")";
-            series2.Label = "Đúng giờ (" + usrClass.ClrOnTime + ")";
-            series3.Label = "Muộn giờ (" + usrClass.ClrLateTime + ")";
-            series4.Label = "Báo nghỉ (" + usrClass.ClrAbsent + ")";
-            series5.Label = "Chưa ĐD (" + usrClass.ClrNotYet + ")";
-            series1.ItemsSource = new ObservableCollection<ChartForm>()
+            if (usrClass != null)
             {
-                new ChartForm("Lớp", 0, usrClass.ClrNoSt),
-            };
-            series2.ItemsSource = new ObservableCollection<ChartForm>()
+                usrClassSub.IsVisible = false;
+                series1.Label = "Lớp (" + usrClass.ClrNoSt + ")";
+                series2.Label = "Đúng giờ (" + usrClass.ClrOnTime + ")";
+                series3.Label = "Muộn giờ (" + usrClass.ClrLateTime + ")";
+                series4.Label = "Báo nghỉ (" + usrClass.ClrAbsent + ")";
+                series5.Label = "Chưa ĐD (" + usrClass.ClrNotYet + ")";
+                series1.ItemsSource = new ObservableCollection<ChartForm>()
+                {
+                    new ChartForm("Lớp", 0, usrClass.ClrNoSt),
+                };
+                series2.ItemsSource = new ObservableCollection<ChartForm>()
+                {
+                    new ChartForm("Lớp", usrClass.ClrOnTime, usrClass.ClrNoSt),
+                };
+                series3.ItemsSource = new ObservableCollection<ChartForm>()
+                {
+                    new ChartForm("Lớp", usrClass.ClrLateTime, usrClass.ClrNoSt),
+                };
+                series4.ItemsSource = new ObservableCollection<ChartForm>()
+                {
+                    new ChartForm("Lớp", usrClass.ClrAbsent, usrClass.ClrNoSt),
+                };
+                series5.ItemsSource = new ObservableCollection<ChartForm>()
+                {
+                    new ChartForm("Lớp", usrClass.ClrNotYet, usrClass.ClrNoSt),
+                };
+            }
+            else
             {
-                new ChartForm("Lớp", usrClass.ClrOnTime, usrClass.ClrNoSt),
-            };
-            series3.ItemsSource = new ObservableCollection<ChartForm>()
-            {
-                new ChartForm("Lớp", usrClass.ClrLateTime, usrClass.ClrNoSt),
-            };
-            series4.ItemsSource = new ObservableCollection<ChartForm>()
-            {
-                new ChartForm("Lớp", usrClass.ClrAbsent, usrClass.ClrNoSt),
-            };
-            series5.ItemsSource = new ObservableCollection<ChartForm>()
-            {
-                new ChartForm("Lớp", usrClass.ClrNotYet, usrClass.ClrNoSt),
-            };
+                usrClassSub.IsVisible = true;
+            }
             ObservableCollection<ChartForm> ClassErrorList = new ObservableCollection<ChartForm>();
             for (int classes = 1; classes < response[0].Count(); ++classes)
             {
                 ClassErrorList.Add(new ChartForm(classroomListForms[classes].ClrName, classroomListForms[classes].ClrError, classroomListForms[classes].ClrNoSt));
             }
             ErrorRateSeries.ItemsSource = ClassErrorList.OrderByDescending(x => x.Value);
+
             refreshAll.IsRefreshing = false;
         }
 

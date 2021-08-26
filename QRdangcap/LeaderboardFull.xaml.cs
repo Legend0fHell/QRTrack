@@ -34,9 +34,14 @@ namespace QRdangcap
 
         private async void RefreshAll_Refreshing(object sender, EventArgs e)
         {
+            PersonalRanking.IsVisible = true;
+            if (UserData.IsHidden)
+            {
+                PersonalRanking.IsVisible = false;
+            }
             UserData.NoUserRanked = await instance.GetGlobalUserRanking();
             SQLiteConnection db = new SQLiteConnection(GlobalVariables.localUserDatabasePath);
-            Leaderboard = new ObservableCollection<UserListForm>(db.Table<UserListForm>().ToList().OrderByDescending(x => x.RankingPoint));
+            Leaderboard = new ObservableCollection<UserListForm>(db.Table<UserListForm>().ToList().OrderByDescending(x => x.RankingPoint).Where(x => x.IsHidden == 0));
             LeaderboardView.ItemsSource = Leaderboard;
             UserRankingPointLbl.Text = UserData.UserRankingPoint.ToString();
             UserRankingLbl.Text = UserData.UserRanking.ToString() + "/" + UserData.NoUserRanked;

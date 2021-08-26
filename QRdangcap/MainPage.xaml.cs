@@ -51,7 +51,7 @@ namespace QRdangcap
             UserRankingPointLbl.Text = UserData.UserRankingPoint.ToString();
             UserRankingLbl.Text = UserData.UserRanking.ToString() + "/" + UserData.NoUserRanked;
             SQLiteConnection db = new SQLiteConnection(GlobalVariables.localUserDatabasePath);
-            Leaderboard = new ObservableCollection<UserListForm>(db.Table<UserListForm>().ToList().OrderByDescending(x => x.RankingPoint).Take(10));
+            Leaderboard = new ObservableCollection<UserListForm>(db.Table<UserListForm>().ToList().OrderByDescending(x => x.RankingPoint).Where(x => x.IsHidden == 0).Take(10));
             LeaderboardView.ItemsSource = Leaderboard;
             db.Dispose();
             if (UserData.StudentPriv == 0) Priv.Text = "Học sinh";
@@ -59,6 +59,14 @@ namespace QRdangcap
             else if (UserData.StudentPriv == 2) Priv.Text = "Giáo viên";
             else if (UserData.StudentPriv == 3) Priv.Text = "Quản trị viên";
             else Priv.Text = "Hảo hán";
+            LoginToday.IsVisible = true;
+            PersonalRanking.IsVisible = true;
+            if (UserData.IsHidden)
+            {
+                IsHiddenOrNot.Text = "Người dùng ẩn";
+                LoginToday.IsVisible = false;
+                PersonalRanking.IsVisible = false;
+            }
             if (UserData.IsUserLogin == 0)
             {
                 LblStatusToday.Text = "Bạn chưa điểm danh ngày hôm nay!";

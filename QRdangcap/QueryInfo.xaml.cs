@@ -17,12 +17,13 @@ namespace QRdangcap
         public ObservableRangeCollection<UserListForm> ItemsList { get; set; }
         public SQLiteConnection db = new SQLiteConnection(GlobalVariables.localUserDatabasePath);
         public List<UserListForm> filteredItem = new List<UserListForm>();
+        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public int firstTake = 50;
         public int skip = 50;
         public int intervalSkip = 30;
         public int queryStat = -1;
         public bool ForcedReload { get; set; }
-
+        public bool UpdateStat { get; set; }
         public QueryInfo()
         {
             InitializeComponent();
@@ -32,15 +33,19 @@ namespace QRdangcap
             {
                 await instance.CheckUserTableExist();
             }
-
+            UpdateStat = true;
             refreshAll.IsRefreshing = true;
         }
-
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            refreshAll.IsRefreshing = true;
+        }
         public void Init()
         {
             ItemsList = new ObservableRangeCollection<UserListForm>();
             ItemsList.Clear();
-            ItemsList.AddRange(db.Table<UserListForm>().ToList().Take(firstTake));
+            ItemsList.AddRange(db.Table<UserListForm>().ToList().Where(x => x.IsHidden == 0).Take(firstTake));
             myCollectionView.ItemsSource = ItemsList;
             myCollectionView.RemainingItemsThreshold = 5;
             myCollectionView.RemainingItemsThresholdReached += MyCollectionView_RemainingItemsThresholdReached;
@@ -52,11 +57,11 @@ namespace QRdangcap
         {
             if (filteredItem == null)
             {
-                filteredItem = db.Table<UserListForm>().ToList();
+                filteredItem = new List<UserListForm>(db.Table<UserListForm>().ToList().Where(x => x.IsHidden == 0));
             }
             if (queryStat == -1)
             {
-                ItemsList.AddRange(db.Table<UserListForm>().ToList().Skip(skip).Take(intervalSkip));
+                ItemsList.AddRange(db.Table<UserListForm>().ToList().Where(x => x.IsHidden == 0).Skip(skip).Take(intervalSkip));
                 skip += intervalSkip;
             }
             int numEntry = filteredItem.Count();
@@ -84,7 +89,7 @@ namespace QRdangcap
             searchTerm = searchTerm.ToLower(CultureInfo.CreateSpecificCulture("vi-VN"));
             classSearchTerm = classSearchTerm.ToLower(CultureInfo.CreateSpecificCulture("vi-VN"));
 
-            List<UserListForm> UserList = new List<UserListForm>(db.Table<UserListForm>().ToList());
+            List<UserListForm> UserList = new List<UserListForm>(db.Table<UserListForm>().ToList().Where(x => x.IsHidden == 0));
             filteredItem = UserList;
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
@@ -103,8 +108,11 @@ namespace QRdangcap
             MyCollectionView_RemainingItemsThresholdReached(sender, e);
         }
 
-        private void RefreshView_Refreshing(object sender, EventArgs e)
+        private async void RefreshView_Refreshing(object sender, EventArgs e)
         {
+            if (UpdateStat) await instance.GetGlobalLogStat();
+            UpdateStat = false;
+            ForcedReload = true;
             Init();
         }
 
@@ -121,11 +129,9 @@ namespace QRdangcap
             myCollectionView.SelectedItem = null;
         }
 
-        private async void LoginStatUpdate_Clicked(object sender, EventArgs e)
+        private void LoginStatUpdate_Clicked(object sender, EventArgs e)
         {
-            RetrieveAllUserDb instance = new RetrieveAllUserDb();
-            await instance.GetGlobalLogStat();
-            ForcedReload = true;
+            UpdateStat = true;
             refreshAll.IsRefreshing = true;
         }
     }

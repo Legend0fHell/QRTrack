@@ -20,13 +20,10 @@ namespace QRdangcap
             {
                 case 1:
                     return Brush.Green;
-
                 case 2:
                     return Brush.Orange;
-
                 case 3:
                     return Brush.Magenta;
-
                 default:
                     return Brush.Red;
             }
@@ -46,7 +43,7 @@ namespace QRdangcap
         public int globalSortStrat = -1;
         public string globalClrCheck = "";
         public bool ForcedReload { get; set; }
-
+        public bool UpdateStat { get; set; }
         public DClassInfo(string Clr)
         {
             InitializeComponent();
@@ -63,8 +60,15 @@ namespace QRdangcap
             FilterMode.SelectedIndex = 0;
             SortMode.ItemsSource = SortingMode.ToList();
             SortMode.SelectedIndex = 1;
+            UpdateStat = true;
+            RefreshAll.IsRefreshing = true;
         }
-
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            // TODO: Have a expire for this so that the query are not spammed.
+            RefreshAll.IsRefreshing = true;
+        }
         private async void ClrList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.CurrentSelection.FirstOrDefault() is UserListForm UsrUserChose)
@@ -87,12 +91,12 @@ namespace QRdangcap
             int DesiredStat = FilterMode.SelectedIndex - 1;
             if (SortStrat == 0)
             {
-                ItemsList.AddRange(db.Table<UserListForm>().ToList().Where(x => x.StClass.Equals(globalClrCheck) && (DesiredStat <= -1 || x.LogStatus == DesiredStat))
+                ItemsList.AddRange(db.Table<UserListForm>().ToList().Where(x => x.StClass.Equals(globalClrCheck) && (DesiredStat <= -1 || x.LogStatus == DesiredStat) && x.IsHidden == 0)
                     .OrderBy(x => x.StName));
             }
             else
             {
-                ItemsList.AddRange(db.Table<UserListForm>().ToList().Where(x => x.StClass.Equals(globalClrCheck) && (DesiredStat <= -1 || x.LogStatus == DesiredStat))
+                ItemsList.AddRange(db.Table<UserListForm>().ToList().Where(x => x.StClass.Equals(globalClrCheck) && (DesiredStat <= -1 || x.LogStatus == DesiredStat) && x.IsHidden == 0)
                     .OrderBy(x => x.StId));
             }
             globalSortStrat = SortStrat;
@@ -100,28 +104,30 @@ namespace QRdangcap
             RefreshAll.IsRefreshing = false;
         }
 
-        private void RefreshAll_Refreshing(object sender, EventArgs e)
+        private async void RefreshAll_Refreshing(object sender, EventArgs e)
         {
+            if (UpdateStat) await instance.GetGlobalLogStat();
+            UpdateStat = false;
+            ForcedReload = true;
             UpdateSumLog(SortMode.SelectedIndex);
         }
 
         private void SortMode_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UpdateStat = false;
             RefreshAll.IsRefreshing = true;
         }
 
-        private async void LoginStatUpdate_Clicked(object sender, EventArgs e)
+        private void LoginStatUpdate_Clicked(object sender, EventArgs e)
         {
-            await instance.GetGlobalLogStat();
-            ForcedReload = true;
+            UpdateStat = true;
             RefreshAll.IsRefreshing = true;
         }
-
-        private async void FilterMode_SelectedIndexChanged(object sender, EventArgs e)
+        private void FilterMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (globalSortStrat != -1)
             {
-                await instance.GetGlobalLogStat();
+                UpdateStat = false;
                 ForcedReload = true;
                 RefreshAll.IsRefreshing = true;
             }

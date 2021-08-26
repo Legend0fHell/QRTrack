@@ -93,6 +93,7 @@ namespace QRdangcap
                     UserData.StudentFullName = "Admin (Debug) (Bypassed)";
                     UserData.StudentPriv = 9;
                     UserData.StudentIdDatabase = 9;
+                    UserData.IsHidden = true;
                     LoginSucceeded();
                     return;
                 }
@@ -117,6 +118,7 @@ namespace QRdangcap
                         UserData.StudentFullName = response.STName;
                         UserData.StudentPriv = response.STPriv;
                         UserData.StudentIdDatabase = response.STId;
+                        UserData.IsHidden = response.Message1 == 1;
                         LoginSucceeded();
                     }
                     else LoginFailed("");

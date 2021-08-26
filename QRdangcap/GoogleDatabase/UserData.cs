@@ -29,5 +29,6 @@ namespace QRdangcap.GoogleDatabase
         public static int UserRankingPoint { get; set; }
         public static int UserRanking { get; set; }
         public static int NoUserRanked { get; set; }
+        public static bool IsHidden { get; set; }
     }
 }

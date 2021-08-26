@@ -2,13 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QRdangcap.DClassInfo"
-             xmlns:local="clr-namespace:QRdangcap"
-             Title="Tra cứu - Học sinh">
+             xmlns:local="clr-namespace:QRdangcap">
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:BarConverter x:Key="intConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
+    <Shell.TitleView>
+        <Grid Margin="0,0,10,0">
+            <Label Text="Tra cứu - Học sinh" FontSize="22" TextColor="White" VerticalOptions="Center" />
+            <Button Text="Cập nhật" FontSize="15" VerticalOptions="Center" HorizontalOptions="End" Clicked="LoginStatUpdate_Clicked" />
+        </Grid>
+    </Shell.TitleView>
     <ContentPage.Content>
         <RefreshView x:Name="RefreshAll" Refreshing="RefreshAll_Refreshing">
             <ScrollView>
@@ -35,7 +40,7 @@
                         <Picker Grid.Column="3" x:Name="FilterMode" Title="Sắp xếp theo..." SelectedIndexChanged="FilterMode_SelectedIndexChanged" />
                     </Grid>
 
-                    <Button x:Name="LoginStatUpdate" Text="Cập nhật thông tin đăng nhập" Clicked="LoginStatUpdate_Clicked" />
+                    
                     <CollectionView x:Name="ClrList" Grid.Row="3"
                                     Margin="10,0,10,0"
                                     VerticalOptions="FillAndExpand"

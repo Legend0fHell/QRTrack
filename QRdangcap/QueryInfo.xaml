@@ -2,18 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QRdangcap.QueryInfo"
-             xmlns:local="clr-namespace:QRdangcap"
-             Title="Tra cứu thông tin">
+             xmlns:local="clr-namespace:QRdangcap">
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:BarConverter x:Key="intConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
+    <Shell.TitleView>
+        <Grid Margin="0,0,10,0">
+            <Label Text="Tra cứu thông tin" FontSize="22" TextColor="White" VerticalOptions="Center" />
+            <Button Text="Cập nhật" FontSize="15" VerticalOptions="Center" HorizontalOptions="End" Clicked="LoginStatUpdate_Clicked" />
+        </Grid>
+    </Shell.TitleView>
     <ContentPage.Content>
         <RefreshView x:Name="refreshAll" Refreshing="RefreshView_Refreshing">
             <ScrollView>
                 <StackLayout>
-                    <Button x:Name="LoginStatUpdate" Text="Cập nhật thông tin đăng nhập" Clicked="LoginStatUpdate_Clicked" />
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
