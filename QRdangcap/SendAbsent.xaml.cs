@@ -14,7 +14,7 @@ namespace QRdangcap
     {
         private int UserIDRead = 0;
         public static HttpClient client = new HttpClient();
-        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+        public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
 
         public SendAbsent()
         {

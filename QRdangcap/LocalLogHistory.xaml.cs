@@ -1,4 +1,5 @@
 ﻿using QRdangcap.DatabaseModel;
+using QRdangcap.GoogleDatabase;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,10 @@ namespace QRdangcap
             LogList.RemainingItemsThresholdReached += LogList_RemainingItemsThresholdReached;
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
         private void LogList_RemainingItemsThresholdReached(object sender, EventArgs e)
         {
             if (resLogList == null)
@@ -56,7 +61,7 @@ namespace QRdangcap
         private async void List_ItemTapped(object sender, SelectionChangedEventArgs e)
         {
             if (!(e.CurrentSelection.FirstOrDefault() is LogListForm logIdChose)) return;
-            await Navigation.PushAsync(new LogChanger(logIdChose));
+            if(UserData.StudentPriv > 0) await Navigation.PushAsync(new LogChanger(logIdChose));
             LogList.SelectedItem = null;
         }
 

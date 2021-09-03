@@ -30,5 +30,8 @@ namespace QRdangcap.GoogleDatabase
         public static int UserRanking { get; set; }
         public static int NoUserRanked { get; set; }
         public static bool IsHidden { get; set; }
+        public static DateTime LastGPSUpdate { get; set; }
+        public static DateTime LastStatusUpdate { get; set; }
+        public static bool ForcedStatusUpdate { get; set; }
     }
 }

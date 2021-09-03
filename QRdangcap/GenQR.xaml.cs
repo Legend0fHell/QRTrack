@@ -8,7 +8,7 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GenQR : ContentPage
     {
-        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+        public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
 
         public GenQR()
         {

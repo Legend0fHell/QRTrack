@@ -23,8 +23,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="1.5*"/>
                         </Grid.ColumnDefinitions>
-                        <SearchBar x:Name ="ClassQuery" Grid.Column="0" Placeholder="Lớp" TextChanged="Test_TextChanged" HeightRequest="30" Margin="-10,0,0,0"/>
-                        <SearchBar x:Name ="NameQuery" Grid.Column="1" Placeholder="Tên" TextChanged="Test_TextChanged" HeightRequest="30" Margin="-30,0,0,0"/>
+                        <SearchBar x:Name ="ClassQuery" Grid.Column="0" Placeholder="Lớp" TextChanged="Test_TextChanged" HeightRequest="30" Margin="-10,10,0,0"/>
+                        <SearchBar x:Name ="NameQuery" Grid.Column="1" Placeholder="Tên" TextChanged="Test_TextChanged" HeightRequest="30" Margin="-30,10,0,0"/>
                     </Grid>
                     
                     <CollectionView x:Name ="myCollectionView" 

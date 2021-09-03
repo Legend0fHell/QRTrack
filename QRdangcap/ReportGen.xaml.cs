@@ -20,7 +20,7 @@ namespace QRdangcap
         private readonly ReportGenViewModel ViewModel;
         private readonly SQLiteConnection db = new SQLiteConnection(GlobalVariables.localUserDatabasePath);
         public static FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
-        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+        public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public IDisposable Subscriber;
 
         public ReportGen()

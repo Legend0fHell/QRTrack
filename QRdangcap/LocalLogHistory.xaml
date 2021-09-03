@@ -1,38 +1,107 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QRdangcap.LocalLogHistory"
-             Title="Lịch sử quét của bạn">
+<ContentPage
+    x:Class="QRdangcap.LocalLogHistory"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Lịch sử quét của bạn">
     <ContentPage.Content>
         <RefreshView x:Name="refreshAll" Refreshing="RefreshView_Refreshing">
             <ScrollView>
                 <StackLayout BackgroundColor="#f2f4f6">
-                    <Button Text="Lấy dữ liệu" x:Name="RetrieveLog" Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Clicked="RetrieveLog_Clicked" />
-                    <CollectionView x:Name="LogList" Grid.Row="1"
-                                Margin="10,0,10,0"
-                                MinimumHeightRequest="400"
-                                VerticalOptions="FillAndExpand"
-                                HorizontalOptions="FillAndExpand"
-                                SelectionMode="Single"
-                                SelectionChanged="List_ItemTapped">
+                    <Button
+                        x:Name="RetrieveLog"
+                        Grid.Row="0"
+                        Clicked="RetrieveLog_Clicked"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Lấy dữ liệu"
+                        VerticalOptions="Start" />
+                    <CollectionView
+                        x:Name="LogList"
+                        Grid.Row="1"
+                        Margin="10,0,10,0"
+                        HorizontalOptions="FillAndExpand"
+                        MinimumHeightRequest="400"
+                        SelectionChanged="List_ItemTapped"
+                        SelectionMode="Single"
+                        VerticalOptions="FillAndExpand">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Frame BackgroundColor="White" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="True">
-                                    <Grid HeightRequest="80" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                                <Frame
+                                    Margin="0,0,0,5"
+                                    Padding="5"
+                                    BackgroundColor="White"
+                                    BorderColor="#F0F0F0"
+                                    HasShadow="True">
+                                    <Grid
+                                        HeightRequest="80"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="Start">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1.5*" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
-                                        <StackLayout Grid.Column="0" Orientation="Vertical" Margin="0,0" HorizontalOptions="Start" VerticalOptions="Center">
-                                            <Label Text="{Binding StName}" TextColor="Black" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" Margin="10,5,0,0" LineBreakMode="HeadTruncation" />
-                                            <Label Text="{Binding StClass}" TextColor="#757575" FontSize="12" VerticalOptions="Center" Margin="10,-5,0,0" />
-                                            <Label Text="{Binding Mistake}" TextColor="Red" FontSize="12" VerticalOptions="Center" Margin="10,-5,0,0" LineBreakMode="TailTruncation" />
-                                            <Label Text="{Binding RpString}" TextColor="Magenta" FontSize="12" VerticalOptions="Center" Margin="10,-5,0,0" LineBreakMode="TailTruncation" />
+                                        <StackLayout
+                                            Grid.Column="0"
+                                            Margin="0,0"
+                                            HorizontalOptions="Start"
+                                            Orientation="Vertical"
+                                            VerticalOptions="Center">
+                                            <Label
+                                                Margin="10,5,0,0"
+                                                FontAttributes="Bold"
+                                                FontSize="16"
+                                                LineBreakMode="HeadTruncation"
+                                                Text="{Binding StName}"
+                                                TextColor="Black"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Margin="10,-5,0,0"
+                                                FontSize="12"
+                                                Text="{Binding StClass}"
+                                                TextColor="#757575"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Margin="10,-5,0,0"
+                                                FontSize="12"
+                                                LineBreakMode="TailTruncation"
+                                                Text="{Binding Mistake}"
+                                                TextColor="Red"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Margin="10,-5,0,0"
+                                                FontSize="12"
+                                                LineBreakMode="TailTruncation"
+                                                Text="{Binding RpString}"
+                                                TextColor="Magenta"
+                                                VerticalOptions="Center" />
                                         </StackLayout>
-                                        <StackLayout Grid.Column="1" Orientation="Vertical" Margin="0,0" HorizontalOptions="End" VerticalOptions="Start">
-                                            <Label Text="{Binding LoginDate, StringFormat='{}{0:HH:mm:ss}'}" TextColor="{Binding LoginColor}" FontSize="30" FontAttributes="Bold" VerticalOptions="Start"  Margin="0,0,5,0" />
-                                            <Label Text="{Binding LoginDate, StringFormat='{}{0:ddd, dd.MM}'}" TextColor="#757575" FontSize="12" HorizontalTextAlignment="End" VerticalOptions="End"  Margin="0,-10,5,0" />
-                                            <Label Text="Nhấn để chỉnh sửa" TextColor="#757575" FontSize="12" HorizontalTextAlignment="End" VerticalOptions="End"  Margin="0,0,5,0" />
+                                        <StackLayout
+                                            Grid.Column="1"
+                                            Margin="0,0"
+                                            HorizontalOptions="End"
+                                            Orientation="Vertical"
+                                            VerticalOptions="Start">
+                                            <Label
+                                                Margin="0,0,5,0"
+                                                FontAttributes="Bold"
+                                                FontSize="30"
+                                                Text="{Binding LoginDate, StringFormat='{}{0:HH:mm:ss}'}"
+                                                TextColor="{Binding LoginColor}"
+                                                VerticalOptions="Start" />
+                                            <Label
+                                                Margin="0,-10,5,0"
+                                                FontSize="12"
+                                                HorizontalTextAlignment="End"
+                                                Text="{Binding LoginDate, StringFormat='{}{0:ddd, dd.MM}'}"
+                                                TextColor="#757575"
+                                                VerticalOptions="End" />
+                                            <Label
+                                                Margin="0,0,5,0"
+                                                FontSize="12"
+                                                HorizontalTextAlignment="End"
+                                                Text="Nhấn để chỉnh sửa"
+                                                TextColor="#757575"
+                                                VerticalOptions="End" />
                                         </StackLayout>
                                     </Grid>
                                 </Frame>

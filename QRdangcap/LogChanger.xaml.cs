@@ -13,7 +13,7 @@ namespace QRdangcap
     public partial class LogChanger : ContentPage
     {
         public LogListForm globalLogList = new LogListForm();
-        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+        public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
         public SQLiteConnection db = new SQLiteConnection(GlobalVariables.localLogHistDatabasePath);
 
@@ -26,6 +26,16 @@ namespace QRdangcap
             StMistake.Text = logList.Mistake.Equals("NONE") ? "" : logList.Mistake;
             OnTime.IsChecked = false;
             LateTime.IsChecked = false;
+            if(UserData.StudentPriv >= 2)
+            {
+                OnTime.IsEnabled = true;
+                LateTime.IsEnabled = true;
+            }
+            else
+            {
+                OnTime.IsEnabled = false;
+                LateTime.IsEnabled = false;
+            }
             if (logList.LoginStatus == 1) OnTime.IsChecked = true;
             else if (logList.LoginStatus == 2) LateTime.IsChecked = true;
             StTime.Text = logList.LoginDate.ToString("HH:mm:ss dd.MM.yyyy");

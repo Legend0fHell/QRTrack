@@ -12,7 +12,7 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DSchoolInfo : ContentPage
     {
-        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+        public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public ObservableRangeCollection<ClassroomListForm> ItemsList { get; set; }
         public int globalSortStrat = -1;
         public int startDate = DateTime.Now.DayOfYear;

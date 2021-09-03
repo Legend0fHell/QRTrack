@@ -14,7 +14,7 @@ namespace QRdangcap
     public partial class LeaderboardFull : ContentPage
     {
         public ObservableCollection<UserListForm> Leaderboard { get; set; }
-        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+        public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
 
         public LeaderboardFull()
         {

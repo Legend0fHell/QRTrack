@@ -9,7 +9,7 @@ namespace QRdangcap
     public partial class AbsentChanger : ContentPage
     {
         public AbsentLogForm globalLogList = new AbsentLogForm();
-        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+        public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
 
         public AbsentChanger(AbsentLogForm logList)
         {

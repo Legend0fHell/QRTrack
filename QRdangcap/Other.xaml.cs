@@ -11,7 +11,7 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Other : ContentPage
     {
-        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+        public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public string _CurAcc = "Không có thông tin!";
 
         public string CurAcc
@@ -37,6 +37,96 @@ namespace QRdangcap
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            if(UserData.StudentPriv == 0)
+            {
+                // Hs quèn
+                UserCard.IsEnabled = true;
+                GenQR.IsEnabled = false;
+                SendAbs.IsEnabled = false;
+                AbsLog.IsEnabled = false;
+                RestDay.IsEnabled = false;
+                GPSTest.IsEnabled = true;
+                TCClr.IsEnabled = true;
+                HistDB.IsEnabled = false;
+                HistLocal.IsEnabled = true;
+                ReportGene.IsEnabled = false;
+                UpdateDBUser.IsEnabled = true;
+                DelDBLocal.IsEnabled = true;
+                FirebaseLogTesting.IsEnabled = false;
+                IsGPSRequired.IsEnabled = false;
+            }
+            else if (UserData.StudentPriv == 1)
+            {
+                // XK
+                UserCard.IsEnabled = true;
+                GenQR.IsEnabled = true;
+                SendAbs.IsEnabled = false;
+                AbsLog.IsEnabled = false;
+                RestDay.IsEnabled = false;
+                GPSTest.IsEnabled = true;
+                TCClr.IsEnabled = true;
+                HistDB.IsEnabled = false;
+                HistLocal.IsEnabled = true;
+                ReportGene.IsEnabled = true;
+                UpdateDBUser.IsEnabled = true;
+                DelDBLocal.IsEnabled = true;
+                FirebaseLogTesting.IsEnabled = false;
+                IsGPSRequired.IsEnabled = false;
+            }
+            else if (UserData.StudentPriv == 2)
+            {
+                // GV
+                UserCard.IsEnabled = true;
+                GenQR.IsEnabled = true;
+                SendAbs.IsEnabled = true;
+                AbsLog.IsEnabled = true;
+                RestDay.IsEnabled = false;
+                GPSTest.IsEnabled = true;
+                TCClr.IsEnabled = true;
+                HistDB.IsEnabled = true;
+                HistLocal.IsEnabled = true;
+                ReportGene.IsEnabled = true;
+                UpdateDBUser.IsEnabled = true;
+                DelDBLocal.IsEnabled = true;
+                FirebaseLogTesting.IsEnabled = false;
+                IsGPSRequired.IsEnabled = true;
+            }
+            else if (UserData.StudentPriv == 3)
+            {
+                // QTV
+                UserCard.IsEnabled = true;
+                GenQR.IsEnabled = true;
+                SendAbs.IsEnabled = true;
+                AbsLog.IsEnabled = true;
+                RestDay.IsEnabled = true;
+                GPSTest.IsEnabled = true;
+                TCClr.IsEnabled = true;
+                HistDB.IsEnabled = true;
+                HistLocal.IsEnabled = true;
+                ReportGene.IsEnabled = true;
+                UpdateDBUser.IsEnabled = true;
+                DelDBLocal.IsEnabled = true;
+                FirebaseLogTesting.IsEnabled = false;
+                IsGPSRequired.IsEnabled = true;
+            }
+            else if (UserData.StudentPriv > 3)
+            {
+                // God
+                UserCard.IsEnabled = true;
+                GenQR.IsEnabled = true;
+                SendAbs.IsEnabled = true;
+                AbsLog.IsEnabled = true;
+                RestDay.IsEnabled = true;
+                GPSTest.IsEnabled = true;
+                TCClr.IsEnabled = true;
+                HistDB.IsEnabled = true;
+                HistLocal.IsEnabled = true;
+                ReportGene.IsEnabled = true;
+                UpdateDBUser.IsEnabled = true;
+                DelDBLocal.IsEnabled = true;
+                FirebaseLogTesting.IsEnabled = true;
+                IsGPSRequired.IsEnabled = true;
+            }
             CurAcc = "Tên: " + UserData.StudentFullName + ", ID: " + UserData.StudentIdDatabase.ToString();
         }
 
@@ -189,6 +279,11 @@ namespace QRdangcap
         private async void ReportGene_Tapped(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new ReportGen());
+        }
+
+        private async void UserCard_Tapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new UserCard());
         }
     }
 }

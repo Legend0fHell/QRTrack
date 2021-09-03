@@ -16,7 +16,7 @@ namespace QRdangcap
     public partial class RestDay : ContentPage
     {
         public List<WeekItem> WeekList = new List<WeekItem>();
-        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+        public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
 
         public RestDay()
         {

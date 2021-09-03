@@ -34,7 +34,8 @@ namespace QRdangcap
             StChose = St;
             ViewModel = new DUserInfoViewModel();
             BindingContext = ViewModel;
-
+            if (UserData.StudentPriv > 0) ViewModel.IsEditAllowed = true;
+            else ViewModel.IsEditAllowed = false;
             FilterMode.SelectedIndex = 0;
         }
 
@@ -153,7 +154,7 @@ namespace QRdangcap
         private async void List_ItemTapped(object sender, SelectionChangedEventArgs e)
         {
             if (!(e.CurrentSelection.FirstOrDefault() is LogListForm logIdChose)) return;
-            await Navigation.PushAsync(new LogChanger(logIdChose));
+            if(ViewModel.IsEditAllowed) await Navigation.PushAsync(new LogChanger(logIdChose));
             LogList.SelectedItem = null;
         }
 

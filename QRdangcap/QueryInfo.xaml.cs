@@ -17,13 +17,11 @@ namespace QRdangcap
         public ObservableRangeCollection<UserListForm> ItemsList { get; set; }
         public SQLiteConnection db = new SQLiteConnection(GlobalVariables.localUserDatabasePath);
         public List<UserListForm> filteredItem = new List<UserListForm>();
-        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
-        public int firstTake = 50;
-        public int skip = 50;
-        public int intervalSkip = 30;
+        public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public int queryStat = -1;
         public bool ForcedReload { get; set; }
         public bool UpdateStat { get; set; }
+
         public QueryInfo()
         {
             InitializeComponent();
@@ -36,41 +34,21 @@ namespace QRdangcap
             UpdateStat = true;
             refreshAll.IsRefreshing = true;
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
             refreshAll.IsRefreshing = true;
         }
+
         public void Init()
         {
             ItemsList = new ObservableRangeCollection<UserListForm>();
             ItemsList.Clear();
-            ItemsList.AddRange(db.Table<UserListForm>().ToList().Where(x => x.IsHidden == 0).Take(firstTake));
+            ItemsList.AddRange(db.Table<UserListForm>().ToList().Where(x => x.IsHidden == 0));
             myCollectionView.ItemsSource = ItemsList;
-            myCollectionView.RemainingItemsThreshold = 5;
-            myCollectionView.RemainingItemsThresholdReached += MyCollectionView_RemainingItemsThresholdReached;
             BindingContext = this;
             refreshAll.IsRefreshing = false;
-        }
-
-        private void MyCollectionView_RemainingItemsThresholdReached(object sender, EventArgs e)
-        {
-            if (filteredItem == null)
-            {
-                filteredItem = new List<UserListForm>(db.Table<UserListForm>().ToList().Where(x => x.IsHidden == 0));
-            }
-            if (queryStat == -1)
-            {
-                ItemsList.AddRange(db.Table<UserListForm>().ToList().Where(x => x.IsHidden == 0).Skip(skip).Take(intervalSkip));
-                skip += intervalSkip;
-            }
-            int numEntry = filteredItem.Count();
-            if (numEntry > 0)
-            {
-                if (skip > numEntry) return;
-                ItemsList.AddRange(filteredItem.Skip(skip).Take(intervalSkip));
-                skip += intervalSkip;
-            }
         }
 
         private void Test_TextChanged(object sender, TextChangedEventArgs e)
@@ -102,10 +80,7 @@ namespace QRdangcap
             queryStat = 0;
             if (filteredItem.Count > 0) queryStat = 1;
             ItemsList.Clear();
-
-            ItemsList.AddRange(filteredItem.Take(firstTake));
-            skip = firstTake;
-            MyCollectionView_RemainingItemsThresholdReached(sender, e);
+            ItemsList.AddRange(filteredItem);
         }
 
         private async void RefreshView_Refreshing(object sender, EventArgs e)
@@ -121,16 +96,13 @@ namespace QRdangcap
             if (!(e.CurrentSelection.FirstOrDefault() is UserListForm userIdChose)) return;
             MessagingCenter.Send<Page, UserListForm>(this, "ChoseSTId", userIdChose);
             if (Navigation.NavigationStack.Count > 1) await Navigation.PopAsync();
-            else
-            {
-                var ChoosePage = new DUserInfo(userIdChose);
-                await Navigation.PushAsync(ChoosePage);
-            }
+            else await Navigation.PushAsync(new DUserInfo(userIdChose));
             myCollectionView.SelectedItem = null;
         }
 
         private void LoginStatUpdate_Clicked(object sender, EventArgs e)
         {
+            UserData.ForcedStatusUpdate = true;
             UpdateStat = true;
             refreshAll.IsRefreshing = true;
         }

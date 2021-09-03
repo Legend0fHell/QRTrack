@@ -1,96 +1,238 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QRdangcap.SubmitForm">
+<ContentPage
+    x:Class="QRdangcap.SubmitForm"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <Shell.TitleView>
         <Grid Margin="0,0,10,0">
-            <Label Text="Ghi nhận" FontSize="22" TextColor="White" VerticalOptions="Center" />
-            <Button Text="Lịch sử quét" FontSize="15" VerticalOptions="Center" HorizontalOptions="End" Clicked="History_Clicked" />
+            <Label
+                FontSize="22"
+                Text="Ghi nhận"
+                TextColor="White"
+                VerticalOptions="Center" />
+            <Button
+                Clicked="History_Clicked"
+                FontSize="15"
+                HorizontalOptions="End"
+                Text="Lịch sử quét"
+                VerticalOptions="Center" />
         </Grid>
     </Shell.TitleView>
 
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#f2f4f6">
-            <Frame HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="100" VerticalOptions="Start">
-                <StackLayout Margin="10,0,10,5">
-                    <Label x:Name="DeviceClock" HorizontalTextAlignment="Center" FontSize="55" Margin="0,0,0,0" />
-                    <Label x:Name="DeviceDate" Text=" " HorizontalTextAlignment="Center" VerticalOptions="Start" FontSize="22" Margin="0,-15,0,0" />
-                </StackLayout>
-            </Frame>
-            <Frame x:Name="Lbl_Availability" IsVisible="true" Margin="10,5,10,0" HasShadow="True" CornerRadius="10" Padding="0" HeightRequest="90" VerticalOptions="Start">
-                <StackLayout>
-                    <Label Text="Chức năng này không khả dụng." HorizontalTextAlignment="Center" VerticalOptions="Start" FontSize="22" Margin="0,0,0,0" />
-                    <Label Text="Kéo xuống để thử lại." HorizontalTextAlignment="Center" VerticalOptions="Start" FontSize="18" Margin="0,0,0,0" />
-                </StackLayout>
-            </Frame>
-            <StackLayout x:Name="FormSubmitting" Margin="10,5,10,0" IsVisible="false">
-                <Frame Grid.Column="0" HasShadow="True" CornerRadius="10" Padding="0" HeightRequest="90" VerticalOptions="Start">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                    </Frame.GestureRecognizers>
+        <ScrollView>
+            <StackLayout BackgroundColor="#f2f4f6">
+                <Frame
+                    Margin="10,10,10,0"
+                    Padding="0"
+                    CornerRadius="10"
+                    HasShadow="True"
+                    HeightRequest="100"
+                    VerticalOptions="Start">
+                    <StackLayout Margin="10,0,10,5">
+                        <Label
+                            x:Name="DeviceClock"
+                            Margin="0,0,0,0"
+                            FontSize="55"
+                            HorizontalTextAlignment="Center" />
+                        <Label
+                            x:Name="DeviceDate"
+                            Margin="0,-15,0,0"
+                            FontSize="22"
+                            HorizontalTextAlignment="Center"
+                            Text=" "
+                            VerticalOptions="Start" />
+                    </StackLayout>
+                </Frame>
+                <Frame
+                    x:Name="Lbl_Availability"
+                    Margin="10,5,10,0"
+                    Padding="0"
+                    CornerRadius="10"
+                    HasShadow="True"
+                    HeightRequest="90"
+                    IsVisible="true"
+                    VerticalOptions="Start">
                     <StackLayout>
-                        <Label Text="CHỌN HỌC SINH:" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,5,0,-10" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column ="0" x:Name="ChoseString" Margin="10,0,0,0" FontSize="17" VerticalOptions="Center" LineBreakMode="HeadTruncation" />
-                            <Button Grid.Column ="1"
-                                ImageSource="ic_action_search.png"
-                                Clicked="TapGestureRecognizer_Tapped"
-                                BackgroundColor="Transparent"
-                                BorderColor="Transparent"
-                                Scale="1.5"
-                                Margin="-5,0,0,0"
-                                HeightRequest="60"
-                                WidthRequest="50"
-                                VerticalOptions="Center"
-                                HorizontalOptions="End" />
-                            <Button Grid.Column ="2"
-                                ImageSource="ic_action_center_focus_strong.png"
-                                Clicked="Button_Clicked"
-                                BackgroundColor="Transparent"
-                                BorderColor="Transparent"
-                                Scale="1.5"
-                                Margin="-10,0,0,0"
-                                HeightRequest="60"
-                                WidthRequest="50"
-                                VerticalOptions="Center"
-                                HorizontalOptions="End" />
-                        </Grid>
+                        <Label
+                            Margin="0,0,0,0"
+                            FontSize="22"
+                            HorizontalTextAlignment="Center"
+                            Text="Chức năng này không khả dụng."
+                            VerticalOptions="Start" />
                     </StackLayout>
                 </Frame>
-                <Frame HasShadow="True" CornerRadius="10" Padding="0" HeightRequest="200" VerticalOptions="Start">
-                    <StackLayout Margin="10,0">
-                        <Label Text="LỖI (NẾU CÓ):" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,5,0,0" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <CheckBox x:Name="Reason0" Grid.Column="0" Grid.Row="0" Scale="1.2" />
-                            <Label Grid.Column="1" Grid.Row="0" Text="Quên thẻ" FontSize="20" VerticalOptions="Center" />
-                            <CheckBox x:Name="Reason1" Grid.Column="0" Grid.Row="1" Margin="0,-10,0,0" Scale="1.2" />
-                            <Label Grid.Column="1" Grid.Row="1" Text="Sai đồng phục" FontSize="20" Margin="0,-10,0,0" VerticalOptions="Center" />
-                            <CheckBox x:Name="Reason2" Grid.Column="2" Grid.Row="0" Margin="0,0,0,0" Scale="1.2" />
-                            <Label Grid.Column="3" Grid.Row="0" Text="Lỗi ATGT" FontSize="20" Margin="0,0,0,0" VerticalOptions="Center" />
-                        </Grid>
-                        <Entry x:Name="otherMistake" Placeholder="Lỗi khác..." Margin="2,-10,0,0" FontSize="20" />
+                <Frame
+                    x:Name="LoginToday"
+                    Margin="10,5,10,0"
+                    Padding="0"
+                    CornerRadius="10"
+                    HasShadow="True"
+                    HeightRequest="100"
+                    VerticalOptions="Start">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout Margin="10,5,10,5">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            Opacity="80"
+                            Text="Điểm danh cá nhân" />
+                        <Label
+                            x:Name="LblStatusToday"
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalTextAlignment="End" />
+                        <Label
+                            x:Name="LblStatusSubString"
+                            Margin="0,-5,0,10"
+                            FontSize="16"
+                            HorizontalTextAlignment="End"
+                            TextColor="#757575" />
                     </StackLayout>
                 </Frame>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Button Grid.Column ="0" Text="Gửi" Clicked="Button_Clicked_1" HeightRequest="70" FontSize="30" FontAttributes="Bold" BackgroundColor="#a6dca1" TextColor="#7D7D7D" CornerRadius="15" />
-                    <Button Grid.Column ="1" Text="Hủy" Clicked="Button_Clicked_2" HeightRequest="70" FontSize="30" FontAttributes="Bold" BackgroundColor="#fab8bc" TextColor="#7D7D7D" CornerRadius="15" />
-                </Grid>
+                <StackLayout
+                    x:Name="FormSubmitting"
+                    Margin="10,5,10,0"
+                    IsVisible="false">
+                    <Frame
+                        Padding="0"
+                        CornerRadius="10"
+                        HasShadow="True"
+                        HeightRequest="300"
+                        VerticalOptions="Start">
+                        <StackLayout Margin="10,0">
+                            <Label
+                                Margin="0,5,0,0"
+                                FontAttributes="Bold"
+                                FontSize="20"
+                                Opacity="80"
+                                Text="Điểm danh người dùng khác" />
+                            <StackLayout Margin="0,-10,-5,-5">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                </StackLayout.GestureRecognizers>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        x:Name="ChoseString"
+                                        Grid.Column="0"
+                                        Margin="10,0,0,0"
+                                        FontSize="17"
+                                        LineBreakMode="HeadTruncation"
+                                        VerticalOptions="Center" />
+                                    <Button
+                                        Grid.Column="1"
+                                        Margin="-5,0,0,0"
+                                        BackgroundColor="Transparent"
+                                        BorderColor="Transparent"
+                                        Clicked="TapGestureRecognizer_Tapped"
+                                        HeightRequest="60"
+                                        HorizontalOptions="End"
+                                        ImageSource="ic_action_search.png"
+                                        Scale="1.5"
+                                        VerticalOptions="Center"
+                                        WidthRequest="50" />
+                                    <Button
+                                        Grid.Column="2"
+                                        Margin="-10,0,0,0"
+                                        BackgroundColor="Transparent"
+                                        BorderColor="Transparent"
+                                        Clicked="Button_Clicked"
+                                        HeightRequest="60"
+                                        HorizontalOptions="End"
+                                        ImageSource="ic_action_center_focus_strong.png"
+                                        Scale="1.5"
+                                        VerticalOptions="Center"
+                                        WidthRequest="50" />
+                                </Grid>
+                            </StackLayout>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox
+                                    x:Name="Reason0"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Scale="1.2" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    FontSize="20"
+                                    Text="Quên thẻ"
+                                    VerticalOptions="Center" />
+                                <CheckBox
+                                    x:Name="Reason1"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,-10,0,0"
+                                    Scale="1.2" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="0,-10,0,0"
+                                    FontSize="20"
+                                    Text="Sai đồng phục"
+                                    VerticalOptions="Center" />
+                                <CheckBox
+                                    x:Name="Reason2"
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Margin="0,0,0,0"
+                                    Scale="1.2" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="3"
+                                    Margin="0,0,0,0"
+                                    FontSize="20"
+                                    Text="Lỗi ATGT"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                            <Entry
+                                x:Name="otherMistake"
+                                Margin="2,-10,0,0"
+                                FontSize="20"
+                                Placeholder="Lỗi khác..." />
+
+                            <Grid Margin="0,0,0,20" VerticalOptions="EndAndExpand">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button
+                                    Grid.Column="0"
+                                    BackgroundColor="#a6dca1"
+                                    Clicked="Button_Clicked_1"
+                                    CornerRadius="15"
+                                    FontAttributes="Bold"
+                                    FontSize="30"
+                                    HeightRequest="65"
+                                    Text="Gửi"
+                                    TextColor="#7D7D7D" />
+                                <Button
+                                    Grid.Column="1"
+                                    BackgroundColor="#fab8bc"
+                                    Clicked="Button_Clicked_2"
+                                    CornerRadius="15"
+                                    FontAttributes="Bold"
+                                    FontSize="30"
+                                    HeightRequest="60"
+                                    Text="Hủy"
+                                    TextColor="#7D7D7D" />
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
             </StackLayout>
-        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

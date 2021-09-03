@@ -13,7 +13,7 @@ namespace QRdangcap
 {
     public partial class MainPage : ContentPage
     {
-        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+        public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public ObservableCollection<UserListForm> Leaderboard { get; set; }
 
         public MainPage()
@@ -59,6 +59,7 @@ namespace QRdangcap
             else if (UserData.StudentPriv == 2) Priv.Text = "Giáo viên";
             else if (UserData.StudentPriv == 3) Priv.Text = "Quản trị viên";
             else Priv.Text = "Hảo hán";
+            IsHiddenOrNot.Text = "";
             LoginToday.IsVisible = true;
             PersonalRanking.IsVisible = true;
             if (UserData.IsHidden)
@@ -66,6 +67,14 @@ namespace QRdangcap
                 IsHiddenOrNot.Text = "Người dùng ẩn";
                 LoginToday.IsVisible = false;
                 PersonalRanking.IsVisible = false;
+            }
+            if(UserData.StudentPriv > 1)
+            {
+                AdminTab.IsVisible = true;
+            }
+            else
+            {
+                AdminTab.IsVisible = false;
             }
             if (UserData.IsUserLogin == 0)
             {
@@ -220,7 +229,7 @@ namespace QRdangcap
 
         private async void C00_Tapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new LocalLogHistory());
+            await Navigation.PushAsync(new UserCard());
         }
 
         private void C01_Tapped(object sender, EventArgs e)
@@ -265,7 +274,8 @@ namespace QRdangcap
 
         private async void C30_Tapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new RestDay());
+            if(UserData.StudentPriv > 2) await Navigation.PushAsync(new RestDay());
+            else DependencyService.Get<IToast>().ShowShort("Chức năng bị khóa.");
         }
 
         private async void C31_Tapped(object sender, EventArgs e)

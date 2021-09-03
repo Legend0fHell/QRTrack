@@ -16,7 +16,7 @@ namespace QRdangcap
         private readonly Stopwatch excTime = new Stopwatch();
         public object MonthSelected { get; set; }
         public ObservableCollection<ChartForm> DoughnutSeriesData { get; set; }
-        public RetrieveAllUserDb instance = new RetrieveAllUserDb();
+        public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
 
         public RealStats()
         {
