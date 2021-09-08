@@ -3,6 +3,7 @@ using QRdangcap.GoogleDatabase;
 using SQLite;
 using Syncfusion.XForms.PopupLayout;
 using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -158,6 +159,7 @@ namespace QRdangcap
 
         private async void Logout_Tapped(object sender, EventArgs e)
         {
+            Preferences.Clear();
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
             UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
         }

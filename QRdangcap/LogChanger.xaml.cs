@@ -26,15 +26,28 @@ namespace QRdangcap
             StMistake.Text = logList.Mistake.Equals("NONE") ? "" : logList.Mistake;
             OnTime.IsChecked = false;
             LateTime.IsChecked = false;
+            // TODO: Changeable interval via google sheets.
             if(UserData.StudentPriv >= 2)
             {
                 OnTime.IsEnabled = true;
                 LateTime.IsEnabled = true;
+                StMistake.IsReadOnly = false;
+                EditButton.IsVisible = true;
             }
             else
             {
                 OnTime.IsEnabled = false;
                 LateTime.IsEnabled = false;
+                if(logList.LoginDate.AddMinutes(10) >= System.DateTime.Now)
+                {
+                    StMistake.IsReadOnly = false;
+                    EditButton.IsVisible = true;
+                }
+                else
+                {
+                    StMistake.IsReadOnly = true;
+                    EditButton.IsVisible = false;
+                }
             }
             if (logList.LoginStatus == 1) OnTime.IsChecked = true;
             else if (logList.LoginStatus == 2) LateTime.IsChecked = true;

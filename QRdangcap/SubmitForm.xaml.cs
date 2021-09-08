@@ -16,6 +16,7 @@ namespace QRdangcap
         private int UserIDRead = 0;
         public SQLiteConnection db = new SQLiteConnection(GlobalVariables.localLogHistDatabasePath);
         public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
+
         public SubmitForm()
         {
             InitializeComponent();
@@ -37,17 +38,31 @@ namespace QRdangcap
             });
             BindingContext = this;
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            LblStatusSubString2.IsVisible = false;
+            if (UserData.IsHidden) LoginToday.IsVisible = false;
+            else LoginToday.IsVisible = true;
             if (!UserData.IsTodayOff)
             {
                 Lbl_Availability.IsVisible = false;
                 FormSubmitting.IsVisible = true;
             }
-            if(UserData.StudentPriv > 0)
+            else
             {
-                FormSubmitting.IsVisible = true;
+                Lbl_Availability.IsVisible = true;
+                FormSubmitting.IsVisible = false;
+            }
+            if (UserData.StudentPriv > 0)
+            {
+                if(UserData.StudentPriv == 1 && (UserData.IsUserLogin == 0 || UserData.IsUserLogin == 3))
+                {
+                    FormSubmitting.IsVisible = false;
+                    LblStatusSubString2.IsVisible = true;
+                }
+                else FormSubmitting.IsVisible = true;
             }
             else
             {
@@ -78,6 +93,7 @@ namespace QRdangcap
                 LblStatusSubString.Text = "";
             }
         }
+
         public async void Scanner()
         {
             var options = new ZXing.Mobile.MobileBarcodeScanningOptions()
@@ -96,7 +112,7 @@ namespace QRdangcap
                     bool invalidDetect = false;
                     UserIDRead = 0;
                     string decodedQRCode = "";
-                    RetrieveAllUserDb instance = new RetrieveAllUserDb();
+                    
                     decodedQRCode = instance.Base64Decode(result.Text);
                     for (int i = 0; i < decodedQRCode.Length; ++i)
                     {
@@ -127,16 +143,23 @@ namespace QRdangcap
 
         public async void SendToDatabase()
         {
-            RetrieveAllUserDb instance = new RetrieveAllUserDb();
-            if (!UserData.IsAtSchool && GlobalVariables.IsGPSRequired)
+            if ((!UserData.IsAtSchool && GlobalVariables.IsGPSRequired)
+                || (UserData.IsAtSchool && DateTime.Now >= UserData.LastGPSUpdate.AddMinutes(5) && GlobalVariables.IsGPSRequired))
             {
                 await instance.UpdateCurLocation();
                 if (UserData.IsLastTimeMock)
                 {
                     await DisplayAlert("Điểm danh thất bại!", "Phát hiện GPS đang bị làm giả!", "OK");
+                    return;
                 }
-                else DependencyService.Get<IToast>().ShowShort("Bạn đang ở ngoài trường! (nếu hệ thống sai, hãy thử lại)");
-                return;
+                else
+                {
+                    if (!UserData.IsAtSchool)
+                    {
+                        await DisplayAlert("Điểm danh thất bại!", "Bạn đang ở ngoài trường! (nếu hệ thống sai, hãy thử lại)", "OK");
+                        return;
+                    }
+                }
             }
             string MistakeStringCombined;
             if (UserIDRead < 4)
@@ -220,6 +243,7 @@ namespace QRdangcap
             }
             else Scanner2();
         }
+
         public async void Scanner2()
         {
             var options = new ZXing.Mobile.MobileBarcodeScanningOptions()
@@ -262,7 +286,8 @@ namespace QRdangcap
                     {
                         DisplayAlert("Điểm danh thất bại!", "Code QR không hợp lệ!", "OK");
                     }
-                    else if (!UserData.IsAtSchool && GlobalVariables.IsGPSRequired)
+                    else if ((!UserData.IsAtSchool && GlobalVariables.IsGPSRequired)
+                        || (UserData.IsAtSchool && DateTime.Now >= UserData.LastGPSUpdate.AddMinutes(5) && GlobalVariables.IsGPSRequired))
                     {
                         LocationTmpUpdating();
                         async void LocationTmpUpdating()
@@ -272,48 +297,52 @@ namespace QRdangcap
                             {
                                 await DisplayAlert("Điểm danh thất bại!", "Phát hiện GPS đang bị làm giả!", "OK");
                             }
-                            await DisplayAlert("Điểm danh thất bại!", "Bạn đang ở ngoài trường! (nếu hệ thống sai, hãy thử lại)", "OK");
+                            else
+                            {
+                                if (!UserData.IsAtSchool) await DisplayAlert("Điểm danh thất bại!", "Bạn đang ở ngoài trường! (nếu hệ thống sai, hãy thử lại)", "OK");
+                                else SendData();
+                            }
                         }
                     }
                     else
                     {
                         SendData();
-                        async void SendData()
-                        {
-                            ResponseModel response = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
-                            {
-                                Mode = "2",
-                                Contents = QRRandCode,
-                                Contents2 = UserData.StudentIdDatabase.ToString(),
-                            });
-                            string Reason = "";
-                            if (response.Message1 == 1)
-                            {
-                                Reason = "Bạn đã điểm danh đúng giờ!";
-                                UserData.IsUserLogin = 1;
-                            }
-                            else if (response.Message1 == 2)
-                            {
-                                Reason = "Bạn đã điểm danh muộn!";
-                                UserData.IsUserLogin = 2;
-                            }
-                            else if (response.Message1 == 0) Reason = "Code QR đã cũ hoặc không hợp lệ!";
-                            else if (response.Message1 == -1) Reason = "Bạn điểm danh ngoài khoảng thời gian quy định!";
-                            else Reason = "Bạn đã điểm danh trước đó!";
-                            if (response.Status == "SUCCESS")
-                            {
-                                instance.Firebase_SendLog(UserData.StudentIdDatabase, "NONE", false, false);
-                                await DisplayAlert("Điểm danh thành công!", Reason, "OK");
-                            }
-                            else
-                            {
-                                await DisplayAlert("Điểm danh thất bại!", Reason, "OK");
-                            }
-                        }
                     }
                 });
             };
-
+            async void SendData()
+            {
+                ResponseModel response = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
+                {
+                    Mode = "2",
+                    Contents = QRRandCode,
+                    Contents2 = UserData.StudentIdDatabase.ToString(),
+                });
+                string Reason = "";
+                if (response.Message1 == 1)
+                {
+                    Reason = "Bạn đã điểm danh đúng giờ!";
+                    UserData.IsUserLogin = 1;
+                }
+                else if (response.Message1 == 2)
+                {
+                    Reason = "Bạn đã điểm danh muộn!";
+                    UserData.IsUserLogin = 2;
+                }
+                else if (response.Message1 == 0) Reason = "Code QR đã cũ hoặc không hợp lệ!";
+                else if (response.Message1 == -1) Reason = "Bạn điểm danh ngoài khoảng thời gian quy định!";
+                else Reason = "Bạn đã điểm danh trước đó!";
+                if (response.Status == "SUCCESS")
+                {
+                    instance.Firebase_SendLog(UserData.StudentIdDatabase, "NONE", false, false);
+                    await DisplayAlert("Điểm danh thành công!", Reason, "OK");
+                }
+                else
+                {
+                    await DisplayAlert("Điểm danh thất bại!", Reason, "OK");
+                }
+            }
+            OnAppearing();
             await Navigation.PushAsync(ScanView);
         }
     }

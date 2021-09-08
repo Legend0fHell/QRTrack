@@ -1,60 +1,136 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-             x:Class="QRdangcap.LoginPage"
-             Shell.FlyoutBehavior="Disabled"
-             Shell.NavBarIsVisible="False">
+<ContentPage
+    x:Class="QRdangcap.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False">
     <ContentPage.Content>
         <StackLayout>
             <StackLayout.Background>
                 <LinearGradientBrush EndPoint="0,1">
-                    <GradientStop Color="#313fb5" Offset="0.15"/>
-                    <GradientStop Color="#9d2f85" Offset="1"/>
+                    <GradientStop Offset="0.15" Color="#313fb5" />
+                    <GradientStop Offset="1" Color="#9d2f85" />
                 </LinearGradientBrush>
             </StackLayout.Background>
             <Grid>
-                <StackLayout HorizontalOptions="Center" VerticalOptions="StartAndExpand" Margin="0,70,0,0">
-                    <Image Source="ResourcesImg/logo.jpg" HeightRequest="150" WidthRequest="150" />
+                <StackLayout
+                    Margin="0,70,0,0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="StartAndExpand">
+                    <Image
+                        HeightRequest="150"
+                        Source="ResourcesImg/logo.jpg"
+                        WidthRequest="150" />
                 </StackLayout>
-                <Label Margin="40,290,40,0" FontSize="Subtitle" FontAttributes="Bold" x:Name="LoginStat" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" TextColor="White"/>
+                <Label
+                    x:Name="LoginStat"
+                    Margin="40,290,40,0"
+                    FontAttributes="Bold"
+                    FontSize="Subtitle"
+                    HorizontalTextAlignment="Center"
+                    TextColor="White"
+                    VerticalOptions="CenterAndExpand" />
                 <StackLayout Margin="10,170,10,0">
-                    <StackLayout Margin="40,90,40,0" x:Name="EntryField">
-                        <inputLayout:SfTextInputLayout  Hint="Tài khoản"
-                                                       BackgroundColor="Transparent" ContainerBackgroundColor="Transparent"
-                                                       FocusedColor="#E6E6E6" UnfocusedColor="#b5b5b5" InputViewPadding="5" Margin="0,5">
-                            <Entry x:Name="Entry_Username" BackgroundColor="Transparent" TextColor="White" IsSpellCheckEnabled="False"/>
+                    <StackLayout x:Name="EntryField" Margin="40,90,40,0">
+                        <inputLayout:SfTextInputLayout
+                            Margin="0,5"
+                            BackgroundColor="Transparent"
+                            ContainerBackgroundColor="Transparent"
+                            FocusedColor="#E6E6E6"
+                            Hint="Tài khoản"
+                            InputViewPadding="5"
+                            UnfocusedColor="#b5b5b5">
+                            <Entry
+                                x:Name="Entry_Username"
+                                BackgroundColor="Transparent"
+                                IsSpellCheckEnabled="False"
+                                TextColor="White" />
                         </inputLayout:SfTextInputLayout>
-                        <inputLayout:SfTextInputLayout  Hint="Mật khẩu" EnablePasswordVisibilityToggle="true" 
-                                                       BackgroundColor="Transparent" ContainerBackgroundColor="Transparent"
-                                                       FocusedColor="#E6E6E6" UnfocusedColor="#b5b5b5" InputViewPadding="5">
-                            <Entry x:Name="Entry_Password" BackgroundColor="Transparent" TextColor="White" IsPassword="True" IsSpellCheckEnabled="False"/>
+                        <inputLayout:SfTextInputLayout
+                            BackgroundColor="Transparent"
+                            ContainerBackgroundColor="Transparent"
+                            EnablePasswordVisibilityToggle="true"
+                            FocusedColor="#E6E6E6"
+                            Hint="Mật khẩu"
+                            InputViewPadding="5"
+                            UnfocusedColor="#b5b5b5">
+                            <Entry
+                                x:Name="Entry_Password"
+                                BackgroundColor="Transparent"
+                                IsPassword="True"
+                                IsSpellCheckEnabled="False"
+                                TextColor="White" />
                         </inputLayout:SfTextInputLayout>
-                        <StackLayout Orientation="Horizontal" Margin="0,-7">
-                            <CheckBox Color="White" Scale="1.2"/>
-                            <Label Text="Ghi nhớ đăng nhập" TextColor="White" VerticalOptions="Center" FontSize="Subtitle"/>
+                        <StackLayout Margin="0,-7" Orientation="Horizontal">
+                            <CheckBox
+                                x:Name="SavedPreference"
+                                Scale="1.2"
+                                Color="White" />
+                            <Label
+                                FontSize="Subtitle"
+                                Text="Ghi nhớ đăng nhập"
+                                TextColor="White"
+                                VerticalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
-                    <StackLayout Padding="0" Margin="35,20,35,0" VerticalOptions="EndAndExpand">
+                    <StackLayout
+                        Margin="35,20,35,0"
+                        Padding="0"
+                        VerticalOptions="EndAndExpand">
                         <Grid>
-                            <Button Grid.Column="0"  x:Name="LoginBtn" Text="ĐĂNG NHẬP" FontSize="Subtitle" BackgroundColor="Transparent" BorderColor="White" 
-                                BorderWidth="1" TextColor="White" CornerRadius="30" Clicked="LoginProcedure" HeightRequest="40"/>
-                            <ActivityIndicator Grid.Column="0" x:Name="ActivityIndicator"
-                                   IsRunning="False"
-                                   Color="White"
-                                   HorizontalOptions="CenterAndExpand"
-                                   VerticalOptions="CenterAndExpand"
-                                   HeightRequest="50"
-                                   WidthRequest="50" />
+                            <Button
+                                x:Name="LoginBtn"
+                                Grid.Column="0"
+                                BackgroundColor="Transparent"
+                                BorderColor="White"
+                                BorderWidth="1"
+                                Clicked="LoginProcedure"
+                                CornerRadius="30"
+                                FontSize="Subtitle"
+                                HeightRequest="40"
+                                Text="ĐĂNG NHẬP"
+                                TextColor="White" />
+                            <ActivityIndicator
+                                x:Name="ActivityIndicator"
+                                Grid.Column="0"
+                                HeightRequest="50"
+                                HorizontalOptions="CenterAndExpand"
+                                IsRunning="False"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="50"
+                                Color="White" />
                         </Grid>
                     </StackLayout>
                 </StackLayout>
             </Grid>
-            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="10,0,10,20">
-                <Button x:Name="InstantLogin2" Text="Dev: InstantLogin" FontSize="Subtitle" BackgroundColor="Transparent" BorderColor="White" 
-                                BorderWidth="1" TextColor="White" CornerRadius="30" Clicked="InstantLoginProcedureBypass" HeightRequest="43" Margin="15,-10,15,3"/>
-                <Label Text="Hệ thống Điểm danh Học sinh CYB - Bản Thử nghiệm" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"  TextColor="#c9c9c9" />
-                <Label x:Name="ClientVer" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"  TextColor="#c9c9c9" />
+            <StackLayout
+                Margin="10,0,10,20"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="EndAndExpand">
+                <Button
+                    x:Name="InstantLogin2"
+                    Margin="15,-10,15,3"
+                    BackgroundColor="Transparent"
+                    BorderColor="White"
+                    BorderWidth="1"
+                    Clicked="InstantLoginProcedureBypass"
+                    CornerRadius="30"
+                    FontSize="Subtitle"
+                    HeightRequest="43"
+                    Text="Dev: InstantLogin"
+                    TextColor="White" />
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Text="Hệ thống Điểm danh Học sinh CYB - Bản Thử nghiệm"
+                    TextColor="#c9c9c9"
+                    VerticalOptions="CenterAndExpand" />
+                <Label
+                    x:Name="ClientVer"
+                    HorizontalTextAlignment="Center"
+                    TextColor="#c9c9c9"
+                    VerticalOptions="CenterAndExpand" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

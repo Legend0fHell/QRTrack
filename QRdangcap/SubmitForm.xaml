@@ -68,7 +68,7 @@
                     Padding="0"
                     CornerRadius="10"
                     HasShadow="True"
-                    HeightRequest="100"
+                    HeightRequest="120"
                     VerticalOptions="Start">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" />
@@ -90,6 +90,13 @@
                             FontSize="16"
                             HorizontalTextAlignment="End"
                             TextColor="#757575" />
+                        <Label
+                            x:Name="LblStatusSubString2"
+                            Margin="0,-5,0,10"
+                            FontSize="15"
+                            HorizontalTextAlignment="End"
+                            Text="Bạn cần điểm danh để mở khóa tính năng."
+                            TextColor="Red" />
                     </StackLayout>
                 </Frame>
                 <StackLayout

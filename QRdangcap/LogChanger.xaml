@@ -1,50 +1,128 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QRdangcap.LogChanger"
-             Title="Chỉnh sửa biên bản">
+<ContentPage
+    x:Class="QRdangcap.LogChanger"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Chỉnh sửa biên bản">
     <ContentPage.Content>
-        <RefreshView x:Name ="RefreshingView">
+        <RefreshView x:Name="RefreshingView">
             <ScrollView>
                 <StackLayout BackgroundColor="#f2f4f6">
-                    <Frame HasShadow="True" CornerRadius="10" Margin="10,20,10,0" Padding="0" HeightRequest="70" VerticalOptions="Start">
+                    <Frame
+                        Margin="10,20,10,0"
+                        Padding="0"
+                        CornerRadius="10"
+                        HasShadow="True"
+                        HeightRequest="70"
+                        VerticalOptions="Start">
                         <StackLayout Margin="10,5,10,0">
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                                <Label Text="ID Biên bản:" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                                <Label x:Name="ChoseLogId" FontSize="18" LineBreakMode="HeadTruncation" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    HorizontalTextAlignment="Center"
+                                    Text="ID Biên bản:" />
+                                <Label
+                                    x:Name="ChoseLogId"
+                                    FontSize="18"
+                                    LineBreakMode="HeadTruncation" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                                <Label Text="Học sinh:" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" MinimumWidthRequest="70" />
-                                <Label x:Name="ChoseString" FontSize="18" LineBreakMode="HeadTruncation" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    HorizontalTextAlignment="Center"
+                                    MinimumWidthRequest="70"
+                                    Text="Học sinh:" />
+                                <Label
+                                    x:Name="ChoseString"
+                                    FontSize="18"
+                                    LineBreakMode="HeadTruncation" />
                             </StackLayout>
                         </StackLayout>
                     </Frame>
-                    <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="200" VerticalOptions="Start">
+                    <Frame
+                        Margin="10,5,10,0"
+                        Padding="0"
+                        CornerRadius="10"
+                        HasShadow="True"
+                        HeightRequest="200"
+                        VerticalOptions="Start">
                         <StackLayout>
-                            <Label Text="BIÊN BẢN:" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,5,0,-10" />
-                            <StackLayout Orientation="Horizontal" Margin="10,5,10,-10" VerticalOptions="Center">
-                                <Label Text="Lỗi:" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" MinimumWidthRequest="30" />
-                                <Entry x:Name="StMistake" FontSize="15" HorizontalOptions="FillAndExpand" IsSpellCheckEnabled="false" Placeholder="Điền lỗi..." />
+                            <Label
+                                Margin="0,5,0,-10"
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                HorizontalTextAlignment="Center"
+                                Text="BIÊN BẢN:" />
+                            <StackLayout
+                                Margin="10,5,10,-10"
+                                Orientation="Horizontal"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    MinimumWidthRequest="30"
+                                    Text="Lỗi:"
+                                    VerticalOptions="Center" />
+                                <Entry
+                                    x:Name="StMistake"
+                                    FontSize="15"
+                                    HorizontalOptions="FillAndExpand"
+                                    IsSpellCheckEnabled="false"
+                                    Placeholder="Điền lỗi..." />
                             </StackLayout>
-                            <Label Text="(Lưu ý: Nếu có nhiều lỗi hãy sử dụng dấu chấm phẩy (;) để phân cách.)" Margin="10,0,10,0" />
-                            <StackLayout x:Name="RadioButtonStatus" Orientation="Horizontal" RadioButtonGroup.GroupName="logStatus" Margin="10,0,10,0">
-                                <Label Text="Trạng thái:" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
+                            <Label Margin="10,0,10,0" Text="(Lưu ý: Nếu có nhiều lỗi hãy sử dụng dấu chấm phẩy (;) để phân cách.)" />
+                            <StackLayout
+                                x:Name="RadioButtonStatus"
+                                Margin="10,0,10,0"
+                                Orientation="Horizontal"
+                                RadioButtonGroup.GroupName="logStatus">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    Text="Trạng thái:"
+                                    VerticalOptions="Center" />
                                 <RadioButton x:Name="OnTime" Content="Đúng giờ" />
                                 <RadioButton x:Name="LateTime" Content="Muộn giờ" />
                             </StackLayout>
-                            <StackLayout Orientation="Horizontal" Margin="10,0,10,0" VerticalOptions="Center">
-                                <Label Text="Thời gian ghi nhận:" FontSize="18" FontAttributes="Bold" />
+                            <StackLayout
+                                Margin="10,0,10,0"
+                                Orientation="Horizontal"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    Text="Thời gian ghi nhận:" />
                                 <Label x:Name="StTime" FontSize="18" />
                             </StackLayout>
                         </StackLayout>
                     </Frame>
-                    <Grid Margin="10,5,10,0">
+                    <Grid x:Name="EditButton" Margin="10,5,10,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column ="0" Text="Sửa" Clicked="Button_Clicked_1" HeightRequest="70" FontSize="30" FontAttributes="Bold" BackgroundColor="#a6dca1" TextColor="#7D7D7D" CornerRadius="15" />
-                        <Button Grid.Column ="1" Text="Xóa" Clicked="Button_Clicked_2" HeightRequest="70" FontSize="30" FontAttributes="Bold" BackgroundColor="#fab8bc" TextColor="#7D7D7D" CornerRadius="15" />
+                        <Button
+                            Grid.Column="0"
+                            BackgroundColor="#a6dca1"
+                            Clicked="Button_Clicked_1"
+                            CornerRadius="15"
+                            FontAttributes="Bold"
+                            FontSize="30"
+                            HeightRequest="70"
+                            Text="Sửa"
+                            TextColor="#7D7D7D" />
+                        <Button
+                            Grid.Column="1"
+                            BackgroundColor="#fab8bc"
+                            Clicked="Button_Clicked_2"
+                            CornerRadius="15"
+                            FontAttributes="Bold"
+                            FontSize="30"
+                            HeightRequest="70"
+                            Text="Xóa"
+                            TextColor="#7D7D7D" />
                     </Grid>
                 </StackLayout>
             </ScrollView>

@@ -66,7 +66,6 @@ namespace QRdangcap
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            // TODO: Have a expire for this so that the query are not spammed.
             RefreshAll.IsRefreshing = true;
         }
         private async void ClrList_SelectionChanged(object sender, SelectionChangedEventArgs e)

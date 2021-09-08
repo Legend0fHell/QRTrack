@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Xamanimation;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
+using Xamarin.Essentials;
 namespace QRdangcap
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -19,6 +19,12 @@ namespace QRdangcap
             Entry_Password.Text = "";
             ClientVer.Text = "Phiên bản: " + GlobalVariables.ClientVersion + " (Dựng lúc " + GlobalVariables.ClientVersionDate.ToString("G") + ")";
             Init();
+            if(Preferences.Get("PrevSaved", false))
+            {
+                Entry_Username.Text = Preferences.Get("SavedUser", "");
+                Entry_Password.Text = Preferences.Get("SavedPass", "");
+                LoginProcedure(null, null);
+            }
         }
 
         private int isInstantLogin = 0;
@@ -173,6 +179,13 @@ namespace QRdangcap
 
         private async void LoginSucceeded()
         {
+            if (SavedPreference.IsChecked)
+            {
+                Preferences.Set("SavedUser", Entry_Username.Text);
+                Preferences.Set("SavedPass", Entry_Password.Text);
+                Preferences.Set("PrevSaved", true);
+            }
+            else Preferences.Clear();
             isInstantLogin = 0;
             LoginStat.Text = "Đang tải dữ liệu của trường... (2/6)";
             await instance.CheckUserTableExist();
