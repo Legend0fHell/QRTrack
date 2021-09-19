@@ -2,7 +2,7 @@
 ### Dự án không tên không tuổi nhưng chắc chắn kiếm được tiền.
 
 ## Thông tin
-- **Bản dựng mới nhất**: B037 (v0.37-beta) @ 08.09.2021
+- **Bản dựng mới nhất**: B038 (v0.38-beta) @ 19.09.2021
 - **Tiến độ dự án**: **75%** (phase Beta: **60%**).
 - Để sử dụng một vài API và Package, file nguồn có chứa License Key và rất nhiều tài liệu định danh cá nhân, để tránh lộ lọt thông tin, dự án sẽ không open-source.
 - Dự án tuân thủ theo giấy phép MIT.
@@ -23,7 +23,7 @@
   - Giai đoạn Beta bắt đầu khi code xong những thứ cốt lõi nhất, xây dựng xong nền móng.
   - Chủ yếu chú trọng cải thiện trải nghiệm người dùng và cải tiến thêm tính năng.
   - Code theo đổi mỗi 3-4 ngày (bắt buộc).
-* **Phase Delta** (dự kiến từ 20.09.2021): 
+* **Phase Delta** (dự kiến từ 25.09.2021): 
   - Giai đoạn Delta bắt đầu khi tất cả các chức năng cơ bản đã hoàn thiện, chỉ còn những tính năng phụ và UI.
   - Chủ yếu chú trọng cải thiện tính năng phụ và UI.
   - Code theo đổi theo tuần (không bắt buộc).
