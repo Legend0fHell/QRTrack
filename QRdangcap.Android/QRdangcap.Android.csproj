@@ -91,12 +91,6 @@
     <PackageReference Include="Syncfusion.Xamarin.SfProgressBar.Android">
       <Version>19.2.0.56</Version>
     </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.SfTreeView.Android">
-      <Version>19.2.0.56</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Android.Support.v7.RecyclerView">
-      <Version>28.0.0.3</Version>
-    </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Annotation">
       <Version>1.2.0.1</Version>
     </PackageReference>

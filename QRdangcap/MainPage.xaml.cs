@@ -238,9 +238,9 @@ namespace QRdangcap
             await Navigation.PushAsync(new UserCard());
         }
 
-        private void C01_Tapped(object sender, EventArgs e)
+        private async void C01_Tapped(object sender, EventArgs e)
         {
-            DependencyService.Get<IToast>().ShowShort("Chức năng sắp ra mắt");
+            await Navigation.PushAsync(new Timetable());
         }
 
         private async void C02_Tapped(object sender, EventArgs e)

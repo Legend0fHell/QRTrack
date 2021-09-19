@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="QRdangcap.Timetable"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:schedule="clr-namespace:Syncfusion.SfSchedule.XForms;assembly=Syncfusion.SfSchedule.XForms"
+    Title="Bảng báo nghỉ">
+    <ContentPage.Content>
+        <RefreshView x:Name="RefreshingView" Refreshing="RefreshView_Refreshing">
+            <ScrollView>
+                <StackLayout>
+                    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                        <schedule:SfSchedule
+                            x:Name="Schedule"
+                            Grid.Row="0"
+                            BindingContext="{Binding}"
+                            DataSource="{Binding Timetables}"
+                            FirstDayOfWeek="2"
+                            Locale="vi"
+                            ScheduleView="MonthView"
+                            ViewHeaderHeight="40">
+                            <schedule:SfSchedule.AppointmentMapping>
+                                <schedule:ScheduleAppointmentMapping
+                                    ColorMapping="Color"
+                                    EndTimeMapping="To"
+                                    IsAllDayMapping="AllDay"
+                                    StartTimeMapping="From"
+                                    SubjectMapping="Name" />
+                            </schedule:SfSchedule.AppointmentMapping>
+                            <schedule:SfSchedule.MonthViewSettings>
+                                <schedule:MonthViewSettings
+                                    AgendaViewHeight="400"
+                                    BlackoutDates="{Binding BlackoutDates}"
+                                    ShowAgendaView="true" />
+                            </schedule:SfSchedule.MonthViewSettings>
+                        </schedule:SfSchedule>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+
+    </ContentPage.Content>
+</ContentPage>

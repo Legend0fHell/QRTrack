@@ -287,5 +287,10 @@ namespace QRdangcap
         {
             await Navigation.PushAsync(new UserCard());
         }
+
+        private async void Timetable_Tapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Timetable());
+        }
     }
 }

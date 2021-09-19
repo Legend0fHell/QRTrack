@@ -53,15 +53,5 @@ namespace QRdangcap
                 }
             });
         }
-
-        private void TreeView_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("Changed");
-        }
-
-        private void TreeView_Loaded(object sender, Syncfusion.XForms.TreeView.TreeViewLoadedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("Loaded");
-        }
     }
 }

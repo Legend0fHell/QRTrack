@@ -25,6 +25,10 @@
                         Tapped="AbsLog_Tapped"
                         Text="Danh sách học sinh báo nghỉ" />
                     <TextCell
+                        x:Name="Timetable"
+                        Tapped="Timetable_Tapped"
+                        Text="Bảng báo nghỉ (thêm, xóa, sửa, đọc)" />
+                    <TextCell
                         x:Name="RestDay"
                         Tapped="RestDay_Tapped"
                         Text="Đặt ngày nghỉ" />

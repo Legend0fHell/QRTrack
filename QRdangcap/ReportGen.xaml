@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QRdangcap.ReportGen"
-             xmlns:local="clr-namespace:QRdangcap.DatabaseModel"
-             xmlns:sfTreeView="clr-namespace:Syncfusion.XForms.TreeView;assembly=Syncfusion.SfTreeView.XForms"
-             xmlns:treeviewengine="clr-namespace:Syncfusion.TreeView.Engine;assembly=Syncfusion.SfTreeView.XForms">
+<ContentPage
+    x:Class="QRdangcap.ReportGen"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:QRdangcap.DatabaseModel">
+    <!--
+        xmlns:sfTreeView="clr-namespace:Syncfusion.XForms.TreeView;assembly=Syncfusion.SfTreeView.XForms">
+        xmlns:treeviewengine="clr-namespace:Syncfusion.TreeView.Engine;assembly=Syncfusion.SfTreeView.XForms">
+    -->
     <ContentPage.Content>
         <StackLayout BackgroundColor="#f2f4f6">
+            <!--
             <Grid Margin="0" RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -41,7 +45,7 @@
                                                Source="{Binding ImageIcon}"
                                                VerticalOptions="Center"
                                                HorizontalOptions="Center"
-                                               HeightRequest="35" 
+                                               HeightRequest="35"
                                                WidthRequest="35"/>
                                             </Grid>
                                             <Grid Grid.Column="1"
@@ -62,6 +66,8 @@
                     </sfTreeView:SfTreeView.ItemTemplate>
                 </sfTreeView:SfTreeView>
             </Grid>
+            -->
+            <Label Text="under construction" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

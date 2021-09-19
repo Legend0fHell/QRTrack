@@ -145,7 +145,7 @@
                                     Source="ic_action_calendar_today.png" />
                                 <Label
                                     HorizontalTextAlignment="Center"
-                                    Text="Thời khóa biểu"
+                                    Text="Bảng báo nghỉ"
                                     TextColor="Black" />
                             </StackLayout>
                             <StackLayout
