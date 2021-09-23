@@ -14,14 +14,55 @@ namespace QRdangcap
     {
         private readonly TimetableViewModel ViewModel;
         public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
-        private static readonly Color[] Pallette = { Color.Red, Color.BlueViolet, Color.OrangeRed, Color.DarkGreen, Color.Violet, Color.LightBlue };
+        private static readonly Color[] Pallette = { Color.Red, Color.BlueViolet, Color.OrangeRed, Color.DarkGreen, Color.Violet, Color.Blue };
         public int Stages = 0;
+        public TimetableForm LogBeingChanged { get; set; }
         public Timetable()
         {
             InitializeComponent();
+
+            Schedule.MonthInlineAppointmentTapped += Schedule_MonthInlineAppointmentTapped;
             ViewModel = new TimetableViewModel();
             BindingContext = ViewModel;
             RefreshingView.IsRefreshing = true;
+            MessagingCenter.Subscribe<Page, AbsentLogForm>(this, "AbsentChangerEdit", (p, LogChanged) =>
+            {
+                if (LogChanged.ChangeStat <= 2)
+                {
+                    int LogIndex = ViewModel.Timetables.IndexOf(LogBeingChanged);
+                    ViewModel.Timetables.RemoveAt(LogIndex);
+                    LogBeingChanged.ContentStartDate = LogChanged.ContentStartDate;
+                    LogBeingChanged.ContentEndDate = LogChanged.ContentEndDate;
+                    LogBeingChanged.ReporterId = LogChanged.ReporterId;
+                    LogBeingChanged.From = LogChanged.DateCSD.Date;
+                    LogBeingChanged.To = LogChanged.DateCED.Date.Add(new TimeSpan(0, 23, 59, 59));
+                    ViewModel.Timetables.Add(LogBeingChanged);
+                }
+                else
+                {
+                    var randomGen = new Random();
+                    TimetableForm Absenting = new TimetableForm()
+                    {
+                        LogId = LogChanged.LogId,
+                        StId = LogChanged.StId,
+                        ContentStartDate = LogChanged.ContentStartDate,
+                        ContentEndDate = LogChanged.ContentEndDate,
+                        ReporterId = LogChanged.ReporterId,
+                        From = LogChanged.DateCSD.Date,
+                        To = LogChanged.DateCED.Date.Add(new TimeSpan(0, 23, 59, 59)),
+                        Name = $"{LogChanged.StClass} - {LogChanged.StName}",
+                        Color = Pallette[randomGen.Next(6)],
+                    };
+                    ViewModel.Timetables.Add(Absenting);
+                }
+            });
+        }
+
+        private async void Schedule_MonthInlineAppointmentTapped(object sender, Syncfusion.SfSchedule.XForms.MonthInlineAppointmentTappedEventArgs e)
+        {
+            LogBeingChanged = e.Appointment as TimetableForm;
+            AbsentLogForm appointment = e.Appointment as AbsentLogForm;
+            await Navigation.PushAsync(new AbsentChanger(appointment));
         }
 
         public async void GetAbsent()
@@ -44,10 +85,15 @@ namespace QRdangcap
             var randomGen = new Random();
             for (int i = 0; i < response.Length; i++)
             {
-                var Absenting = new TimetableForm()
+                TimetableForm Absenting = new TimetableForm()
                 {
-                    From = response[i].DateCSD.Date.AddHours(10),
-                    To = response[i].DateCED.Date.AddHours(10),
+                    LogId = response[i].LogId,
+                    StId = response[i].StId,
+                    ContentStartDate = response[i].ContentStartDate,
+                    ContentEndDate = response[i].ContentEndDate,
+                    ReporterId = response[i].ReporterId,
+                    From = response[i].DateCSD.Date,
+                    To = response[i].DateCED.Date.Add(new TimeSpan(0, 23, 59, 59)),
                     Name = $"{response[i].StClass} - {response[i].StName}",
                     Color = Pallette[randomGen.Next(6)],
                 };
@@ -59,6 +105,11 @@ namespace QRdangcap
         private void RefreshView_Refreshing(object sender, EventArgs e)
         {
             GetAbsent();
+        }
+
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SendAbsent());
         }
     }
 }

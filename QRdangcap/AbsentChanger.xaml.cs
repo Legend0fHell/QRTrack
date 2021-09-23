@@ -33,8 +33,18 @@ namespace QRdangcap
                 ContentStartTime = FromDate.Date.DayOfYear,
                 ContentEndTime = ToDate.Date.DayOfYear,
             });
+            AbsentLogForm LogChanged = new AbsentLogForm()
+            {
+                ChangeStat = 1,
+                LogId = globalLogList.LogId,
+                StId = globalLogList.StId,
+                ContentStartDate = FromDate.Date.DayOfYear,
+                ContentEndDate = ToDate.Date.DayOfYear,
+                ReporterId = UserData.StudentIdDatabase,
+            };
             if (response.Status == "SUCCESS")
             {
+                MessagingCenter.Send<Page, AbsentLogForm>(this, "AbsentChangerEdit", LogChanged);
                 DependencyService.Get<IToast>().ShowShort("Sửa thành công: " + QueryName);
             }
             else
@@ -53,8 +63,13 @@ namespace QRdangcap
                 Mode = "16",
                 Contents = globalLogList.LogId.ToString(),
             });
+            AbsentLogForm LogChanged = new AbsentLogForm()
+            {
+                ChangeStat = 2,
+            };
             if (response.Status == "SUCCESS")
             {
+                MessagingCenter.Send<Page, AbsentLogForm>(this, "AbsentChangerEdit", LogChanged);
                 DependencyService.Get<IToast>().ShowShort("Xóa thành công: " + QueryName);
             }
             else

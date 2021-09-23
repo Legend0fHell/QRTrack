@@ -3,8 +3,22 @@
     x:Class="QRdangcap.Timetable"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:schedule="clr-namespace:Syncfusion.SfSchedule.XForms;assembly=Syncfusion.SfSchedule.XForms"
-    Title="Bảng báo nghỉ">
+    xmlns:schedule="clr-namespace:Syncfusion.SfSchedule.XForms;assembly=Syncfusion.SfSchedule.XForms">
+    <Shell.TitleView>
+        <Grid Margin="0,0,10,0">
+            <Label
+                FontSize="22"
+                Text="Bảng báo nghỉ"
+                TextColor="White"
+                VerticalOptions="Center" />
+            <Button
+                Clicked="Button_Clicked"
+                FontSize="15"
+                HorizontalOptions="End"
+                Text="Báo nghỉ"
+                VerticalOptions="Center" />
+        </Grid>
+    </Shell.TitleView>
     <ContentPage.Content>
         <RefreshView x:Name="RefreshingView" Refreshing="RefreshView_Refreshing">
             <ScrollView>
@@ -31,7 +45,12 @@
                                 <schedule:MonthViewSettings
                                     AgendaViewHeight="400"
                                     BlackoutDates="{Binding BlackoutDates}"
-                                    ShowAgendaView="true" />
+                                    ShowAgendaView="true"
+                                    ShowWeekNumber="true">
+                                    <schedule:MonthViewSettings.AgendaViewStyle>
+                                        <schedule:AgendaViewStyle TimeFormat="HH:mm" />
+                                    </schedule:MonthViewSettings.AgendaViewStyle>
+                                </schedule:MonthViewSettings>
                             </schedule:SfSchedule.MonthViewSettings>
                         </schedule:SfSchedule>
                     </Grid>

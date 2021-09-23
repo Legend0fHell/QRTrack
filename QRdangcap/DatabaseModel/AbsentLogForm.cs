@@ -5,6 +5,7 @@ namespace QRdangcap.DatabaseModel
 {
     public class AbsentLogForm
     {
+        public int ChangeStat { get; set; }
         public int LogId { get; set; }
         public int StId { get; set; }
         public string StName => GetInfo(1, StId);

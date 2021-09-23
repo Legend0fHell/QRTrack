@@ -5,15 +5,16 @@ using System.Text;
 using Xamarin.Forms;
 using Syncfusion.SfSchedule.XForms;
 using System.Collections.ObjectModel;
+using QRdangcap.DatabaseModel;
 
 namespace QRdangcap.ViewModel
 {
-    public class TimetableForm
+    public class TimetableForm : AbsentLogForm
     {
         public DateTime From { get; set; }
         public DateTime To { get; set; }
         public Color Color { get; set; }
-        public bool AllDay => true;
+        public bool AllDay => false;
         public string Name { get; set; }
     }
     public class TimetableViewModel : INotifyPropertyChanged
@@ -49,5 +50,6 @@ namespace QRdangcap.ViewModel
                 RaiseOnPropertyChanged("BlackoutDates");
             }
         }
+
     }
 }

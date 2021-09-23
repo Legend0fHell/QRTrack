@@ -107,6 +107,16 @@ namespace QRdangcap
             });
             if (response.Status == "SUCCESS")
             {
+                AbsentLogForm LogChanged = new AbsentLogForm()
+                {
+                    ChangeStat = 3,
+                    LogId = response.Message1,
+                    StId = UserIDRead,
+                    ContentStartDate = FromDate.Date.DayOfYear,
+                    ContentEndDate = ToDate.Date.DayOfYear,
+                    ReporterId = UserData.StudentIdDatabase,
+                };
+                MessagingCenter.Send<Page, AbsentLogForm>(this, "AbsentChangerEdit", LogChanged);
                 DependencyService.Get<IToast>().ShowShort("OK: " + QueryName);
             }
             else
