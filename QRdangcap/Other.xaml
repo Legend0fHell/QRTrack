@@ -58,6 +58,16 @@
                         <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
                     </StackLayout>
             </Frame>
+                <Frame x:Name="RestView" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="RestView_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_airline_seat_flat.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Quản lý ngày nghỉ" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+                </Frame>
                 <Frame x:Name="GPSTest" HeightRequest="20" Margin="10,0" CornerRadius="5">
                     <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="GPSTest_Tapped" />

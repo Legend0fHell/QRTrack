@@ -151,6 +151,11 @@ namespace QRdangcap
             await Navigation.PushAsync(new LocalLogHistory());
         }
 
+        private async void RestView_Tapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new RestView());
+        }
+
         private async void UpdateDBUser_Tapped(object sender, EventArgs e)
         {
             RetrieveAllUserDb instance = new RetrieveAllUserDb();

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QRdangcap.RestView"
+             xmlns:schedule="clr-namespace:Syncfusion.SfSchedule.XForms;assembly=Syncfusion.SfSchedule.XForms">
+    <ContentPage.Content>
+        <RefreshView x:Name="RefreshingView" Refreshing="RefreshView_Refreshing">
+            <ScrollView>
+                <StackLayout>
+                    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                        <schedule:SfSchedule
+                            x:Name="Schedule"
+                            Grid.Row="0"
+                            BindingContext="{Binding}"
+                            DataSource="{Binding Schedules}"
+                            FirstDayOfWeek="2"
+                            Locale="vi"
+                            ScheduleView="MonthView"
+                            ViewHeaderHeight="40">
+                            <schedule:SfSchedule.AppointmentMapping>
+                                <schedule:ScheduleAppointmentMapping
+                                    ColorMapping="Color"
+                                    EndTimeMapping="To"
+                                    IsAllDayMapping="AllDay"
+                                    StartTimeMapping="From"/>
+                            </schedule:SfSchedule.AppointmentMapping>
+                            <schedule:SfSchedule.MonthViewSettings>
+                                <schedule:MonthViewSettings
+                                    AppointmentDisplayMode="Appointment"
+                                    AgendaViewHeight="400"
+                                    ShowAgendaView="false"
+                                    ShowWeekNumber="true">
+                                </schedule:MonthViewSettings>
+                            </schedule:SfSchedule.MonthViewSettings>
+                        </schedule:SfSchedule>
+                    </Grid>
+        </StackLayout>
+        </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>
