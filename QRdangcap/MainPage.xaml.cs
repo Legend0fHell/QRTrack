@@ -275,7 +275,7 @@ namespace QRdangcap
 
         private async void C22_Tapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AbsentLog());
+            await Navigation.PushAsync(new ReportGen());
         }
 
         private async void C30_Tapped(object sender, EventArgs e)

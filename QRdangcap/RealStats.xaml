@@ -186,11 +186,22 @@
                             </chart:SfChart>
                         </StackLayout>
                     </Frame>
-                    <Frame x:Name="Frame_Chart3" HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="250" VerticalOptions="Start">
+                    <Frame x:Name="Frame_Chart3" HasShadow="True" CornerRadius="10" Margin="10,10,10,20" Padding="0" HeightRequest="200" VerticalOptions="Start">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Details_Clicked"/>
+                        </Frame.GestureRecognizers>
                         <StackLayout>
                             <StackLayout Orientation="Horizontal">
                                 <Label Text="Các lớp cụ thể" FontSize="20" FontAttributes="Bold" Opacity="80" Margin="10,5,0,0"/>
-                                <Button x:Name="Details" Text="Chi tiết" Clicked="Details_Clicked" HeightRequest="50" BackgroundColor="Transparent" Margin="0,-5,0,0"/>
+                                <Label
+                                    FontAttributes="Italic"
+                                    FontSize="17"
+                                    HorizontalOptions="EndAndExpand"
+                                    Opacity="80"
+                                    Text="Chi tiết &gt;"
+                                    TextColor="Blue"
+                                    VerticalOptions="Center" 
+                                    Margin="0,5,10,0"/>
                             </StackLayout>
 
                             <CollectionView

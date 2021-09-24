@@ -21,13 +21,19 @@
                         FontSize="Medium"
                         HorizontalTextAlignment="Center"
                         TextColor="Black" />
+                    <Label
+                        x:Name="ExpectedChangeInterval"
+                        FontSize="Medium"
+                        HorizontalTextAlignment="Center"
+                        TextColor="Black" />
                     <Entry x:Name="entryQRCode" Placeholder="Nội dung cần tạo..." />
                     <StackLayout
                         Margin="0,0,0,-20"
                         HorizontalOptions="Center"
                         Orientation="Horizontal">
                         <Button Clicked="Button_Clicked" Text="Tạo QR" />
-                        <Button Clicked="Button2_Clicked" Text="Lấy mã QR hợp lệ" />
+                        <Button Clicked="Button2_Clicked" Text="Lấy mã QR" />
+                        <Button x:Name="AutoStat"  Clicked="Button_Clicked_1" Text="Tự động lấy" />
                     </StackLayout>
                     <zxing:ZXingBarcodeImageView
                         x:Name="QRCodeImg"

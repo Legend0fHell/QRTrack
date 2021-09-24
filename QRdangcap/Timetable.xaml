@@ -12,6 +12,7 @@
                 TextColor="White"
                 VerticalOptions="Center" />
             <Button
+                IsVisible="{Binding IsAbsentAllowed}"
                 Clicked="Button_Clicked"
                 FontSize="15"
                 HorizontalOptions="End"

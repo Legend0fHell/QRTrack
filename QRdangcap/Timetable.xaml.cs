@@ -58,11 +58,20 @@ namespace QRdangcap
             });
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            ViewModel.IsAbsentAllowed = UserData.StudentPriv >= 2;
+        }
         private async void Schedule_MonthInlineAppointmentTapped(object sender, Syncfusion.SfSchedule.XForms.MonthInlineAppointmentTappedEventArgs e)
         {
-            LogBeingChanged = e.Appointment as TimetableForm;
-            AbsentLogForm appointment = e.Appointment as AbsentLogForm;
-            await Navigation.PushAsync(new AbsentChanger(appointment));
+            if (ViewModel.IsAbsentAllowed)
+            {
+                LogBeingChanged = e.Appointment as TimetableForm;
+                AbsentLogForm appointment = e.Appointment as AbsentLogForm;
+                await Navigation.PushAsync(new AbsentChanger(appointment));
+            }
+            else return;
         }
 
         public async void GetAbsent()

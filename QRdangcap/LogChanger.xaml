@@ -13,7 +13,7 @@
                         Padding="0"
                         CornerRadius="10"
                         HasShadow="True"
-                        HeightRequest="70"
+                        HeightRequest="90"
                         VerticalOptions="Start">
                         <StackLayout Margin="10,5,10,0">
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
@@ -38,6 +38,10 @@
                                     x:Name="ChoseString"
                                     FontSize="18"
                                     LineBreakMode="HeadTruncation" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                <Label Text="Nugời báo cáo:" FontSize="18" FontAttributes="Bold"/>
+                                <Label x:Name="ChoseString2" FontSize="18" LineBreakMode="HeadTruncation"/>
                             </StackLayout>
                         </StackLayout>
                     </Frame>

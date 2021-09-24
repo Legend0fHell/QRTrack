@@ -7,15 +7,19 @@
         <RefreshView x:Name ="RefreshingView">
             <ScrollView>
                 <StackLayout BackgroundColor="#f2f4f6">
-                    <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="70" VerticalOptions="Start">
+                    <Frame HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="90" VerticalOptions="Start">
                         <StackLayout Margin="10,5,10,0">
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
                                 <Label Text="ID Biên bản:" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                                 <Label x:Name="ChoseLogId" FontSize="18" LineBreakMode="HeadTruncation"/>
                             </StackLayout>
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                                <Label Text="Học sinh:" FontSize="18" FontAttributes="Bold" Margin="0,0,5,0" WidthRequest="100"/>
+                                <Label Text="Học sinh:" FontSize="18" FontAttributes="Bold" Margin="0,0,5,0"/>
                                 <Label x:Name="ChoseString" FontSize="18" LineBreakMode="HeadTruncation"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                <Label Text="Nugời báo cáo:" FontSize="18" FontAttributes="Bold" Margin="0,0,5,0"/>
+                                <Label x:Name="ChoseString2" FontSize="18" LineBreakMode="HeadTruncation"/>
                             </StackLayout>
                         </StackLayout>
 

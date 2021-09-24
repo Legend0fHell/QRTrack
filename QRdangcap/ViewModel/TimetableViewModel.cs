@@ -22,6 +22,7 @@ namespace QRdangcap.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         private ObservableCollection<TimetableForm> timetables;
         private ObservableCollection<DateTime> blackoutDates;
+        private bool isAbsentAllowed;
         private void RaiseOnPropertyChanged(string propertyName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -48,6 +49,18 @@ namespace QRdangcap.ViewModel
             {
                 blackoutDates = value;
                 RaiseOnPropertyChanged("BlackoutDates");
+            }
+        }
+        public bool IsAbsentAllowed
+        {
+            get
+            {
+                return isAbsentAllowed;
+            }
+            set
+            {
+                isAbsentAllowed = value;
+                RaiseOnPropertyChanged("IsAbsentAllowed");
             }
         }
 

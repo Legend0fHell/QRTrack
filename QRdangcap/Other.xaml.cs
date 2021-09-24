@@ -30,8 +30,8 @@ namespace QRdangcap
             InitializeComponent();
             // OnAppearing
 
-            ClientVerText.Detail = GlobalVariables.ClientVersion + " (dựng lúc: " + GlobalVariables.ClientVersionDate.ToString("G") + ")";
-            IsGPSRequired.On = true;
+            ClientVerText_Detail.Text = GlobalVariables.ClientVersion + " (dựng lúc: " + GlobalVariables.ClientVersionDate.ToString("G") + ")";
+            IsGPSRequired_Switch.IsToggled = true;
             BindingContext = this;
         }
 
@@ -41,92 +41,92 @@ namespace QRdangcap
             if(UserData.StudentPriv == 0)
             {
                 // Hs quèn
-                UserCard.IsEnabled = true;
-                GenQR.IsEnabled = false;
-                SendAbs.IsEnabled = false;
-                AbsLog.IsEnabled = false;
-                RestDay.IsEnabled = false;
-                GPSTest.IsEnabled = true;
-                TCClr.IsEnabled = true;
-                HistDB.IsEnabled = false;
-                HistLocal.IsEnabled = true;
-                ReportGene.IsEnabled = false;
-                UpdateDBUser.IsEnabled = true;
-                DelDBLocal.IsEnabled = true;
-                FirebaseLogTesting.IsEnabled = false;
-                IsGPSRequired.IsEnabled = false;
+                UserCard.IsVisible = true;
+                GenQR.IsVisible = false;
+                SendAbs.IsVisible = false;
+                
+                RestDay.IsVisible = false;
+                GPSTest.IsVisible = true;
+                TCClr.IsVisible = true;
+                HistDB.IsVisible = false;
+                HistLocal.IsVisible = true;
+                ReportGene.IsVisible = false;
+                UpdateDBUser.IsVisible = true;
+                DelDBLocal.IsVisible = true;
+                FirebaseLogTesting.IsVisible = false;
+                IsGPSRequired.IsVisible = false;
             }
             else if (UserData.StudentPriv == 1)
             {
                 // XK
-                UserCard.IsEnabled = true;
-                GenQR.IsEnabled = true;
-                SendAbs.IsEnabled = false;
-                AbsLog.IsEnabled = false;
-                RestDay.IsEnabled = false;
-                GPSTest.IsEnabled = true;
-                TCClr.IsEnabled = true;
-                HistDB.IsEnabled = false;
-                HistLocal.IsEnabled = true;
-                ReportGene.IsEnabled = true;
-                UpdateDBUser.IsEnabled = true;
-                DelDBLocal.IsEnabled = true;
-                FirebaseLogTesting.IsEnabled = false;
-                IsGPSRequired.IsEnabled = false;
+                UserCard.IsVisible = true;
+                GenQR.IsVisible = true;
+                SendAbs.IsVisible = false;
+                
+                RestDay.IsVisible = false;
+                GPSTest.IsVisible = true;
+                TCClr.IsVisible = true;
+                HistDB.IsVisible = false;
+                HistLocal.IsVisible = true;
+                ReportGene.IsVisible = true;
+                UpdateDBUser.IsVisible = true;
+                DelDBLocal.IsVisible = true;
+                FirebaseLogTesting.IsVisible = false;
+                IsGPSRequired.IsVisible = false;
             }
             else if (UserData.StudentPriv == 2)
             {
                 // GV
-                UserCard.IsEnabled = true;
-                GenQR.IsEnabled = true;
-                SendAbs.IsEnabled = true;
-                AbsLog.IsEnabled = true;
-                RestDay.IsEnabled = false;
-                GPSTest.IsEnabled = true;
-                TCClr.IsEnabled = true;
-                HistDB.IsEnabled = true;
-                HistLocal.IsEnabled = true;
-                ReportGene.IsEnabled = true;
-                UpdateDBUser.IsEnabled = true;
-                DelDBLocal.IsEnabled = true;
-                FirebaseLogTesting.IsEnabled = false;
-                IsGPSRequired.IsEnabled = true;
+                UserCard.IsVisible = true;
+                GenQR.IsVisible = true;
+                SendAbs.IsVisible = true;
+                
+                RestDay.IsVisible = false;
+                GPSTest.IsVisible = true;
+                TCClr.IsVisible = true;
+                HistDB.IsVisible = true;
+                HistLocal.IsVisible = true;
+                ReportGene.IsVisible = true;
+                UpdateDBUser.IsVisible = true;
+                DelDBLocal.IsVisible = true;
+                FirebaseLogTesting.IsVisible = false;
+                IsGPSRequired.IsVisible = true;
             }
             else if (UserData.StudentPriv == 3)
             {
                 // QTV
-                UserCard.IsEnabled = true;
-                GenQR.IsEnabled = true;
-                SendAbs.IsEnabled = true;
-                AbsLog.IsEnabled = true;
-                RestDay.IsEnabled = true;
-                GPSTest.IsEnabled = true;
-                TCClr.IsEnabled = true;
-                HistDB.IsEnabled = true;
-                HistLocal.IsEnabled = true;
-                ReportGene.IsEnabled = true;
-                UpdateDBUser.IsEnabled = true;
-                DelDBLocal.IsEnabled = true;
-                FirebaseLogTesting.IsEnabled = false;
-                IsGPSRequired.IsEnabled = true;
+                UserCard.IsVisible = true;
+                GenQR.IsVisible = true;
+                SendAbs.IsVisible = true;
+                
+                RestDay.IsVisible = true;
+                GPSTest.IsVisible = true;
+                TCClr.IsVisible = true;
+                HistDB.IsVisible = true;
+                HistLocal.IsVisible = true;
+                ReportGene.IsVisible = true;
+                UpdateDBUser.IsVisible = true;
+                DelDBLocal.IsVisible = true;
+                FirebaseLogTesting.IsVisible = false;
+                IsGPSRequired.IsVisible = true;
             }
             else if (UserData.StudentPriv > 3)
             {
                 // God
-                UserCard.IsEnabled = true;
-                GenQR.IsEnabled = true;
-                SendAbs.IsEnabled = true;
-                AbsLog.IsEnabled = true;
-                RestDay.IsEnabled = true;
-                GPSTest.IsEnabled = true;
-                TCClr.IsEnabled = true;
-                HistDB.IsEnabled = true;
-                HistLocal.IsEnabled = true;
-                ReportGene.IsEnabled = true;
-                UpdateDBUser.IsEnabled = true;
-                DelDBLocal.IsEnabled = true;
-                FirebaseLogTesting.IsEnabled = true;
-                IsGPSRequired.IsEnabled = true;
+                UserCard.IsVisible = true;
+                GenQR.IsVisible = true;
+                SendAbs.IsVisible = true;
+                
+                RestDay.IsVisible = true;
+                GPSTest.IsVisible = true;
+                TCClr.IsVisible = true;
+                HistDB.IsVisible = true;
+                HistLocal.IsVisible = true;
+                ReportGene.IsVisible = true;
+                UpdateDBUser.IsVisible = true;
+                DelDBLocal.IsVisible = true;
+                FirebaseLogTesting.IsVisible = true;
+                IsGPSRequired.IsVisible = true;
             }
             CurAcc = "Tên: " + UserData.StudentFullName + ", ID: " + UserData.StudentIdDatabase.ToString();
         }
@@ -270,7 +270,7 @@ namespace QRdangcap
 
         private void IsGPSRequired_OnChanged(object sender, ToggledEventArgs e)
         {
-            GlobalVariables.IsGPSRequired = IsGPSRequired.On;
+            GlobalVariables.IsGPSRequired = IsGPSRequired_Switch.IsToggled;
         }
 
         private async void FirebaseLogTesting_Tapped(object sender, EventArgs e)

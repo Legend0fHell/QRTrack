@@ -283,7 +283,7 @@
                                         Source="ic_action_assignment.png" />
                                     <Label
                                         HorizontalTextAlignment="Center"
-                                        Text="QL HS Báo nghỉ"
+                                        Text="Xuất báo cáo lớp"
                                         TextColor="Black" />
                                 </StackLayout>
                                 <StackLayout

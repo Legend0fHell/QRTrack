@@ -5,103 +5,200 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Khác">
     <ContentPage.Content>
-        <TableView Intent="Data">
-            <TableRoot>
-                <TableSection>
-                    <TextCell
-                        x:Name="UserCard"
-                        Tapped="UserCard_Tapped"
-                        Text="Thẻ của bạn" />
-                    <TextCell
-                        x:Name="GenQR"
-                        Tapped="GenQR_Tapped"
-                        Text="Tạo mã QR" />
-                    <TextCell
-                        x:Name="SendAbs"
-                        Tapped="SendAbs_Tapped"
-                        Text="Báo nghỉ học sinh" />
-                    <TextCell
-                        x:Name="AbsLog"
-                        Tapped="AbsLog_Tapped"
-                        Text="Danh sách học sinh báo nghỉ" />
-                    <TextCell
-                        x:Name="Timetable"
-                        Tapped="Timetable_Tapped"
-                        Text="Bảng báo nghỉ (thêm, xóa, sửa, đọc)" />
-                    <TextCell
-                        x:Name="RestDay"
-                        Tapped="RestDay_Tapped"
-                        Text="Đặt ngày nghỉ" />
-                    <TextCell
-                        x:Name="GPSTest"
-                        Tapped="GPSTest_Tapped"
-                        Text="Kiểm tra GPS" />
-                    <TextCell
-                        x:Name="TCClr"
-                        Tapped="TCClr_Tapped"
-                        Text="Tra cứu theo lớp" />
-                    <TextCell
-                        x:Name="HistDB"
-                        Tapped="HistDB_Tapped"
-                        Text="Lịch sử ĐD toàn hệ thống" />
-                    <TextCell
-                        x:Name="HistLocal"
-                        Tapped="HistLocal_Tapped"
-                        Text="Lịch sử ĐD của bạn" />
-                    <TextCell
-                        x:Name="ReportGene"
-                        Tapped="ReportGene_Tapped"
-                        Text="Xuất báo cáo lớp (Demo, sẽ thay thế)" />
-                </TableSection>
-                <TableSection Title=" " />
-                <TableSection>
-                    <TextCell
-                        x:Name="UpdateDBUser"
-                        Tapped="UpdateDBUser_Tapped"
-                        Text="Cập nhật DB User" />
-                    <TextCell
-                        x:Name="DelDBLocal"
-                        Tapped="DelDBLocal_Tapped"
-                        Text="Xóa lịch sử ĐD (cục bộ)" />
-                    <TextCell
-                        x:Name="FirebaseLogTesting"
-                        Tapped="FirebaseLogTesting_Tapped"
-                        Text="Thử nghiệm Firebase" />
-                </TableSection>
-                <TableSection Title=" " />
-                <TableSection>
-                    <SwitchCell
-                        x:Name="IsGPSRequired"
-                        OnChanged="IsGPSRequired_OnChanged"
-                        Text="Bắt buộc GPS? (Chỉ hiệu lực trong phiên này)" />
-                </TableSection>
-                <TableSection Title=" " />
-                <TableSection>
-                    <TextCell
-                        x:Name="LoginStatusText"
-                        Detail="{Binding CurAcc}"
-                        Text="Tài khoản" />
-                    <TextCell
-                        x:Name="ChangePassword"
-                        Tapped="ChangePassword_Tapped"
-                        Text="Đổi mật khẩu" />
-                    <TextCell
-                        x:Name="Logout"
-                        Tapped="Logout_Tapped"
-                        Text="Đăng xuất" />
-                </TableSection>
-                <TableSection Title=" " />
-                <TableSection>
-                    <TextCell
-                        x:Name="ClientVerText"
-                        Detail=""
-                        Text="Phiên bản Client:" />
-                    <TextCell
-                        x:Name="UpdateCheck"
-                        Tapped="UpdateCheck_Tapped"
-                        Text="Kiểm tra cập nhật" />
-                </TableSection>
-            </TableRoot>
-        </TableView>
+        <ScrollView>
+        <StackLayout BackgroundColor="#f2f4f6">
+            <Label FontAttributes="Bold" FontSize="20" Opacity="80" Text="Chức năng khác" Margin="10,15,0,0"/>
+            <Frame x:Name="UserCard" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="UserCard_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                    <Image Source="ic_action_credit_card.png" Scale="1.5" Margin="0,0,15,0"/>
+                    <Label Text="Thẻ của bạn" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                    <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                </StackLayout>
+            </Frame>
+                <Frame x:Name="GenQR" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="GenQR_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_center_focus_strong.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Tạo mã QR" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Frame x:Name="SendAbs" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="SendAbs_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_person_remove.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Báo nghỉ học sinh" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Frame x:Name="Timetable" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Timetable_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_calendar_today.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Bảng báo nghỉ" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Frame x:Name="RestDay" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="RestDay_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_airline_seat_flat.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Đặt ngày nghỉ" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Frame x:Name="GPSTest" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="GPSTest_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_radio_button_checked.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Kiểm tra GPS" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Frame x:Name="TCClr" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TCClr_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_search.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Tra cứu theo lớp" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Frame x:Name="HistDB" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="HistDB_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_more_time.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Lịch sử điểm danh toàn hệ thống" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Frame x:Name="HistLocal" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="HistLocal_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_access_time.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Lịch sử điểm danh của bạn" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Frame x:Name="ReportGene" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ReportGene_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_assignment.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Xuất báo cáo lớp (Demo, sẽ thay thế)" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Label FontAttributes="Bold" FontSize="20" Opacity="80" Text="Dữ liệu" Margin="10,15,0,0"/>
+                <Frame x:Name="UpdateDBUser" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="UpdateDBUser_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_cloud_download.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Cập nhật dữ liệu học sinh" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Frame x:Name="DelDBLocal" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="DelDBLocal_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_delete_forever.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Xóa lịch sử điểm danh trên máy" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Frame x:Name="FirebaseLogTesting" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="FirebaseLogTesting_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_cloud_download.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Thử nghiệm Firebase" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Frame x:Name="IsGPSRequired" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_radio_button_checked.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Bắt buộc GPS?" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Switch x:Name="IsGPSRequired_Switch" Toggled="IsGPSRequired_OnChanged" HorizontalOptions="EndAndExpand" Margin="0,0,-15,0" Scale="0.9"/>
+                    </StackLayout>
+                </Frame>
+                <Label FontAttributes="Bold" FontSize="20" Opacity="80" Text="Tài khoản" Margin="10,15,0,0"/>
+                
+                <Frame x:Name="LoginStatusText" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_account_circle.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <StackLayout Margin="0,-10,0,0">
+                            <Label Text="Tài khoản" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                            <Label Text="{Binding CurAcc}" TextColor="#7f7f7f" Margin="0,-3,0,0"/>
+                        </StackLayout>
+                    </StackLayout>
+            </Frame>
+                <Frame x:Name="ChangePassword" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ChangePassword_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_credit_card.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Đổi mật khẩu" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Frame x:Name="Logout" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Logout_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_person_remove.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Đăng xuất" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+                <Label FontAttributes="Bold" FontSize="20" Opacity="80" Text="Client" Margin="10,15,0,0"/>
+                
+                <Frame x:Name="ClientVerText" HeightRequest="20" Margin="10,0" CornerRadius="5">
+                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_account_circle.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <StackLayout Margin="0,-10,0,0">
+                            <Label Text="Phiên bản hiện tại" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                            <Label x:Name="ClientVerText_Detail" TextColor="#7f7f7f" Margin="0,-3,0,0"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+                <Frame x:Name="UpdateCheck" HeightRequest="20" Margin="10,0,10,20" CornerRadius="5">
+                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="UpdateCheck_Tapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image Source="ic_action_cloud_download.png" Scale="1.5" Margin="0,0,15,0"/>
+                        <Label Text="Kiểm tra cập nhật" TextColor="Black" FontSize="17" VerticalTextAlignment="Center"/>
+                        <Image Source="ic_action_arrow_forward_ios.png" Scale="0.7" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,-10,0"/>
+                    </StackLayout>
+            </Frame>
+        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

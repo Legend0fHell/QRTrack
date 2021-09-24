@@ -22,7 +22,8 @@ namespace QRdangcap
             InitializeComponent();
             globalLogList = logList;
             ChoseLogId.Text = logList.Keys;
-            ChoseString.Text = logList.StId.ToString() + " " + logList.StClass + " - " + logList.StName;
+            ChoseString.Text = instance.RetrieveNameUser(logList.StId);
+            ChoseString2.Text = instance.RetrieveNameUser(logList.ReporterId);
             StMistake.Text = logList.Mistake.Equals("NONE") ? "" : logList.Mistake;
             OnTime.IsChecked = false;
             LateTime.IsChecked = false;
