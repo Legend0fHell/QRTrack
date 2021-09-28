@@ -44,6 +44,7 @@ namespace QRdangcap
     public partial class FirebaseLogTesting : ContentPage
     {
         public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
+
         public FirebaseLogTesting()
         {
             InitializeComponent();

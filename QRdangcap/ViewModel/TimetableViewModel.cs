@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using Xamarin.Forms;
-using Syncfusion.SfSchedule.XForms;
+﻿using QRdangcap.DatabaseModel;
+using System;
 using System.Collections.ObjectModel;
-using QRdangcap.DatabaseModel;
+using System.ComponentModel;
+using Xamarin.Forms;
 
 namespace QRdangcap.ViewModel
 {
@@ -17,16 +14,20 @@ namespace QRdangcap.ViewModel
         public bool AllDay => false;
         public string Name { get; set; }
     }
+
     public class TimetableViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
         private ObservableCollection<TimetableForm> timetables;
         private ObservableCollection<DateTime> blackoutDates;
         private bool isAbsentAllowed;
+
         private void RaiseOnPropertyChanged(string propertyName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         public ObservableCollection<TimetableForm> Timetables
         {
             get
@@ -39,6 +40,7 @@ namespace QRdangcap.ViewModel
                 RaiseOnPropertyChanged("Timetables");
             }
         }
+
         public ObservableCollection<DateTime> BlackoutDates
         {
             get
@@ -51,6 +53,7 @@ namespace QRdangcap.ViewModel
                 RaiseOnPropertyChanged("BlackoutDates");
             }
         }
+
         public bool IsAbsentAllowed
         {
             get
@@ -63,6 +66,5 @@ namespace QRdangcap.ViewModel
                 RaiseOnPropertyChanged("IsAbsentAllowed");
             }
         }
-
     }
 }

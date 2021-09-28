@@ -38,6 +38,7 @@ namespace QRdangcap
         {
             base.OnAppearing();
         }
+
         private void LogList_RemainingItemsThresholdReached(object sender, EventArgs e)
         {
             if (resLogList == null)
@@ -61,7 +62,7 @@ namespace QRdangcap
         private async void List_ItemTapped(object sender, SelectionChangedEventArgs e)
         {
             if (!(e.CurrentSelection.FirstOrDefault() is LogListForm logIdChose)) return;
-            if(UserData.StudentPriv > 0) await Navigation.PushAsync(new LogChanger(logIdChose));
+            if (UserData.StudentPriv > 0) await Navigation.PushAsync(new LogChanger(logIdChose));
             LogList.SelectedItem = null;
         }
 

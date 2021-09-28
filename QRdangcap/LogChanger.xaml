@@ -40,8 +40,8 @@
                                     LineBreakMode="HeadTruncation" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                                <Label Text="Nugời báo cáo:" FontSize="18" FontAttributes="Bold"/>
-                                <Label x:Name="ChoseString2" FontSize="18" LineBreakMode="HeadTruncation"/>
+                                <Label Text="Nugời báo cáo:" FontSize="18" FontAttributes="Bold" />
+                                <Label x:Name="ChoseString2" FontSize="18" LineBreakMode="HeadTruncation" />
                             </StackLayout>
                         </StackLayout>
                     </Frame>

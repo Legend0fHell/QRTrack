@@ -12,10 +12,10 @@
                 TextColor="White"
                 VerticalOptions="Center" />
             <Button
-                IsVisible="{Binding IsAbsentAllowed}"
                 Clicked="Button_Clicked"
                 FontSize="15"
                 HorizontalOptions="End"
+                IsVisible="{Binding IsAbsentAllowed}"
                 Text="Báo nghỉ"
                 VerticalOptions="Center" />
         </Grid>
@@ -58,6 +58,5 @@
                 </StackLayout>
             </ScrollView>
         </RefreshView>
-
     </ContentPage.Content>
 </ContentPage>

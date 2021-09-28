@@ -31,6 +31,7 @@ namespace QRdangcap.ViewModel
                 OnPropertyChanged(nameof(RetrieveLog));
             }
         }
+
         public bool IsVisi
         {
             get => _IsVisi;
@@ -40,6 +41,7 @@ namespace QRdangcap.ViewModel
                 OnPropertyChanged(nameof(IsVisi));
             }
         }
+
         private void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

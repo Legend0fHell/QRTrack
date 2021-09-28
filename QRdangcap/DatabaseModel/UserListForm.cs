@@ -7,6 +7,7 @@ namespace QRdangcap.DatabaseModel
         // Contains info from GoogleDatabase, use specifically for local database.
         [PrimaryKey, Unique]
         public int StId { get; set; }
+
         public string StName { get; set; }
         public string StClass { get; set; }
         public int Priv { get; set; }

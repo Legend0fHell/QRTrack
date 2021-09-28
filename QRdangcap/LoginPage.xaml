@@ -19,6 +19,9 @@
                     Margin="0,70,0,0"
                     HorizontalOptions="Center"
                     VerticalOptions="StartAndExpand">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="InstantLoginProcedureBypass" />
+                    </StackLayout.GestureRecognizers>
                     <Image
                         HeightRequest="150"
                         Source="ResourcesImg/logo.jpg"
@@ -32,7 +35,7 @@
                     HorizontalTextAlignment="Center"
                     TextColor="White"
                     VerticalOptions="CenterAndExpand" />
-                <StackLayout Margin="10,170,10,0">
+                <StackLayout Margin="10,180,10,0">
                     <StackLayout x:Name="EntryField" Margin="40,90,40,0">
                         <inputLayout:SfTextInputLayout
                             Margin="0,5"
@@ -76,7 +79,7 @@
                         </StackLayout>
                     </StackLayout>
                     <StackLayout
-                        Margin="35,20,35,0"
+                        Margin="35,40,35,0"
                         Padding="0"
                         VerticalOptions="EndAndExpand">
                         <Grid>
@@ -109,18 +112,6 @@
                 Margin="10,0,10,20"
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="EndAndExpand">
-                <Button
-                    x:Name="InstantLogin2"
-                    Margin="15,-10,15,3"
-                    BackgroundColor="Transparent"
-                    BorderColor="White"
-                    BorderWidth="1"
-                    Clicked="InstantLoginProcedureBypass"
-                    CornerRadius="30"
-                    FontSize="Subtitle"
-                    HeightRequest="43"
-                    Text="Dev: InstantLogin"
-                    TextColor="White" />
                 <Label
                     HorizontalTextAlignment="Center"
                     Text="Hệ thống Điểm danh Học sinh CYB - Bản Thử nghiệm"

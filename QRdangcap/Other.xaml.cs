@@ -38,14 +38,12 @@ namespace QRdangcap
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            if(UserData.StudentPriv == 0)
+            if (UserData.StudentPriv == 0)
             {
                 // Hs quèn
                 UserCard.IsVisible = true;
                 GenQR.IsVisible = false;
                 SendAbs.IsVisible = false;
-                
-                RestDay.IsVisible = false;
                 GPSTest.IsVisible = true;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = false;
@@ -62,8 +60,6 @@ namespace QRdangcap
                 UserCard.IsVisible = true;
                 GenQR.IsVisible = true;
                 SendAbs.IsVisible = false;
-                
-                RestDay.IsVisible = false;
                 GPSTest.IsVisible = true;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = false;
@@ -80,8 +76,6 @@ namespace QRdangcap
                 UserCard.IsVisible = true;
                 GenQR.IsVisible = true;
                 SendAbs.IsVisible = true;
-                
-                RestDay.IsVisible = false;
                 GPSTest.IsVisible = true;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = true;
@@ -98,8 +92,6 @@ namespace QRdangcap
                 UserCard.IsVisible = true;
                 GenQR.IsVisible = true;
                 SendAbs.IsVisible = true;
-                
-                RestDay.IsVisible = true;
                 GPSTest.IsVisible = true;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = true;
@@ -116,8 +108,6 @@ namespace QRdangcap
                 UserCard.IsVisible = true;
                 GenQR.IsVisible = true;
                 SendAbs.IsVisible = true;
-                
-                RestDay.IsVisible = true;
                 GPSTest.IsVisible = true;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = true;
@@ -158,8 +148,32 @@ namespace QRdangcap
 
         private async void UpdateDBUser_Tapped(object sender, EventArgs e)
         {
+            DependencyService.Get<IToast>().ShowShort("Đang cập nhật dữ liệu...");
             RetrieveAllUserDb instance = new RetrieveAllUserDb();
             await instance.RetrieveAllUserDatabase();
+            await instance.GetGlobalLogStat();
+            ResponseModel response2 = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
+            {
+                Mode = "18",
+                Contents = UserData.StudentIdDatabase.ToString(),
+            });
+            UserData.SchoolLat = response2.Latitude;
+            UserData.SchoolLon = response2.Longitude;
+            UserData.SchoolDist = response2.Distance;
+            await instance.UpdateCurLocation();
+            UserData.StartTime = response2.StartTime;
+            UserData.EndTime = response2.EndTime;
+            UserData.LateTime = response2.LateTime;
+            if (response2.Message == "0") UserData.IsUserLogin = 0;
+            else if (response2.Message == "1") UserData.IsUserLogin = 1;
+            else if (response2.Message == "2") UserData.IsUserLogin = 2;
+            else if (response2.Message == "3") UserData.IsUserLogin = 3;
+            else if (response2.Message == "-1")
+            {
+                UserData.IsUserLogin = 0;
+                UserData.IsTodayOff = true;
+            }
+            DependencyService.Get<IToast>().ShowShort("Cập nhật thành công.");
         }
 
         private async void Logout_Tapped(object sender, EventArgs e)

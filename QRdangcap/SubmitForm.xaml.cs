@@ -57,7 +57,7 @@ namespace QRdangcap
             }
             if (UserData.StudentPriv > 0)
             {
-                if(UserData.StudentPriv == 1 && (UserData.IsUserLogin == 0 || UserData.IsUserLogin == 3))
+                if (UserData.StudentPriv == 1 && (UserData.IsUserLogin == 0 || UserData.IsUserLogin == 3))
                 {
                     FormSubmitting.IsVisible = false;
                     LblStatusSubString2.IsVisible = true;
@@ -112,7 +112,7 @@ namespace QRdangcap
                     bool invalidDetect = false;
                     UserIDRead = 0;
                     string decodedQRCode = "";
-                    
+
                     decodedQRCode = instance.Base64Decode(result.Text);
                     for (int i = 0; i < decodedQRCode.Length; ++i)
                     {

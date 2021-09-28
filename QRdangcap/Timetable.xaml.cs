@@ -17,6 +17,7 @@ namespace QRdangcap
         private static readonly Color[] Pallette = { Color.Red, Color.BlueViolet, Color.OrangeRed, Color.DarkGreen, Color.Violet, Color.Blue };
         public int Stages = 0;
         public TimetableForm LogBeingChanged { get; set; }
+
         public Timetable()
         {
             InitializeComponent();
@@ -63,6 +64,7 @@ namespace QRdangcap
             base.OnAppearing();
             ViewModel.IsAbsentAllowed = UserData.StudentPriv >= 2;
         }
+
         private async void Schedule_MonthInlineAppointmentTapped(object sender, Syncfusion.SfSchedule.XForms.MonthInlineAppointmentTappedEventArgs e)
         {
             if (ViewModel.IsAbsentAllowed)

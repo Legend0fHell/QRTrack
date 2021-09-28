@@ -6,7 +6,7 @@
         <StackLayout>
             <Label Text="Trang chỉ mang tính chất kiểm tra chống chịu, không sử dụng." />
             <Entry x:Name="From" Placeholder="Từ..." />
-            <Entry x:Name="To" Placeholder="Đến..."/>
+            <Entry x:Name="To" Placeholder="Đến..." />
             <Label x:Name="Sending" Text="Đang gửi: " />
             <Button Text="Gửi test" Clicked="Button_Clicked_2" />
         </StackLayout>

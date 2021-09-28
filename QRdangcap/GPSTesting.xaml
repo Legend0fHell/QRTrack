@@ -5,14 +5,14 @@
              Title="Kiểm tra GPS">
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="Lấy vị trí hiện tại" Clicked="Button_Clicked"/>
+            <Button Text="Lấy vị trí hiện tại" Clicked="Button_Clicked" />
             <Frame HasShadow="True" CornerRadius="10" Margin="10,5,10,0" Padding="0" HeightRequest="190" VerticalOptions="Start">
                 <StackLayout Margin="10,10,10,0">
-                    <Label x:Name="SchoolLoc" FontSize="16"/>
-                    <Label x:Name="Approx" FontSize="15"/>
-                    <Label x:Name="UserLoc" FontSize="15"/>
-                    <Label x:Name="Distance" FontSize="15"/>
-                    <Label x:Name="Accuracy" FontSize="15"/>
+                    <Label x:Name="SchoolLoc" FontSize="16" />
+                    <Label x:Name="Approx" FontSize="15" />
+                    <Label x:Name="UserLoc" FontSize="15" />
+                    <Label x:Name="Distance" FontSize="15" />
+                    <Label x:Name="Accuracy" FontSize="15" />
                     <Label x:Name="IsInSchool" FontSize="15" />
                 </StackLayout>
             </Frame>

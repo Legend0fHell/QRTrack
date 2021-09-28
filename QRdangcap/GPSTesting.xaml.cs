@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using QRdangcap.GoogleDatabase;
+using System;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using QRdangcap.GoogleDatabase;
 
 namespace QRdangcap
 {
@@ -14,6 +10,7 @@ namespace QRdangcap
     public partial class GPSTesting : ContentPage
     {
         public Location School = new Location();
+
         public GPSTesting()
         {
             InitializeComponent();

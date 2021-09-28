@@ -1,12 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QRdangcap.RestView"
-             xmlns:schedule="clr-namespace:Syncfusion.SfSchedule.XForms;assembly=Syncfusion.SfSchedule.XForms">
+<ContentPage
+    x:Class="QRdangcap.RestView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:schedule="clr-namespace:Syncfusion.SfSchedule.XForms;assembly=Syncfusion.SfSchedule.XForms"
+    Title="Quản lý ngày nghỉ">
     <ContentPage.Content>
         <RefreshView x:Name="RefreshingView" Refreshing="RefreshView_Refreshing">
             <ScrollView>
-                <StackLayout>
+                <StackLayout Margin="0,10,0,0">
+                    <Frame
+                        Margin="10,10,10,0"
+                        Padding="0"
+                        CornerRadius="10"
+                        HasShadow="True"
+                        HeightRequest="70"
+                        VerticalOptions="Start">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </Frame.GestureRecognizers>
+                        <StackLayout Margin="10,0">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="20"
+                                Opacity="80"
+                                Text="Cấu hình nâng cao" />
+                            <Label
+                                Margin="0,-5,0,0"
+                                FontSize="15"
+                                Text="Nhấn vào đây để đặt ngày nghỉ nhanh." />
+                        </StackLayout>
+                    </Frame>
+
                     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                         <schedule:SfSchedule
                             x:Name="Schedule"
@@ -22,20 +47,19 @@
                                     ColorMapping="Color"
                                     EndTimeMapping="To"
                                     IsAllDayMapping="AllDay"
-                                    StartTimeMapping="From"/>
+                                    StartTimeMapping="From" />
                             </schedule:SfSchedule.AppointmentMapping>
                             <schedule:SfSchedule.MonthViewSettings>
                                 <schedule:MonthViewSettings
-                                    AppointmentDisplayMode="Appointment"
                                     AgendaViewHeight="400"
+                                    AppointmentDisplayMode="Appointment"
                                     ShowAgendaView="false"
-                                    ShowWeekNumber="true">
-                                </schedule:MonthViewSettings>
+                                    ShowWeekNumber="true" />
                             </schedule:SfSchedule.MonthViewSettings>
                         </schedule:SfSchedule>
                     </Grid>
-        </StackLayout>
-        </ScrollView>
+                </StackLayout>
+            </ScrollView>
         </RefreshView>
     </ContentPage.Content>
 </ContentPage>

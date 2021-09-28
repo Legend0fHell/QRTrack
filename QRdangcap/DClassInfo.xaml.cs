@@ -20,10 +20,13 @@ namespace QRdangcap
             {
                 case 1:
                     return Brush.Green;
+
                 case 2:
                     return Brush.Orange;
+
                 case 3:
                     return Brush.Magenta;
+
                 default:
                     return Brush.Red;
             }
@@ -44,6 +47,7 @@ namespace QRdangcap
         public string globalClrCheck = "";
         public bool ForcedReload { get; set; }
         public bool UpdateStat { get; set; }
+
         public DClassInfo(string Clr)
         {
             InitializeComponent();
@@ -63,11 +67,13 @@ namespace QRdangcap
             UpdateStat = true;
             RefreshAll.IsRefreshing = true;
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
             RefreshAll.IsRefreshing = true;
         }
+
         private async void ClrList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.CurrentSelection.FirstOrDefault() is UserListForm UsrUserChose)
@@ -122,6 +128,7 @@ namespace QRdangcap
             UpdateStat = true;
             RefreshAll.IsRefreshing = true;
         }
+
         private void FilterMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (globalSortStrat != -1)

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Text;
 using Xamarin.Forms;
 
 namespace QRdangcap.DatabaseModel
@@ -12,9 +9,11 @@ namespace QRdangcap.DatabaseModel
         private string fileName;
         private string imageIcon;
         private ObservableCollection<File> files;
+
         public Folder()
         {
         }
+
         public ObservableCollection<File> Files
         {
             get { return files; }
@@ -24,6 +23,7 @@ namespace QRdangcap.DatabaseModel
                 RaisedOnPropertyChanged("SubFiles");
             }
         }
+
         public string FileName
         {
             get { return fileName; }
@@ -33,6 +33,7 @@ namespace QRdangcap.DatabaseModel
                 RaisedOnPropertyChanged("FileName");
             }
         }
+
         public string ImageIcon
         {
             get { return imageIcon; }
@@ -50,14 +51,17 @@ namespace QRdangcap.DatabaseModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(_PropertyName));
         }
     }
+
     public class File : INotifyPropertyChanged
     {
         private string fileName;
         private ImageSource imageIcon;
         private ObservableCollection<SubFile> subFiles;
+
         public File()
         {
         }
+
         public ObservableCollection<SubFile> SubFiles
         {
             get { return subFiles; }
@@ -77,6 +81,7 @@ namespace QRdangcap.DatabaseModel
                 RaisedOnPropertyChanged("FileName");
             }
         }
+
         public ImageSource ImageIcon
         {
             get { return imageIcon; }
@@ -94,13 +99,16 @@ namespace QRdangcap.DatabaseModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(_PropertyName));
         }
     }
+
     public class SubFile : INotifyPropertyChanged
     {
         private string fileName;
         private ImageSource imageIcon;
+
         public SubFile()
         {
         }
+
         public string FileName
         {
             get { return fileName; }
@@ -110,6 +118,7 @@ namespace QRdangcap.DatabaseModel
                 RaisedOnPropertyChanged("FolderName");
             }
         }
+
         public ImageSource ImageIcon
         {
             get { return imageIcon; }

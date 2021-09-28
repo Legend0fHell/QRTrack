@@ -2,8 +2,7 @@
 <ContentPage
     x:Class="QRdangcap.ReportGen"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:QRdangcap.DatabaseModel">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <!--
         xmlns:sfTreeView="clr-namespace:Syncfusion.XForms.TreeView;assembly=Syncfusion.SfTreeView.XForms">
         xmlns:treeviewengine="clr-namespace:Syncfusion.TreeView.Engine;assembly=Syncfusion.SfTreeView.XForms">
@@ -13,7 +12,7 @@
             <!--
             <Grid Margin="0" RowSpacing="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <sfTreeView:SfTreeView x:Name="treeView"
                              ItemHeight="40"
@@ -23,8 +22,8 @@
                              ItemsSource="{Binding Folders}"
                              AutoExpandMode="AllNodesExpanded">
                     <sfTreeView:SfTreeView.HierarchyPropertyDescriptors>
-                        <treeviewengine:HierarchyPropertyDescriptor TargetType="{x:Type local:Folder}" ChildPropertyName="Files"/>
-                        <treeviewengine:HierarchyPropertyDescriptor TargetType="{x:Type local:File}" ChildPropertyName="SubFiles"/>
+                        <treeviewengine:HierarchyPropertyDescriptor TargetType="{x:Type local:Folder}" ChildPropertyName="Files" />
+                        <treeviewengine:HierarchyPropertyDescriptor TargetType="{x:Type local:File}" ChildPropertyName="SubFiles" />
                     </sfTreeView:SfTreeView.HierarchyPropertyDescriptors>
                     <sfTreeView:SfTreeView.ItemTemplate>
                         <DataTemplate>
@@ -46,7 +45,7 @@
                                                VerticalOptions="Center"
                                                HorizontalOptions="Center"
                                                HeightRequest="35"
-                                               WidthRequest="35"/>
+                                               WidthRequest="35" />
                                             </Grid>
                                             <Grid Grid.Column="1"
                                               RowSpacing="1"
@@ -56,7 +55,7 @@
                                                    Text="{Binding FileName}"
                                                    TextColor="Black"
                                                    VerticalTextAlignment="Center"
-                                                   FontSize="16"/>
+                                                   FontSize="16" />
                                             </Grid>
                                         </Grid>
                                     </Grid>

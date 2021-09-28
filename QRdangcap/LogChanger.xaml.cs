@@ -28,7 +28,7 @@ namespace QRdangcap
             OnTime.IsChecked = false;
             LateTime.IsChecked = false;
             // TODO: Changeable interval via google sheets.
-            if(UserData.StudentPriv >= 2)
+            if (UserData.StudentPriv >= 2)
             {
                 OnTime.IsEnabled = true;
                 LateTime.IsEnabled = true;
@@ -39,7 +39,7 @@ namespace QRdangcap
             {
                 OnTime.IsEnabled = false;
                 LateTime.IsEnabled = false;
-                if(logList.LoginDate.AddMinutes(10) >= System.DateTime.Now)
+                if (logList.LoginDate.AddMinutes(10) >= System.DateTime.Now)
                 {
                     StMistake.IsReadOnly = false;
                     EditButton.IsVisible = true;

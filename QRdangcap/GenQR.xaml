@@ -3,8 +3,8 @@
     x:Class="QRdangcap.GenQR"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
     xmlns:zxing1="clr-namespace:ZXing.Common;assembly=zxing"
+    xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
     Title="Tạo mã QR">
     <ContentPage.Content>
         <RefreshView x:Name="RefreshingView">

@@ -43,7 +43,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             <Button x:Name="LoadMoreData" Text="Nhấn để tải thêm" Clicked="LoadMoreData_Clicked" VerticalOptions="Center" HorizontalOptions="FillAndExpand"
-                    IsVisible="{Binding IsVisi}"/>
+                    IsVisible="{Binding IsVisi}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,10 +17,12 @@ namespace QRdangcap
         private readonly RestViewViewModel ViewModel;
         public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public List<int> ListOffDay = new List<int>();
+
         public RestView()
         {
             InitializeComponent();
             Schedule.CellTapped += Schedule_CellTapped;
+
             ViewModel = new RestViewViewModel();
             BindingContext = ViewModel;
             RefreshingView.IsRefreshing = true;
@@ -39,8 +39,8 @@ namespace QRdangcap
             OverwritePopup.PopupView.PopupStyle.OverlayColor = Color.Black;
             OverwritePopup.PopupView.PopupStyle.OverlayOpacity = 0.35;
             OverwritePopup.BackgroundColor = new Color(230, 230, 230);
-            OverwritePopup.PopupView.HeightRequest = 200;
-            Switch RestDayState = new Switch { IsToggled = !ListOffDay.Contains(e.Datetime.DayOfYear), HorizontalOptions=LayoutOptions.EndAndExpand };
+            OverwritePopup.PopupView.HeightRequest = 150;
+            Switch RestDayState = new Switch { IsToggled = ListOffDay.Contains(e.Datetime.DayOfYear), HorizontalOptions = LayoutOptions.EndAndExpand, VerticalOptions = LayoutOptions.StartAndExpand};
             DataTemplate contentTemplateView = new DataTemplate(() =>
             {
                 StackLayout popupContent = new StackLayout()
@@ -49,7 +49,7 @@ namespace QRdangcap
                     Orientation = StackOrientation.Horizontal,
                     Children =
                     {
-                        new Label {Text = "Tính điểm ngày này?", Margin = new Thickness(10,0,0,-10), HorizontalTextAlignment=TextAlignment.Start},
+                        new Label {Text = "Ngày nghỉ?", Margin = new Thickness(10,0,0,-10), HorizontalTextAlignment=TextAlignment.Start},
                         RestDayState,
                     }
                 };
@@ -67,13 +67,13 @@ namespace QRdangcap
                 {
                     Mode = "14",
                     Contents = "3",
-                    Contents2 = RestDayState.IsToggled ? "1" : "0",
+                    Contents2 = RestDayState.IsToggled ? "0" : "1",
                     ContentStartTime = e.Datetime.Date.DayOfYear,
                     ContentEndTime = e.Datetime.Date.DayOfYear,
                 });
                 if (response.Status == "SUCCESS")
                 {
-                    if(!RestDayState.IsToggled && !ListOffDay.Contains(e.Datetime.DayOfYear))
+                    if (RestDayState.IsToggled && !ListOffDay.Contains(e.Datetime.DayOfYear))
                     {
                         ListOffDay.Add(e.Datetime.DayOfYear);
                         RestDayForm TmpForm = new RestDayForm()
@@ -84,7 +84,7 @@ namespace QRdangcap
                         };
                         ViewModel.Schedules.Add(TmpForm);
                     }
-                    else if (RestDayState.IsToggled && ListOffDay.Contains(e.Datetime.DayOfYear))
+                    else if (!RestDayState.IsToggled && ListOffDay.Contains(e.Datetime.DayOfYear))
                     {
                         ListOffDay.Remove(e.Datetime.DayOfYear);
                         RestDayForm TmpForm = new RestDayForm()
@@ -129,9 +129,15 @@ namespace QRdangcap
             ViewModel.Schedules = ScheduleTmp;
             RefreshingView.IsRefreshing = false;
         }
+
         private void RefreshView_Refreshing(object sender, EventArgs e)
         {
             GetRestDay();
+        }
+
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new RestDay());
         }
     }
 }

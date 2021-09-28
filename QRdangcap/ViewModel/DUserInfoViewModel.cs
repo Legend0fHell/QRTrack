@@ -12,6 +12,7 @@ namespace QRdangcap.ViewModel
         public string _RetrieveLog = "Đang lấy dữ liệu...";
         public bool _IsVisi = false;
         public bool _IsEditAllowed = false;
+
         public ObservableCollection<LogListForm> LogListFirebase
         {
             get => _LogListFirebase;
@@ -31,6 +32,7 @@ namespace QRdangcap.ViewModel
                 OnPropertyChanged(nameof(RetrieveLog));
             }
         }
+
         public bool IsVisi
         {
             get => _IsVisi;
@@ -40,6 +42,7 @@ namespace QRdangcap.ViewModel
                 OnPropertyChanged(nameof(IsVisi));
             }
         }
+
         public bool IsEditAllowed
         {
             get => _IsEditAllowed;
@@ -49,6 +52,7 @@ namespace QRdangcap.ViewModel
                 OnPropertyChanged(nameof(IsEditAllowed));
             }
         }
+
         private void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

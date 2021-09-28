@@ -2,9 +2,10 @@
 using QRdangcap.GoogleDatabase;
 using System.Threading.Tasks;
 using Xamanimation;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Xamarin.Essentials;
+
 namespace QRdangcap
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -19,7 +20,7 @@ namespace QRdangcap
             Entry_Password.Text = "";
             ClientVer.Text = "Phiên bản: " + GlobalVariables.ClientVersion + " (Dựng lúc " + GlobalVariables.ClientVersionDate.ToString("G") + ")";
             Init();
-            if(Preferences.Get("PrevSaved", false))
+            if (Preferences.Get("PrevSaved", false))
             {
                 Entry_Username.Text = Preferences.Get("SavedUser", "");
                 Entry_Password.Text = Preferences.Get("SavedPass", "");

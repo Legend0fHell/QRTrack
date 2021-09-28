@@ -12,6 +12,7 @@ namespace QRdangcap
         public static DateTime LatestQRTimeChange { get; set; }
         public static DateTime ExpectedQRTimeChange { get; set; }
         public static bool AutoUpdate { get; set; }
+
         public GenQR()
         {
             InitializeComponent();
@@ -20,20 +21,20 @@ namespace QRdangcap
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     if (AutoUpdate && DateTime.Now >= ExpectedQRTimeChange) UpdateQR();
-                    if (!AutoUpdate) {
+                    if (!AutoUpdate)
+                    {
                         AutoStat.Text = "Tự động lấy (tắt)";
                         ExpectedChangeInterval.Text = "Không tự động cập nhật mã QR.";
                     }
                     else
                     {
                         AutoStat.Text = "Tự động lấy (bật)";
-                        if(!RefreshingView.IsRefreshing)
+                        if (!RefreshingView.IsRefreshing)
                         {
                             var Remaining = ExpectedQRTimeChange - DateTime.Now;
                             string RemainingTxt = Remaining.ToString(@"hh\:mm\:ss");
                             ExpectedChangeInterval.Text = "Tạo mã QR mới trong " + RemainingTxt + ".";
                         }
-
                     }
                 });
                 return true;
@@ -66,6 +67,7 @@ namespace QRdangcap
             ExpectedQRTimeChange = LatestQRTimeChange.AddMinutes(response.Message1);
             RefreshingView.IsRefreshing = false;
         }
+
         public void Button2_Clicked(object sender, EventArgs e)
         {
             UpdateQR();
