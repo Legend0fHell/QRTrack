@@ -91,16 +91,19 @@
     <PackageReference Include="Syncfusion.Xamarin.SfProgressBar.Android">
       <Version>19.2.0.62</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.XlsIO">
+      <Version>19.2.0.62</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Annotation">
-      <Version>1.2.0.1</Version>
+      <Version>1.2.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Core">
-      <Version>1.6.0.1</Version>
+      <Version>1.6.0.3</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2125" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
     <PackageReference Include="Xamarin.GooglePlayServices.Base">
-      <Version>117.6.0</Version>
+      <Version>117.6.0.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +111,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveAndroid.cs" />
     <Compile Include="Toast_Android.cs" />
   </ItemGroup>
   <ItemGroup>

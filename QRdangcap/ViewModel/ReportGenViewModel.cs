@@ -8,9 +8,9 @@ namespace QRdangcap.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<Folder> folders = new ObservableCollection<Folder>();
+        public ObservableCollection<LogListForm> folders = new ObservableCollection<LogListForm>();
 
-        public ObservableCollection<Folder> Folders
+        public ObservableCollection<LogListForm> Folders
         {
             get { return folders; }
             set
@@ -24,8 +24,5 @@ namespace QRdangcap.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-
-        public ObservableCollection<File> Files { get; set; }
-        public ObservableCollection<SubFile> SubFiles { get; set; }
     }
 }
