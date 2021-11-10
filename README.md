@@ -4,7 +4,11 @@
 - **Bản dựng mới nhất**: B040-2 (v0.40-2-beta) @ 10.11.2021
 - **Tiến độ dự án**: **85%** (phase Beta: **95%**).
 - Để sử dụng một vài API và Package, file nguồn có chứa License Key và rất nhiều tài liệu định danh cá nhân, để tránh lộ lọt thông tin, dự án sẽ không open-source.
-- Dự án tuân thủ theo giấy phép MIT.
+
+## Mục tiêu hiện tại (Bản dựng tiếp theo: D041)
+- ~~Cập nhật lại Tên gọi, Logo.~~
+- Chuyển toàn bộ hệ thống từ Realtime Database sang Cloud Firestore.
+- Cập nhật Hướng dẫn sử dụng.
 
 ## Cảnh báo:
 - Code vô cùng rối rắm, như đĩa mỳ Ý.
