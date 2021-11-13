@@ -1,6 +1,4 @@
-﻿using Firebase.Database;
-using Firebase.Database.Query;
-using Plugin.CloudFirestore;
+﻿using Plugin.CloudFirestore;
 using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using SQLite;

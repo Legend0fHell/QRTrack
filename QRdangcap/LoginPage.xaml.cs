@@ -3,7 +3,6 @@ using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using System;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Xamanimation;
 using Xamarin.Essentials;
@@ -199,7 +198,7 @@ namespace QRdangcap
             isInstantLogin = 0;
             LoginStat.Text = "Đang tải dữ liệu của trường... (2/6)";
             await instance.CheckUserTableExist();
-            
+
             try
             {
                 using (var ntp = new NtpClient(Dns.GetHostAddresses("pool.ntp.org")[0]))
@@ -209,7 +208,7 @@ namespace QRdangcap
             {
                 UserData.OffsetWithNIST = TimeSpan.Zero;
             }
-            if(UserData.OffsetWithNIST.Duration() >= new TimeSpan(0,30,0))
+            if (UserData.OffsetWithNIST.Duration() >= new TimeSpan(0, 30, 0))
             {
                 await DisplayAlert("Thông báo", $"Đồng hồ trên máy của bạn đang bị lệch {(int)UserData.OffsetWithNIST.Duration().TotalSeconds} giây so với thời gian thực. Vui lòng chỉnh lại để tránh lỗi phát sinh.", "OK");
             }

@@ -51,11 +51,10 @@
                         VerticalOptions="Start"
                         Margin="10,0">
                 <StackLayout VerticalOptions="Center" Margin="10,0">
-                    <Label x:Name="Status" Text="Trạng thái: Sẵn sàng"  FontSize="17" VerticalOptions="Center" HorizontalTextAlignment="Start" Margin="5,0"/>
-                    <Label x:Name="TimeExec" Text="Thời gian: 0s" FontSize="17" VerticalOptions="Center" HorizontalTextAlignment="Start" Margin="5,0"/>
+                    <Label x:Name="Status" Text="Trạng thái: Sẵn sàng"  FontSize="17" VerticalOptions="Center" HorizontalTextAlignment="Start" Margin="5,0" />
+                    <Label x:Name="TimeExec" Text="Thời gian: 0s" FontSize="17" VerticalOptions="Center" HorizontalTextAlignment="Start" Margin="5,0" />
                 </StackLayout>
             </Frame>
-            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

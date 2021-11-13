@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Plugin.CloudFirestore;
+﻿using Plugin.CloudFirestore;
 using Plugin.CloudFirestore.Attributes;
 using QRdangcap.GoogleDatabase;
 using System;
@@ -28,9 +27,9 @@ namespace QRdangcap
     {
         [Id]
         public string Keys { get; set; }
+
         [ServerTimestamp(CanReplace = false)]
         public Timestamp Timestamp { get; set; }
-        
     }
 
     public partial class FirebaseLogTesting : ContentPage
@@ -51,7 +50,7 @@ namespace QRdangcap
                 Sending.Text = $"Đang gửi: {i}";
 
                 Random NoError = new Random();
-                instance.Firebase_SendLog(i, Error.Substring(0, NoError.Next(0,3)));
+                instance.Firebase_SendLog(i, Error.Substring(0, NoError.Next(0, 3)));
             }
         }
     }

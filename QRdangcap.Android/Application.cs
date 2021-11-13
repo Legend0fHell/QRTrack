@@ -1,8 +1,8 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Runtime;
-using System;
 using Plugin.FirebasePushNotification;
+using System;
 
 namespace QRdangcap.Droid
 {
@@ -32,7 +32,7 @@ namespace QRdangcap.Droid
 #if DEBUG
             FirebasePushNotificationManager.Initialize(this, true);
 #else
-              FirebasePushNotificationManager.Initialize(this,false);
+            FirebasePushNotificationManager.Initialize(this, false);
 #endif
 
             //Handle notification when app is closed here

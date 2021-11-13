@@ -1,19 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-
-
-using Xamarin.Forms;
-using UIKit;
 using QuickLook;
+using System;
+using System.IO;
+using UIKit;
+using Xamarin.Forms;
 
 [assembly: Dependency(typeof(SaveIOS))]
 
-    class SaveIOS: ISave
-    {
+internal class SaveIOS : ISave
+{
     //Method to save document as a file and view the saved document
     public void SaveAndView(string filename, string contentType, MemoryStream stream)
     {

@@ -40,7 +40,7 @@ namespace QRdangcap
             OverwritePopup.PopupView.PopupStyle.OverlayOpacity = 0.35;
             OverwritePopup.BackgroundColor = new Color(230, 230, 230);
             OverwritePopup.PopupView.HeightRequest = 150;
-            Switch RestDayState = new Switch { IsToggled = ListOffDay.Contains(e.Datetime.DayOfYear), HorizontalOptions = LayoutOptions.EndAndExpand, VerticalOptions = LayoutOptions.StartAndExpand};
+            Switch RestDayState = new Switch { IsToggled = ListOffDay.Contains(e.Datetime.DayOfYear), HorizontalOptions = LayoutOptions.EndAndExpand, VerticalOptions = LayoutOptions.StartAndExpand };
             DataTemplate contentTemplateView = new DataTemplate(() =>
             {
                 StackLayout popupContent = new StackLayout()

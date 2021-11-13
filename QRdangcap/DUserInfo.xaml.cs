@@ -1,13 +1,9 @@
-﻿using Firebase.Database;
-using Firebase.Database.Query;
-using Plugin.CloudFirestore;
+﻿using Plugin.CloudFirestore;
 using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using QRdangcap.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,11 +11,11 @@ using Xamarin.Forms.Xaml;
 namespace QRdangcap
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    // Today status.
     public partial class DUserInfo : ContentPage
     {
         //public static FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
         public UserListForm StChose;
+
         private readonly DUserInfoViewModel ViewModel;
         public IListenerRegistration Subscriber;
         public bool FirstTime = true;
@@ -53,6 +49,7 @@ namespace QRdangcap
                 LoginStatus = inbound.LoginStatus,
             };
         }
+
         public void UpdateList(IQuerySnapshot snapshot, int StartingPoint)
         {
             foreach (var documentChange in snapshot.DocumentChanges)
@@ -67,10 +64,12 @@ namespace QRdangcap
                         ++cntLoaded;
                         LogList.ScrollTo(Math.Max(StartingPoint - 1, 0));
                         break;
+
                     case DocumentChangeType.Modified:
                         int index2 = ViewModel.LogListFirebase.IndexOf(ViewModel.LogListFirebase.Where(x => x.Keys == documentAdded.Keys).FirstOrDefault());
                         if (index2 >= 0) ViewModel.LogListFirebase[index2] = documentAdded;
                         break;
+
                     case DocumentChangeType.Removed:
                         int index3 = ViewModel.LogListFirebase.IndexOf(ViewModel.LogListFirebase.Where(x => x.Keys == documentAdded.Keys).FirstOrDefault());
                         if (index3 >= 0) ViewModel.LogListFirebase.RemoveAt(index3);
@@ -81,6 +80,7 @@ namespace QRdangcap
                 ViewModel.IsVisi = cntLoaded >= ExpectLoadedLog;
             }
         }
+
         public void UpdateLog(int StartingPoint = 0)
         {
             if (FilterMode.SelectedIndex == 0)
@@ -118,7 +118,6 @@ namespace QRdangcap
                         }
                     });
                 }
-
             }
             else
             {

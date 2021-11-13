@@ -1,13 +1,4 @@
-﻿using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Android.Widget;
 using QRdangcap.Droid;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Toast_Android))]
@@ -20,6 +11,7 @@ namespace QRdangcap.Droid
         {
             Android.Widget.Toast.MakeText(Android.App.Application.Context, message, ToastLength.Long).Show();
         }
+
         public void ShowShort(string message)
         {
             Android.Widget.Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short).Show();
