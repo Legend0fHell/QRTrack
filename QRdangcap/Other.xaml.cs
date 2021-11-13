@@ -34,7 +34,15 @@ namespace QRdangcap
             IsGPSRequired_Switch.IsToggled = true;
             BindingContext = this;
         }
-
+        protected override bool OnBackButtonPressed()
+        {
+            if (Navigation.NavigationStack.Count == 1)
+            {
+                _ = Shell.Current.GoToAsync($"//main/MainPage", true);
+                return true;
+            }
+            else return base.OnBackButtonPressed();
+        }
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -160,7 +168,16 @@ namespace QRdangcap
             UserData.SchoolLat = response2.Latitude;
             UserData.SchoolLon = response2.Longitude;
             UserData.SchoolDist = response2.Distance;
-            await instance.UpdateCurLocation();
+            if (!DependencyService.Get<IGpsDependencyService>().IsGpsEnable())
+            {
+                await DisplayAlert("Thông báo", "GPS chưa được bật. Nhấn OK để kích hoạt GPS trước khi sử dụng.", "OK");
+                DependencyService.Get<IGpsDependencyService>().OpenSettings();
+                return;
+            }
+            else
+            {
+                await instance.UpdateCurLocation();
+            }
             UserData.StartTime = response2.StartTime;
             UserData.EndTime = response2.EndTime;
             UserData.LateTime = response2.LateTime;
@@ -178,9 +195,12 @@ namespace QRdangcap
 
         private async void Logout_Tapped(object sender, EventArgs e)
         {
-            Preferences.Clear();
-            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-            UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
+            if(await DisplayActionSheet("Bạn có chắc chắn muốn đăng xuất không?", "Có", "Không") == "Có")
+            {
+                Preferences.Clear();
+                await Shell.Current.GoToAsync($"//{nameof(LoginPage)}", true);
+                UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
+            }
         }
 
         private void UpdateCheck_Tapped(object sender, EventArgs e)
@@ -274,12 +294,15 @@ namespace QRdangcap
             await Navigation.PushAsync(new AbsentLog());
         }
 
-        private void DelDBLocal_Tapped(object sender, EventArgs e)
+        private async void DelDBLocal_Tapped(object sender, EventArgs e)
         {
-            SQLiteConnection db = new SQLiteConnection(GlobalVariables.localLogHistDatabasePath);
-            db.CreateTable<LogListForm>();
-            db.DeleteAll<LogListForm>();
-            DependencyService.Get<IToast>().ShowShort("Đã xóa!");
+            if (await DisplayActionSheet("Bạn có chắc chắn muốn xóa dữ liệu không?", "Có", "Không") == "Có")
+            {
+                SQLiteConnection db = new SQLiteConnection(GlobalVariables.localLogHistDatabasePath);
+                db.CreateTable<LogListForm>();
+                db.DeleteAll<LogListForm>();
+                DependencyService.Get<IToast>().ShowShort("Đã xóa!");
+            }
         }
 
         private async void GPSTest_Tapped(object sender, EventArgs e)

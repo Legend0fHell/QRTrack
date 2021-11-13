@@ -2,7 +2,13 @@
 <ContentPage
     x:Class="QRdangcap.DUserInfo"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:QRdangcap"
+    Title="Thông tin Người dùng">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:MistakeConverter x:Key="mistakeConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout BackgroundColor="#f2f4f6">
             <Frame HeightRequest="75" HorizontalOptions="FillAndExpand">
@@ -88,7 +94,7 @@
                                         Margin="10,-5,0,0"
                                         FontSize="12"
                                         LineBreakMode="TailTruncation"
-                                        Text="{Binding Mistake}"
+                                        Text="{Binding Mistake, Converter={StaticResource mistakeConverter}}"
                                         TextColor="Red"
                                         VerticalOptions="Center" />
                                     <Label

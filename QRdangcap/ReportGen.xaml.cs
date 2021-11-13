@@ -36,6 +36,7 @@ namespace QRdangcap
             BindingContext = ViewModel;
             var db = new SQLiteConnection(GlobalVariables.localUserDatabasePath);
             ClassList = db.Table<UserListForm>().Select(x => x.StClass).AsParallel().Distinct().ToList();
+            db.Dispose();
             ClassList.Insert(0, "Toàn bộ");
             ClassList.Remove("Debug");
             ClassChose.ItemsSource = ClassList;
@@ -177,10 +178,11 @@ namespace QRdangcap
                 worksheet.Range["C2:E2"].Merge();
                 worksheet.Range["C1"].Text = $"Báo cáo của {ClassReport}";
                 worksheet.Range["C2"].Text = $"Thời gian báo cáo: Từ {BeginTime:d} đến {EndTime:d}";
+                worksheet.Range[1, 1, curRow, 10].CellStyle.Font.FontName = "Calibri";
                 worksheet = workbook.Worksheets[1];
                 worksheet.Name = "Chi tiết";
-                string[] header = { "", "ID", "Họ và tên", "Lớp", "Lỗi", "", "Thời gian báo cáo", "", "Người báo cáo", "Trạng thái" };
-                int[] headerSize = { 20, 5, 26, 7, 40, 12, 25, 4, 30, 9 };
+                string[] header = { "", "ID", "Họ và tên", "Lớp", "Lỗi", "", "Thời gian báo cáo", "", "Người báo cáo", "Trạng thái"};
+                int[] headerSize = { 20, 5, 26, 7, 40, 12, 25, 4, 30, 9};
                 for (int i = 0; i < header.Length; i++)
                 {
                     worksheet.Range[3, i + 1].Text = header[i];
@@ -204,11 +206,11 @@ namespace QRdangcap
                 worksheet.Range["C2:E2"].Merge();
                 worksheet.Range["C1"].Text = $"Báo cáo của {ClassReport}";
                 worksheet.Range["C2"].Text = $"Thời gian báo cáo: Từ {BeginTime:d} đến {EndTime:d}";
-
+                worksheet.Range[1, 1, ViewModel.Folders.Count + 3, 10].CellStyle.Font.FontName = "Calibri";
                 MemoryStream stream = new MemoryStream();
                 workbook.SaveAs(stream);
                 workbook.Close();
-                DependencyService.Get<ISave>().SaveAndView($"Export {DateTime.Now:dd-MM-yyyy HH-mm}.xls", "application/msexcel", stream);
+                DependencyService.Get<ISave>().SaveAndView($"BaoCao.xls", "application/msexcel", stream);
             }
             excTime.Stop();
             Status.Text = $"Trạng thái: Thành công";

@@ -41,6 +41,16 @@ namespace QRdangcap
             refreshAll.IsRefreshing = true;
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            if (Navigation.NavigationStack.Count == 1)
+            {
+                _ = Shell.Current.GoToAsync($"//main/MainPage", true);
+                return true;
+            }
+            else return base.OnBackButtonPressed();
+        }
+
         public void Init()
         {
             ItemsList = new ObservableRangeCollection<UserListForm>();

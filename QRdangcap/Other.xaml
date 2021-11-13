@@ -236,7 +236,7 @@
                             Source="ic_action_access_time.png" />
                         <Label
                             FontSize="17"
-                            Text="Lịch sử điểm danh của bạn"
+                            Text="Lịch sử điểm danh trên thiết bị"
                             TextColor="Black"
                             VerticalTextAlignment="Center" />
                         <Image
@@ -320,7 +320,7 @@
                             Source="ic_action_delete_forever.png" />
                         <Label
                             FontSize="17"
-                            Text="Xóa lịch sử điểm danh trên máy"
+                            Text="Xóa LS điểm danh trên thiết bị"
                             TextColor="Black"
                             VerticalTextAlignment="Center" />
                         <Image
@@ -385,6 +385,62 @@
                     FontAttributes="Bold"
                     FontSize="20"
                     Opacity="80"
+                    Text="Client" />
+
+                <Frame
+                    x:Name="ClientVerText"
+                    Margin="10,0"
+                    CornerRadius="5"
+                    HeightRequest="20">
+                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image
+                            Margin="0,0,15,0"
+                            Scale="1.5"
+                            Source="ic_action_account_circle.png" />
+                        <StackLayout Margin="0,-10,0,0">
+                            <Label
+                                FontSize="17"
+                                Text="Phiên bản hiện tại"
+                                TextColor="Black"
+                                VerticalTextAlignment="Center" />
+                            <Label
+                                x:Name="ClientVerText_Detail"
+                                Margin="0,-3,0,0"
+                                TextColor="#7f7f7f" />
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+                <Frame
+                    x:Name="UpdateCheck"
+                    Margin="10,0"
+                    CornerRadius="5"
+                    HeightRequest="20">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="UpdateCheck_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image
+                            Margin="0,0,15,0"
+                            Scale="1.5"
+                            Source="ic_action_cloud_download.png" />
+                        <Label
+                            FontSize="17"
+                            Text="Kiểm tra cập nhật"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center" />
+                        <Image
+                            Margin="0,0,-10,0"
+                            HorizontalOptions="EndAndExpand"
+                            Scale="0.7"
+                            Source="ic_action_arrow_forward_ios.png"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </Frame>
+                <Label
+                    Margin="10,15,0,0"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Opacity="80"
                     Text="Tài khoản" />
 
                 <Frame
@@ -438,7 +494,7 @@
                 </Frame>
                 <Frame
                     x:Name="Logout"
-                    Margin="10,0"
+                    Margin="10,0,10,20"
                     CornerRadius="5"
                     HeightRequest="20">
                     <Frame.GestureRecognizers>
@@ -452,63 +508,7 @@
                         <Label
                             FontSize="17"
                             Text="Đăng xuất"
-                            TextColor="Black"
-                            VerticalTextAlignment="Center" />
-                        <Image
-                            Margin="0,0,-10,0"
-                            HorizontalOptions="EndAndExpand"
-                            Scale="0.7"
-                            Source="ic_action_arrow_forward_ios.png"
-                            VerticalOptions="CenterAndExpand" />
-                    </StackLayout>
-                </Frame>
-                <Label
-                    Margin="10,15,0,0"
-                    FontAttributes="Bold"
-                    FontSize="20"
-                    Opacity="80"
-                    Text="Client" />
-
-                <Frame
-                    x:Name="ClientVerText"
-                    Margin="10,0"
-                    CornerRadius="5"
-                    HeightRequest="20">
-                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
-                        <Image
-                            Margin="0,0,15,0"
-                            Scale="1.5"
-                            Source="ic_action_account_circle.png" />
-                        <StackLayout Margin="0,-10,0,0">
-                            <Label
-                                FontSize="17"
-                                Text="Phiên bản hiện tại"
-                                TextColor="Black"
-                                VerticalTextAlignment="Center" />
-                            <Label
-                                x:Name="ClientVerText_Detail"
-                                Margin="0,-3,0,0"
-                                TextColor="#7f7f7f" />
-                        </StackLayout>
-                    </StackLayout>
-                </Frame>
-                <Frame
-                    x:Name="UpdateCheck"
-                    Margin="10,0,10,20"
-                    CornerRadius="5"
-                    HeightRequest="20">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="UpdateCheck_Tapped" />
-                    </Frame.GestureRecognizers>
-                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
-                        <Image
-                            Margin="0,0,15,0"
-                            Scale="1.5"
-                            Source="ic_action_cloud_download.png" />
-                        <Label
-                            FontSize="17"
-                            Text="Kiểm tra cập nhật"
-                            TextColor="Black"
+                            TextColor="Red"
                             VerticalTextAlignment="Center" />
                         <Image
                             Margin="0,0,-10,0"

@@ -43,7 +43,24 @@ namespace QRdangcap
                 UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
             }
         }
-
+        DateTime LastBack = DateTime.Now - new TimeSpan(0,0,5);
+        protected override bool OnBackButtonPressed()
+        {
+            if (Navigation.NavigationStack.Count == 1)
+            {
+                if(DateTime.Now - LastBack <= new TimeSpan(0,0,5))
+                {
+                    return base.OnBackButtonPressed();
+                }
+                else
+                {
+                    DependencyService.Get<IToast>().ShowShort("Nhấn BACK lần nữa để thoát");
+                    LastBack = DateTime.Now;
+                    
+                }
+            }
+            return true;
+        }
         public void InitStaticText()
         {
             // Limit is 14 characters.
@@ -106,9 +123,12 @@ namespace QRdangcap
 
         private async void Logout_Clicked(object sender, EventArgs e)
         {
-            Preferences.Clear();
-            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-            UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
+            if (await DisplayActionSheet("Bạn có chắc chắn muốn đăng xuất không?", "Có", "Không") == "Có")
+            {
+                Preferences.Clear();
+                await Shell.Current.GoToAsync($"//{nameof(LoginPage)}", true);
+                UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
+            }
         }
 
         public void Button_Clicked(object sender, System.EventArgs e)
@@ -168,7 +188,16 @@ namespace QRdangcap
                         LocationTmpUpdating();
                         async void LocationTmpUpdating()
                         {
-                            await instance.UpdateCurLocation();
+                            if (!DependencyService.Get<IGpsDependencyService>().IsGpsEnable())
+                            {
+                                await DisplayAlert("Thông báo", "GPS chưa được bật. Nhấn OK để kích hoạt GPS trước khi sử dụng.", "OK");
+                                DependencyService.Get<IGpsDependencyService>().OpenSettings();
+                                return;
+                            }
+                            else
+                            {
+                                await instance.UpdateCurLocation();
+                            }
                             if (UserData.IsLastTimeMock)
                             {
                                 await DisplayAlert("Điểm danh thất bại!", "Phát hiện GPS đang bị làm giả!", "OK");
@@ -245,12 +274,12 @@ namespace QRdangcap
 
         private async void C02_Tapped(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync($"//main/QueryInfo");
+            await Shell.Current.GoToAsync($"//main/QueryInfo", true);
         }
 
         private async void C10_Tapped(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync($"//main/RealStats");
+            await Shell.Current.GoToAsync($"//main/RealStats", true);
         }
 
         private async void C11_Tapped(object sender, EventArgs e)
@@ -260,7 +289,7 @@ namespace QRdangcap
 
         private async void C12_Tapped(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync($"//main/Other");
+            await Shell.Current.GoToAsync($"//main/Other", true);
         }
 
         private async void C20_Tapped(object sender, EventArgs e)

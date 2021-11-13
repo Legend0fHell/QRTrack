@@ -38,7 +38,15 @@ namespace QRdangcap
             });
             BindingContext = this;
         }
-
+        protected override bool OnBackButtonPressed()
+        {
+            if (Navigation.NavigationStack.Count == 1)
+            {
+                _ = Shell.Current.GoToAsync($"//main/MainPage", true);
+                return true;
+            }
+            else return base.OnBackButtonPressed();
+        }
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -146,7 +154,16 @@ namespace QRdangcap
             if ((!UserData.IsAtSchool && GlobalVariables.IsGPSRequired)
                 || (UserData.IsAtSchool && DateTime.Now >= UserData.LastGPSUpdate.AddMinutes(5) && GlobalVariables.IsGPSRequired))
             {
-                await instance.UpdateCurLocation();
+                if (!DependencyService.Get<IGpsDependencyService>().IsGpsEnable())
+                {
+                    await DisplayAlert("Thông báo", "GPS chưa được bật. Nhấn OK để kích hoạt GPS trước khi sử dụng.", "OK");
+                    DependencyService.Get<IGpsDependencyService>().OpenSettings();
+                    return;
+                }
+                else
+                {
+                    await instance.UpdateCurLocation();
+                }
                 if (UserData.IsLastTimeMock)
                 {
                     await DisplayAlert("Điểm danh thất bại!", "Phát hiện GPS đang bị làm giả!", "OK");
@@ -292,7 +309,16 @@ namespace QRdangcap
                         LocationTmpUpdating();
                         async void LocationTmpUpdating()
                         {
-                            await instance.UpdateCurLocation();
+                            if (!DependencyService.Get<IGpsDependencyService>().IsGpsEnable())
+                            {
+                                await DisplayAlert("Thông báo", "GPS chưa được bật. Nhấn OK để kích hoạt GPS trước khi sử dụng.", "OK");
+                                DependencyService.Get<IGpsDependencyService>().OpenSettings();
+                                return;
+                            }
+                            else
+                            {
+                                await instance.UpdateCurLocation();
+                            }
                             if (UserData.IsLastTimeMock)
                             {
                                 await DisplayAlert("Điểm danh thất bại!", "Phát hiện GPS đang bị làm giả!", "OK");

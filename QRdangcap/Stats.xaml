@@ -1,9 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:QRdangcap"
              x:Class="QRdangcap.Stats"
              Title="Lịch sử quét toàn hệ thống"
              x:Name="PageRoot">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:MistakeConverter x:Key="mistakeConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout BackgroundColor="#f2f4f6">
             <Label Text="{Binding RetrieveLog}" FontSize="17" Margin="10,5" FontAttributes="Bold" />
@@ -29,7 +35,7 @@
                                 <StackLayout Grid.Column="0" Orientation="Vertical" Margin="0,0" HorizontalOptions="Start" VerticalOptions="Center">
                                     <Label Text="{Binding StName}" TextColor="Black" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" Margin="10,5,0,0" LineBreakMode="HeadTruncation" />
                                     <Label Text="{Binding StClass}" TextColor="#757575" FontSize="12" VerticalOptions="Center" Margin="10,-5,0,0" />
-                                    <Label Text="{Binding Mistake}" TextColor="Red" FontSize="12" VerticalOptions="Center" Margin="10,-5,0,0" LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding Mistake, Converter={StaticResource mistakeConverter}}" TextColor="Red" FontSize="12" VerticalOptions="Center" Margin="10,-5,0,0" LineBreakMode="TailTruncation" />
                                     <Label Text="{Binding RpString}" TextColor="Magenta" FontSize="12" VerticalOptions="Center" Margin="10,-5,0,0" LineBreakMode="TailTruncation" />
                                 </StackLayout>
                                 <StackLayout Grid.Column="1" Orientation="Vertical" Margin="0,0" HorizontalOptions="End" VerticalOptions="Start">

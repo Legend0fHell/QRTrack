@@ -4,6 +4,7 @@ using QRdangcap.GoogleDatabase;
 using QRdangcap.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,6 +12,25 @@ using Xamarin.Forms.Xaml;
 namespace QRdangcap
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
+    internal class MistakeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            switch (value)
+            {
+                case "NONE":
+                    return "";
+
+                default:
+                    return value;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public partial class Stats : ContentPage
     {
         private readonly StatsViewModel ViewModel;

@@ -1,8 +1,7 @@
-﻿using GuerrillaNtp;
-using QRdangcap.DatabaseModel;
+﻿using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using System;
-using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xamanimation;
 using Xamarin.Essentials;
@@ -136,14 +135,14 @@ namespace QRdangcap
                         UserData.IsHidden = response.Message1 == 1;
                         LoginSucceeded();
                     }
-                    else LoginFailed("");
+                    else LoginFailed();
                 }
-                else LoginFailed("");
+                else LoginFailed();
             }
-            else LoginFailed("");
+            else LoginFailed();
         }
 
-        private void LoginFailed(string exc)
+        private void LoginFailed(string exc = "Thất bại! Tên đăng nhập hoặc mật khẩu không đúng.")
         {
             AnimateField();
             void AnimateField()
@@ -183,7 +182,7 @@ namespace QRdangcap
             ActivityIndicator.IsRunning = false;
             Entry_Username.IsReadOnly = false;
             Entry_Password.IsReadOnly = false;
-            DependencyService.Get<IToast>().Show("Thất bại! Tên đăng nhập hoặc mật khẩu không đúng." + exc);
+            DependencyService.Get<IToast>().Show(exc);
         }
 
         private async void LoginSucceeded()
@@ -199,18 +198,24 @@ namespace QRdangcap
             LoginStat.Text = "Đang tải dữ liệu của trường... (2/6)";
             await instance.CheckUserTableExist();
 
-            try
+            using (var client = new HttpClient())
             {
-                using (var ntp = new NtpClient(Dns.GetHostAddresses("pool.ntp.org")[0]))
-                    UserData.OffsetWithNIST = ntp.GetCorrectionOffset();
-            }
-            catch
-            {
-                UserData.OffsetWithNIST = TimeSpan.Zero;
+                try
+                {
+                    var result = client.GetAsync("https://google.com",
+                          HttpCompletionOption.ResponseHeadersRead).Result;
+                    UserData.OffsetWithNIST = (TimeSpan)(result.Headers.Date - DateTimeOffset.Now);
+                }
+                catch
+                {
+                    UserData.OffsetWithNIST = TimeSpan.Zero;
+                }
             }
             if (UserData.OffsetWithNIST.Duration() >= new TimeSpan(0, 30, 0))
             {
                 await DisplayAlert("Thông báo", $"Đồng hồ trên máy của bạn đang bị lệch {(int)UserData.OffsetWithNIST.Duration().TotalSeconds} giây so với thời gian thực. Vui lòng chỉnh lại để tránh lỗi phát sinh.", "OK");
+                LoginFailed("Đăng nhập thất bại!");
+                return;
             }
             LoginStat.Text = "Đang tải dữ liệu của trường... (3/6)";
             UserData.NoUserRanked = await instance.GetGlobalUserRanking();
@@ -226,7 +231,17 @@ namespace QRdangcap
             UserData.SchoolDist = response2.Distance;
             LoginStat.Text = "Đang cập nhật vị trí... (5/6)";
             GlobalVariables.IsGPSRequired = true;
-            await instance.UpdateCurLocation();
+            if (!DependencyService.Get<IGpsDependencyService>().IsGpsEnable())
+            {
+                await DisplayAlert("Thông báo", "GPS chưa được bật. Nhấn OK để kích hoạt GPS trước khi sử dụng ứng dụng.", "OK");
+                DependencyService.Get<IGpsDependencyService>().OpenSettings();
+                LoginFailed("Đăng nhập thất bại!");
+                return;
+            }
+            else
+            {
+                await instance.UpdateCurLocation();
+            }
             UserData.StartTime = response2.StartTime;
             UserData.EndTime = response2.EndTime;
             UserData.LateTime = response2.LateTime;
@@ -282,7 +297,7 @@ namespace QRdangcap
                 });
             }
             DependencyService.Get<IToast>().ShowShort("Đăng nhập thành công!");
-            await Shell.Current.GoToAsync(state: "//main");
+            await Shell.Current.GoToAsync(state: "//main", true);
         }
     }
 }
