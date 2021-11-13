@@ -59,7 +59,7 @@ namespace QRdangcap
             else if (UserData.StudentPriv == 1) Priv.Text = "Xung kích";
             else if (UserData.StudentPriv == 2) Priv.Text = "Giáo viên";
             else if (UserData.StudentPriv == 3) Priv.Text = "Quản trị viên";
-            else Priv.Text = "Hảo hán";
+            else Priv.Text = "Quản trị HT";
             IsHiddenOrNot.Text = "";
             LoginToday.IsVisible = true;
             PersonalRanking.IsVisible = true;

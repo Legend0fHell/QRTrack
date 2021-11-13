@@ -19,12 +19,14 @@
                     Margin="0,70,0,0"
                     HorizontalOptions="Center"
                     VerticalOptions="StartAndExpand">
+                    <!--
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="InstantLoginProcedureBypass" />
                     </StackLayout.GestureRecognizers>
+                    -->
                     <Image
+                        Source="ResourcesImg/logo2.png"
                         HeightRequest="150"
-                        Source="ResourcesImg/logo.jpg"
                         WidthRequest="150" />
                 </StackLayout>
                 <Label
@@ -114,7 +116,7 @@
                 VerticalOptions="EndAndExpand">
                 <Label
                     HorizontalTextAlignment="Center"
-                    Text="Hệ thống Điểm danh Học sinh CYB - Bản Thử nghiệm"
+                    Text="QRTrack - Hệ thống Quản lý Học sinh CYB"
                     TextColor="#c9c9c9"
                     VerticalOptions="CenterAndExpand" />
                 <Label

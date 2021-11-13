@@ -1,5 +1,9 @@
-﻿using QRdangcap.DatabaseModel;
+﻿using GuerrillaNtp;
+using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
+using System;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xamanimation;
 using Xamarin.Essentials;
@@ -18,7 +22,7 @@ namespace QRdangcap
             InitializeComponent();
             Entry_Username.Text = "";
             Entry_Password.Text = "";
-            ClientVer.Text = "Phiên bản: " + GlobalVariables.ClientVersion + " (Dựng lúc " + GlobalVariables.ClientVersionDate.ToString("G") + ")";
+            ClientVer.Text = "Bản dựng: " + GlobalVariables.ClientVersion + " (Dựng lúc " + GlobalVariables.ClientVersionDate.ToString("G") + ")";
             Init();
             if (Preferences.Get("PrevSaved", false))
             {
@@ -51,6 +55,11 @@ namespace QRdangcap
 
         private async void LoginProcedure(object sender, System.EventArgs e)
         {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                await DisplayAlert("Không có kết nối", "Kiểm tra lại kết nối mạng và thử lại.", "OK");
+                return;
+            }
             LoginStat.Text = "Đang đăng nhập... (1/6)";
             AnimateField();
             void AnimateField()
@@ -190,6 +199,20 @@ namespace QRdangcap
             isInstantLogin = 0;
             LoginStat.Text = "Đang tải dữ liệu của trường... (2/6)";
             await instance.CheckUserTableExist();
+            
+            try
+            {
+                using (var ntp = new NtpClient(Dns.GetHostAddresses("pool.ntp.org")[0]))
+                    UserData.OffsetWithNIST = ntp.GetCorrectionOffset();
+            }
+            catch
+            {
+                UserData.OffsetWithNIST = TimeSpan.Zero;
+            }
+            if(UserData.OffsetWithNIST.Duration() >= new TimeSpan(0,30,0))
+            {
+                await DisplayAlert("Thông báo", $"Đồng hồ trên máy của bạn đang bị lệch {(int)UserData.OffsetWithNIST.Duration().TotalSeconds} giây so với thời gian thực. Vui lòng chỉnh lại để tránh lỗi phát sinh.", "OK");
+            }
             LoginStat.Text = "Đang tải dữ liệu của trường... (3/6)";
             UserData.NoUserRanked = await instance.GetGlobalUserRanking();
             LoginStat.Text = "Đang tải dữ liệu của trường... (4/6)";

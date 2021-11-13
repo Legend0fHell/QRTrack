@@ -33,5 +33,6 @@ namespace QRdangcap.GoogleDatabase
         public static DateTime LastGPSUpdate { get; set; }
         public static DateTime LastStatusUpdate { get; set; }
         public static bool ForcedStatusUpdate { get; set; }
+        public static TimeSpan OffsetWithNIST { get; set; }
     }
 }

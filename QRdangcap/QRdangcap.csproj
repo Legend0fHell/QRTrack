@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-    <Product>QR Đẳng Cấp</Product>
+    <Product>QRTrack - Hệ thống Quản lý Học sinh CYB</Product>
     <PackageId>QRdangcap</PackageId>
     <Company>iTeamCYB 2021 - Chuyên Yên Bái</Company>
-    <Authors>Phạm Nhật Quang / Trần Quốc Lân</Authors>
-    <Copyright>(C) 2021 Phạm Nhật Quang / Trần Quốc Lân. Một số quyền được bảo lưu.</Copyright>
+    <Authors>Phạm Nhật Quang / Nguyễn Hà Lan</Authors>
+    <Copyright>(C) 2021 Phạm Nhật Quang / Nguyễn Hà Lan. Một số quyền được bảo lưu.</Copyright>
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
@@ -23,28 +23,30 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ResourcesImg\logo.jpg" />
+    <None Remove="ResourcesImg\logo2.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="ResourcesImg\logo.jpg" />
+    <EmbeddedResource Include="ResourcesImg\logo2.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FirebaseAdmin" Version="2.2.0" />
     <PackageReference Include="FirebaseDatabase.net" Version="4.0.6" />
+    <PackageReference Include="GuerrillaNtp" Version="2.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Plugin.CloudFirestore" Version="4.1.0" />
     <PackageReference Include="Plugin.FirebasePushNotification" Version="3.3.10" />
     <PackageReference Include="Polly" Version="7.2.2" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
-    <PackageReference Include="Syncfusion.Licensing" Version="19.2.0.62" />
-    <PackageReference Include="Syncfusion.Xamarin.Core" Version="19.2.0.62" />
-    <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="19.2.0.62" />
-    <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="19.2.0.62" />
-    <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="19.2.0.62" />
-    <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="19.2.0.62" />
-    <PackageReference Include="Syncfusion.Xamarin.SfSchedule" Version="19.2.0.62" />
-    <PackageReference Include="Syncfusion.Xamarin.XlsIO" Version="19.2.0.62" />
+    <PackageReference Include="Syncfusion.Licensing" Version="19.3.0.53" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="19.3.0.53" />
+    <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="19.3.0.53" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="19.3.0.53" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="19.3.0.53" />
+    <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="19.3.0.53" />
+    <PackageReference Include="Syncfusion.Xamarin.SfSchedule" Version="19.3.0.53" />
+    <PackageReference Include="Syncfusion.Xamarin.XlsIO" Version="19.3.0.53" />
     <PackageReference Include="Xamanimation" Version="1.3.0" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="1.3.0" />
     <PackageReference Include="Xamarin.CommunityToolkit.Markup" Version="1.3.0" />

@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using Plugin.CloudFirestore;
+using Plugin.CloudFirestore.Attributes;
 using QRdangcap.GoogleDatabase;
 using System;
 using Xamarin.Forms;
@@ -14,31 +16,21 @@ namespace QRdangcap
 
     public class LoggingStatsBase
     {
-        public string IdentityId { get; set; }
-        public string Id2Id { get; set; }
-        public string Id3Id { get; set; }
         public int StId { get; set; }
         public int ReporterId { get; set; }
         public string Mistake { get; set; }
+        public int NoMistake { get; set; }
+        public string StClass { get; set; }
         public int LoginStatus { get; set; }
     }
 
     public class InboundLog : LoggingStatsBase
     {
-        public long Timestamp { get; set; }
+        [Id]
         public string Keys { get; set; }
-    }
-
-    public class OutboundLog : LoggingStatsBase
-    {
-        [JsonProperty("Timestamp")]
-        public ServerTimeStamp TimestampPlaceholder { get; } = new ServerTimeStamp();
-    }
-
-    public class ServerTimeStamp
-    {
-        [JsonProperty(".sv")]
-        public string TimestampPlaceholder { get; } = "timestamp";
+        [ServerTimestamp(CanReplace = false)]
+        public Timestamp Timestamp { get; set; }
+        
     }
 
     public partial class FirebaseLogTesting : ContentPage
@@ -52,11 +44,14 @@ namespace QRdangcap
 
         private async void Button_Clicked_2(object sender, EventArgs e)
         {
+            string Error = ";;;;;;;";
             for (int i = int.Parse(From.Text); i <= int.Parse(To.Text); ++i)
             {
                 await System.Threading.Tasks.Task.Delay(100);
                 Sending.Text = $"Đang gửi: {i}";
-                instance.Firebase_SendLog(i);
+
+                Random NoError = new Random();
+                instance.Firebase_SendLog(i, Error.Substring(0, NoError.Next(0,3)));
             }
         }
     }

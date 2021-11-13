@@ -1,8 +1,10 @@
 ﻿using Firebase.Database;
 using Firebase.Database.Query;
+using Plugin.CloudFirestore;
 using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using SQLite;
+using System;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,7 +16,6 @@ namespace QRdangcap
     {
         public LogListForm globalLogList = new LogListForm();
         public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
-        public FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
         public SQLiteConnection db = new SQLiteConnection(GlobalVariables.localLogHistDatabasePath);
 
         public LogChanger(LogListForm logList)
@@ -39,7 +40,7 @@ namespace QRdangcap
             {
                 OnTime.IsEnabled = false;
                 LateTime.IsEnabled = false;
-                if (logList.LoginDate.AddMinutes(10) >= System.DateTime.Now)
+                if (logList.LoginDate.AddMinutes(10) >= DateTime.Now + UserData.OffsetWithNIST)
                 {
                     StMistake.IsReadOnly = false;
                     EditButton.IsVisible = true;
@@ -61,20 +62,17 @@ namespace QRdangcap
             {
                 StMistake.Text = "NONE";
             }
-            InboundLog NewLog = new InboundLog()
+            var NewLog = new
             {
-                StId = globalLogList.StId,
-                Keys = globalLogList.Keys,
+                globalLogList.StId,
                 ReporterId = UserData.StudentIdDatabase,
                 Mistake = StMistake.Text,
-                Timestamp = globalLogList.Timestamp,
                 LoginStatus = OnTime.IsChecked ? 1 : 2,
-                Id2Id = (OnTime.IsChecked ? 1 : 2).ToString() + "_" + instance.To4DigitString(globalLogList.StId) + "_" + globalLogList.Timestamp,
-                IdentityId = instance.To4DigitString(globalLogList.StId) + "_" + globalLogList.LoginDate.Year.ToString()
-                + "_" + instance.To4DigitString(globalLogList.LoginDate.DayOfYear)
+                globalLogList.StClass,
+                NoMistake = (OnTime.IsChecked ? 1 : 2) - 1 + (StMistake.Text.Equals("NONE") ? 0 : StMistake.Text.Count(x => x.Equals(';')) + 1)
             };
             string QueryName = ChoseString.Text;
-            await fc.Child("Logging").Child(globalLogList.Keys).PutAsync(NewLog);
+            await CrossCloudFirestore.Current.Instance.Collection("logging").Document(globalLogList.Keys).UpdateAsync(NewLog);
             _ = await instance.HttpPolly(new FeedbackModel()
             {
                 Mode = "13",
@@ -90,7 +88,7 @@ namespace QRdangcap
         public async void Button_Clicked_2(object sender, System.EventArgs e)
         {
             string QueryName = ChoseString.Text;
-            await fc.Child("Logging").Child(globalLogList.Keys).DeleteAsync();
+            await CrossCloudFirestore.Current.Instance.Collection("logging").Document(globalLogList.Keys).DeleteAsync();
             _ = await instance.HttpPolly(new FeedbackModel()
             {
                 Mode = "13",

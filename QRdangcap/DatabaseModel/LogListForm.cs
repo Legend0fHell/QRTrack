@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Plugin.CloudFirestore.Attributes;
+using SQLite;
 using System;
 
 namespace QRdangcap.DatabaseModel
@@ -7,6 +8,7 @@ namespace QRdangcap.DatabaseModel
     {
         // Contains info from GoogleDatabase, use specifically for local database.
         [PrimaryKey, Unique]
+        [Id]
         public string Keys { get; set; }
 
         public int StId { get; set; }
@@ -30,14 +32,5 @@ namespace QRdangcap.DatabaseModel
             if (type == 1) return db.Table<UserListForm>().ElementAt(Id - 4).StName;
             else return db.Table<UserListForm>().ElementAt(Id - 4).StClass;
         }
-
-        /*
-        public int GetInfoInt(int Id)
-        {
-            var db = new SQLiteConnection(GlobalVariables.localUserDatabasePath);
-            db.CreateTable<UserListForm>();
-            return db.Table<UserListForm>().ElementAt(Id - 4).Priv;
-        }
-        */
     }
 }

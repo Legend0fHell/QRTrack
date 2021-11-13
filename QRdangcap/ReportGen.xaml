@@ -3,7 +3,7 @@
     x:Class="QRdangcap.ReportGen"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Xuất báo cáo tuần">
+    Title="Xuất báo cáo">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#f2f4f6">
             <Frame
@@ -40,11 +40,7 @@
                                     MinimumWidthRequest="300"
                                     HorizontalOptions="FillAndExpand" />
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" Margin="10,0,10,-5">
-                        <Label Text="Trường hợp:" FontSize="17" FontAttributes="Bold" VerticalOptions="Center" />
-                        <Picker x:Name="ModeChose" Title="Trường hợp..." SelectedIndexChanged="ModeChose_SelectedIndexChanged"  HorizontalOptions="FillAndExpand" />
-                    </StackLayout>
-                    <Button Text="Xuất file" Clicked="Button_Clicked" />
+                    <Button Text="Xuất file Excel" Clicked="Button_Clicked" />
                 </StackLayout>
             </Frame>
             <Frame

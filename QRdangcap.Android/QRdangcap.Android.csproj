@@ -74,25 +74,25 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Syncfusion.Licensing">
-      <Version>19.2.0.62</Version>
+      <Version>19.3.0.53</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>19.2.0.62</Version>
+      <Version>19.3.0.53</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfChart">
-      <Version>19.2.0.62</Version>
+      <Version>19.3.0.53</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPicker">
-      <Version>19.2.0.62</Version>
+      <Version>19.3.0.53</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout">
-      <Version>19.2.0.62</Version>
+      <Version>19.3.0.53</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfProgressBar.Android">
-      <Version>19.2.0.62</Version>
+      <Version>19.3.0.53</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.XlsIO">
-      <Version>19.2.0.62</Version>
+      <Version>19.3.0.53</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Annotation">
       <Version>1.2.0.3</Version>
@@ -144,9 +144,6 @@
       <Project>{AC86A854-1444-4F99-8F5E-B07DFF2E0D22}</Project>
       <Name>QRdangcap</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\logo.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_action_assignment.png" />
@@ -474,6 +471,24 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_action_credit_card.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_launcher.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_launcher.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_launcher.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_launcher.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\logo2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
