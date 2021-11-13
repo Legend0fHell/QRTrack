@@ -1,11 +1,11 @@
 # QRTrack - Hệ thống Quản lý Học sinh CYB
 
 ## Thông tin
-- **Bản dựng mới nhất**: D041 (v0.41-delta) @ 13.11.2021
-- **Tiến độ dự án**: **95%** (phase Beta: **100%**).
+- **Bản dựng mới nhất**: D042 (v0.42-delta) @ 14.11.2021
+- **Tiến độ dự án**: **90%**
 - Để sử dụng một vài API và Package, file nguồn có chứa License Key và rất nhiều tài liệu định danh cá nhân, để tránh lộ lọt thông tin, dự án sẽ không open-source.
 
-## Mục tiêu hiện tại (Bản dựng tiếp theo: D042)
+## Mục tiêu hiện tại (Bản dựng tiếp theo: D043)
 - Chuyển toàn bộ hệ thống Người dùng sang Realtime Database
 - Tối ưu thời gian đăng nhập.
 - Cập nhật Hướng dẫn sử dụng.
