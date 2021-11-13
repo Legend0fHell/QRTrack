@@ -5,9 +5,9 @@
 - **Tiến độ dự án**: **95%** (phase Beta: **100%**).
 - Để sử dụng một vài API và Package, file nguồn có chứa License Key và rất nhiều tài liệu định danh cá nhân, để tránh lộ lọt thông tin, dự án sẽ không open-source.
 
-## Mục tiêu hiện tại (Bản dựng tiếp theo: D041)
-- ~~Cập nhật lại Tên gọi, Logo.~~
-- Chuyển toàn bộ hệ thống từ Realtime Database sang Cloud Firestore.
+## Mục tiêu hiện tại (Bản dựng tiếp theo: D042)
+- Chuyển toàn bộ hệ thống Người dùng sang Realtime Database
+- Tối ưu thời gian đăng nhập.
 - Cập nhật Hướng dẫn sử dụng.
 
 ## Cảnh báo:
