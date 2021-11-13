@@ -1,13 +1,13 @@
 # QRTrack - Hệ thống Quản lý Học sinh CYB
 
 ## Thông tin
-- **Bản dựng mới nhất**: B040-2 (v0.40-2-beta) @ 10.11.2021
-- **Tiến độ dự án**: **85%** (phase Beta: **95%**).
+- **Bản dựng mới nhất**: D041 (v0.41-delta) @ 13.11.2021
+- **Tiến độ dự án**: **95%** (phase Beta: **100%**).
 - Để sử dụng một vài API và Package, file nguồn có chứa License Key và rất nhiều tài liệu định danh cá nhân, để tránh lộ lọt thông tin, dự án sẽ không open-source.
 
-## Mục tiêu hiện tại (Bản dựng tiếp theo: D041)
-- ~~Cập nhật lại Tên gọi, Logo.~~
-- Chuyển toàn bộ hệ thống từ Realtime Database sang Cloud Firestore.
+## Mục tiêu hiện tại (Bản dựng tiếp theo: D042)
+- Chuyển toàn bộ hệ thống Người dùng sang Realtime Database
+- Tối ưu thời gian đăng nhập.
 - Cập nhật Hướng dẫn sử dụng.
 
 ## Cảnh báo:
@@ -26,7 +26,7 @@
   - Giai đoạn Beta bắt đầu khi code xong những thứ cốt lõi nhất, xây dựng xong nền móng.
   - Chủ yếu chú trọng cải thiện trải nghiệm người dùng và cải tiến thêm tính năng.
   - Code theo đổi mỗi 3-4 ngày (bắt buộc).
-* **Phase Delta** (dự kiến từ 12.2021): 
+* **Phase Delta** (từ 13.11.2021): 
   - Giai đoạn Delta bắt đầu khi tất cả các chức năng cơ bản đã hoàn thiện, chỉ còn những tính năng phụ và UI.
   - Chủ yếu chú trọng cải thiện tính năng phụ và UI.
   - Code theo đổi theo tuần (không bắt buộc).
