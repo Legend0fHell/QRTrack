@@ -48,11 +48,12 @@ namespace QRdangcap
             base.OnAppearing();
             if (UserData.StudentPriv == 0)
             {
-                // Hs quèn
+                // Hs
                 UserCard.IsVisible = true;
                 GenQR.IsVisible = false;
                 SendAbs.IsVisible = false;
                 GPSTest.IsVisible = true;
+                RestView.IsVisible = false;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = false;
                 HistLocal.IsVisible = true;
@@ -69,6 +70,7 @@ namespace QRdangcap
                 GenQR.IsVisible = true;
                 SendAbs.IsVisible = false;
                 GPSTest.IsVisible = true;
+                RestView.IsVisible = false;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = false;
                 HistLocal.IsVisible = true;
@@ -85,6 +87,7 @@ namespace QRdangcap
                 GenQR.IsVisible = true;
                 SendAbs.IsVisible = true;
                 GPSTest.IsVisible = true;
+                RestView.IsVisible = false;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = true;
                 HistLocal.IsVisible = true;
@@ -101,6 +104,7 @@ namespace QRdangcap
                 GenQR.IsVisible = true;
                 SendAbs.IsVisible = true;
                 GPSTest.IsVisible = true;
+                RestView.IsVisible = true;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = true;
                 HistLocal.IsVisible = true;
@@ -117,6 +121,7 @@ namespace QRdangcap
                 GenQR.IsVisible = true;
                 SendAbs.IsVisible = true;
                 GPSTest.IsVisible = true;
+                RestView.IsVisible = true;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = true;
                 HistLocal.IsVisible = true;

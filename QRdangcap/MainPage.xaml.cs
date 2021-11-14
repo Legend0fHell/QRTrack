@@ -78,7 +78,7 @@ namespace QRdangcap
             else if (UserData.StudentPriv == 3) Priv.Text = "Quản trị viên";
             else Priv.Text = "Quản trị HT";
             IsHiddenOrNot.Text = "";
-            LoginToday.IsVisible = true;
+            LoginToday.IsVisible = !UserData.IsTodayOff;
             PersonalRanking.IsVisible = true;
             if (UserData.IsHidden)
             {
@@ -94,6 +94,8 @@ namespace QRdangcap
             {
                 AdminTab.IsVisible = false;
             }
+            
+
             if (UserData.IsUserLogin == 0)
             {
                 LblStatusToday.Text = "Bạn chưa điểm danh ngày hôm nay!";
@@ -159,24 +161,28 @@ namespace QRdangcap
                     string decodedQRCode = "";
 
                     decodedQRCode = instance.Base64Decode(result.Text);
-                    for (int i = 0; i < decodedQRCode.Length; ++i)
+                    if(decodedQRCode.Length != 11) invalidDetect = true;
+                    else
                     {
-                        if (decodedQRCode[i] == '_')
+                        for (int i = 0; i < decodedQRCode.Length; ++i)
                         {
-                            if (sepDetect)
+                            if (decodedQRCode[i] == '_')
+                            {
+                                if (sepDetect)
+                                {
+                                    invalidDetect = true;
+                                    break;
+                                }
+                                else sepDetect = true;
+                                continue;
+                            }
+                            else if (decodedQRCode[i] < 48 || (decodedQRCode[i] > 57 && decodedQRCode[i] < 65) || (decodedQRCode[i] > 90))
                             {
                                 invalidDetect = true;
                                 break;
                             }
-                            else sepDetect = true;
-                            continue;
+                            if (sepDetect) QRRandCode += decodedQRCode[i];
                         }
-                        else if (decodedQRCode[i] < 48 || (decodedQRCode[i] > 57 && decodedQRCode[i] < 65) || (decodedQRCode[i] > 90))
-                        {
-                            invalidDetect = true;
-                            break;
-                        }
-                        if (sepDetect) QRRandCode += decodedQRCode[i];
                     }
                     if (!sepDetect || invalidDetect)
                     {
@@ -242,6 +248,7 @@ namespace QRdangcap
                     instance.Firebase_SendLog(UserData.StudentIdDatabase, "NONE", false, false);
                     UserData.NoUserRanked = await instance.GetGlobalUserRanking();
                     await DisplayAlert("Điểm danh thành công!", Reason, "OK");
+                    RefreshingView.IsRefreshing = true;
                 }
                 else
                 {

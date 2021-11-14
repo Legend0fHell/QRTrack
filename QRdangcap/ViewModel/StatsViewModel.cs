@@ -9,7 +9,7 @@ namespace QRdangcap.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<LogListForm> _LogListFirebase = new ObservableCollection<LogListForm>();
-        public string _RetrieveLog = "Đang lấy dữ liệu...";
+        public string _RetrieveLog = "Chưa có dữ liệu...";
         public bool _IsVisi = false;
 
         public ObservableCollection<LogListForm> LogListFirebase

@@ -6,8 +6,8 @@ namespace QRdangcap.DatabaseModel
     // There shouldn't be any "Global Variables" in C# but forgive my laziness...
     public static class GlobalVariables
     {
-        public static string ClientVersion = "D042";
-        public static DateTime ClientVersionDate = new DateTime(2021, 11, 14, 02, 30, 21);
+        public static string ClientVersion = "D043";
+        public static DateTime ClientVersionDate = new DateTime(2021, 11, 14, 23, 22, 15);
         public static string localLogHistDatabasePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "LocalLogHistDatabase.db3");
         public static string localUserDatabasePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "UserDatabase.db3");
         public static string FirebaseURL = "https://qrdangcap-default-rtdb.asia-southeast1.firebasedatabase.app/";

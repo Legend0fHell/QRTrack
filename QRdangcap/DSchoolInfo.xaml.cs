@@ -67,14 +67,15 @@ namespace QRdangcap
                 }
                 classroomListForms.Add(tmpForm);
             }
+            classroomListForms.Remove(classroomListForms.Where(x => x.ClrName == "EntireSchool").FirstOrDefault());
             ItemsList = new ObservableRangeCollection<ClassroomListForm>();
             if (SortStrat == 0)
             {
-                ItemsList.AddRange(classroomListForms.Skip(1).OrderBy(x => x.ClrName));
+                ItemsList.AddRange(classroomListForms.OrderBy(x => x.ClrName));
             }
             else
             {
-                ItemsList.AddRange(classroomListForms.Skip(1).OrderByDescending(x => x.ClrNoSt));
+                ItemsList.AddRange(classroomListForms.OrderByDescending(x => x.ClrNoSt));
             }
             globalSortStrat = SortStrat;
             ClrList.ItemsSource = ItemsList;

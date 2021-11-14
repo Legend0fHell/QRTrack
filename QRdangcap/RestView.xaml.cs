@@ -67,7 +67,7 @@ namespace QRdangcap
                 {
                     Mode = "14",
                     Contents = "3",
-                    Contents2 = RestDayState.IsToggled ? "0" : "1",
+                    Contents2 = RestDayState.IsToggled ? "1" : "0",
                     ContentStartTime = e.Datetime.Date.DayOfYear,
                     ContentEndTime = e.Datetime.Date.DayOfYear,
                 });
