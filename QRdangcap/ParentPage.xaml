@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="QRdangcap.ParentPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="HT Hỗ trợ Quản lý Học sinh CYB">
+
+    <ContentPage.Content>
+        <RefreshView x:Name="RefreshingView" Refreshing="RefreshView_Refreshing">
+            <ScrollView>
+                <StackLayout BackgroundColor="#f2f4f6">
+                    <Frame
+                        Margin="10,10,10,0"
+                        Padding="0"
+                        CornerRadius="10"
+                        HasShadow="True"
+                        HeightRequest="90"
+                        VerticalOptions="Start">
+                        <StackLayout Margin="10,5,10,5">
+                            <Label
+                                x:Name="Greeting"
+                                FontAttributes="Bold"
+                                FontSize="17"
+                                HorizontalTextAlignment="Start"
+                                TextColor="Black"
+                                VerticalOptions="Start" />
+                            <Label
+                                x:Name="Details"
+                                Margin="0,-5,0,0"
+                                FontSize="15"
+                                TextColor="Black" />
+                            <Label
+                                x:Name="Wishes"
+                                FontSize="15"
+                                HorizontalTextAlignment="Start"
+                                TextColor="#757575"
+                                VerticalOptions="EndAndExpand" />
+                        </StackLayout>
+                    </Frame>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Frame
+                            Grid.Column="0"
+                            Margin="10,5,5,0"
+                            Padding="0"
+                            CornerRadius="10"
+                            HasShadow="True"
+                            HeightRequest="90"
+                            VerticalOptions="Start">
+                            <StackLayout Margin="10,5,10,5">
+                                <Label
+                                    x:Name="DeviceClock"
+                                    FontAttributes="Bold"
+                                    FontSize="26"
+                                    HorizontalTextAlignment="Start"
+                                    Text="07:27:27"
+                                    TextColor="Black" />
+                                <Label
+                                    x:Name="DeviceDate"
+                                    Margin="0,-10,0,0"
+                                    HorizontalTextAlignment="Start"
+                                    Text="07:27:27"
+                                    TextColor="#757575" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    Text="Thời gian"
+                                    TextColor="#757575"
+                                    VerticalOptions="EndAndExpand" />
+                            </StackLayout>
+                        </Frame>
+                        <Frame
+                            Grid.Column="1"
+                            Margin="0,5,10,0"
+                            Padding="0"
+                            CornerRadius="10"
+                            HasShadow="True"
+                            HeightRequest="90"
+                            VerticalOptions="Start">
+                            <StackLayout Margin="10,5,10,5">
+                                <Label
+                                    x:Name="Priv"
+                                    FontAttributes="Bold"
+                                    FontSize="26"
+                                    HorizontalTextAlignment="Start"
+                                    TextColor="Black" />
+                                <Label
+                                    x:Name="IsHiddenOrNot"
+                                    Margin="0,-5,0,-5"
+                                    FontAttributes="Bold"
+                                    HorizontalTextAlignment="Start"
+                                    TextColor="#757575" />
+                                <Label
+                                    Text="Loại tài khoản"
+                                    TextColor="#757575"
+                                    VerticalOptions="EndAndExpand" />
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                    <Frame
+                        x:Name="LoginToday"
+                        Margin="10,5,10,0"
+                        Padding="0"
+                        CornerRadius="10"
+                        HasShadow="True"
+                        HeightRequest="100"
+                        VerticalOptions="Start">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </Frame.GestureRecognizers>
+                        <StackLayout Margin="10,5,10,5">
+                            <StackLayout Orientation="Horizontal">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="20"
+                                    HorizontalTextAlignment="Start"
+                                    Opacity="80"
+                                    Text="Điểm danh" />
+                                <Label
+                                    FontAttributes="Italic"
+                                    FontSize="17"
+                                    HorizontalOptions="EndAndExpand"
+                                    Opacity="80"
+                                    Text="Chi tiết &gt;"
+                                    TextColor="Blue"
+                                    VerticalOptions="Center" />
+                            </StackLayout>
+                            <Label
+                                x:Name="LblStatusToday"
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                HorizontalTextAlignment="End" />
+                            <Label
+                                x:Name="LblStatusSubString"
+                                Margin="0,-5,0,10"
+                                FontSize="16"
+                                HorizontalTextAlignment="End"
+                                TextColor="#757575" />
+                        </StackLayout>
+                    </Frame>
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Frame
+                            Grid.Column="0"
+                            Margin="10,10,10,0"
+                            Padding="0"
+                            CornerRadius="10"
+                            HasShadow="True"
+                            HeightRequest="70"
+                            VerticalOptions="Start">
+                            <StackLayout Margin="10,5,10,5">
+                                <Label
+                                    x:Name="VerText"
+                                    FontAttributes="Bold"
+                                    FontSize="24"
+                                    HorizontalTextAlignment="Start"
+                                    TextColor="Black" />
+                                <Label
+                                    Text="Phiên bản"
+                                    TextColor="#757575"
+                                    VerticalOptions="EndAndExpand" />
+                            </StackLayout>
+                        </Frame>
+                        <Frame
+                            Grid.Column="1"
+                            Margin="10,10,10,0"
+                            Padding="0"
+                            CornerRadius="10"
+                            HasShadow="True"
+                            HeightRequest="70"
+                            VerticalOptions="Start">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Logout_Clicked" />
+                            </Frame.GestureRecognizers>
+                            <StackLayout Margin="10,5,10,5">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="26"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Đăng xuất"
+                                    TextColor="Black"
+                                    VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>

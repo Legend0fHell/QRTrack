@@ -76,6 +76,7 @@ namespace QRdangcap
                     if (RestDayState.IsToggled && !ListOffDay.Contains(e.Datetime.DayOfYear))
                     {
                         ListOffDay.Add(e.Datetime.DayOfYear);
+                        if (e.Datetime.Date == DateTime.Today) UserData.IsTodayOff = true;
                         RestDayForm TmpForm = new RestDayForm()
                         {
                             From = new DateTime(DateTime.Now.Year, 1, 1).Date.AddDays(e.Datetime.DayOfYear - 1).AddHours(7),
@@ -87,6 +88,7 @@ namespace QRdangcap
                     else if (!RestDayState.IsToggled && ListOffDay.Contains(e.Datetime.DayOfYear))
                     {
                         ListOffDay.Remove(e.Datetime.DayOfYear);
+                        if (e.Datetime.Date == DateTime.Today) UserData.IsTodayOff = false;
                         RestDayForm TmpForm = new RestDayForm()
                         {
                             From = new DateTime(DateTime.Now.Year, 1, 1).Date.AddDays(e.Datetime.DayOfYear - 1).AddHours(7),

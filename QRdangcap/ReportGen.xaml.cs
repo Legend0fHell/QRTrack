@@ -181,8 +181,8 @@ namespace QRdangcap
                 worksheet.Range[1, 1, curRow, 10].CellStyle.Font.FontName = "Calibri";
                 worksheet = workbook.Worksheets[1];
                 worksheet.Name = "Chi tiết";
-                string[] header = { "", "ID", "Họ và tên", "Lớp", "Lỗi", "", "Thời gian báo cáo", "", "Người báo cáo", "Trạng thái"};
-                int[] headerSize = { 20, 5, 26, 7, 40, 12, 25, 4, 30, 9};
+                string[] header = { "", "ID", "Họ và tên", "Lớp", "Lỗi", "", "Thời gian báo cáo", "", "Người báo cáo", "Trạng thái" };
+                int[] headerSize = { 20, 5, 26, 7, 40, 12, 25, 4, 30, 9 };
                 for (int i = 0; i < header.Length; i++)
                 {
                     worksheet.Range[3, i + 1].Text = header[i];

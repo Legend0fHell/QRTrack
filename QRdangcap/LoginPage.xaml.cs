@@ -297,7 +297,8 @@ namespace QRdangcap
                 });
             }
             DependencyService.Get<IToast>().ShowShort("Đăng nhập thành công!");
-            await Shell.Current.GoToAsync(state: "//main", true);
+            if (UserData.StudentPriv >= 0) await Shell.Current.GoToAsync(state: "//main", true);
+            else await Shell.Current.GoToAsync($"//{nameof(ParentPage)}", true);
         }
     }
 }

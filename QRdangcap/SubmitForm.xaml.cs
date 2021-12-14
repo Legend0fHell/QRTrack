@@ -38,6 +38,7 @@ namespace QRdangcap
             });
             BindingContext = this;
         }
+
         protected override bool OnBackButtonPressed()
         {
             if (Navigation.NavigationStack.Count == 1)
@@ -47,6 +48,7 @@ namespace QRdangcap
             }
             else return base.OnBackButtonPressed();
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -57,6 +59,19 @@ namespace QRdangcap
                 FormSubmitting.IsVisible = true;
                 if (UserData.IsHidden) LoginToday.IsVisible = false;
                 else LoginToday.IsVisible = true;
+                if (UserData.StudentPriv > 0)
+                {
+                    if (UserData.StudentPriv == 1 && (UserData.IsUserLogin == 0 || UserData.IsUserLogin == 3))
+                    {
+                        FormSubmitting.IsVisible = false;
+                        LblStatusSubString2.IsVisible = true;
+                    }
+                    else FormSubmitting.IsVisible = true;
+                }
+                else
+                {
+                    FormSubmitting.IsVisible = false;
+                }
             }
             else
             {
@@ -64,19 +79,7 @@ namespace QRdangcap
                 FormSubmitting.IsVisible = false;
                 LoginToday.IsVisible = false;
             }
-            if (UserData.StudentPriv > 0)
-            {
-                if (UserData.StudentPriv == 1 && (UserData.IsUserLogin == 0 || UserData.IsUserLogin == 3))
-                {
-                    FormSubmitting.IsVisible = false;
-                    LblStatusSubString2.IsVisible = true;
-                }
-                else FormSubmitting.IsVisible = true;
-            }
-            else
-            {
-                FormSubmitting.IsVisible = false;
-            }
+
             if (UserData.IsUserLogin == 0)
             {
                 LblStatusToday.Text = "Bạn chưa điểm danh ngày hôm nay!";
@@ -152,6 +155,7 @@ namespace QRdangcap
 
         public async void SendToDatabase()
         {
+            int tmpStId = UserIDRead;
             if ((!UserData.IsAtSchool && GlobalVariables.IsGPSRequired)
                 || (UserData.IsAtSchool && DateTime.Now >= UserData.LastGPSUpdate.AddMinutes(5) && GlobalVariables.IsGPSRequired))
             {
@@ -210,10 +214,10 @@ namespace QRdangcap
                     MistakeStringCombined = MistakeStringCombined.Substring(0, MistakeStringCombined.Length - 1);
                 }
             }
-            int tmpStId = UserIDRead;
+
             string QueryName = ChoseString.Text;
             DependencyService.Get<IToast>().ShowShort("Đang gửi: " + QueryName);
-            instance.Firebase_SendLog(tmpStId, MistakeStringCombined, true);
+            instance.Firebase_SendLog(tmpStId, MistakeStringCombined, true, true, Reason3.IsChecked);
         }
 
         private void ClearContents()
@@ -223,6 +227,7 @@ namespace QRdangcap
             Reason0.IsChecked = false;
             Reason1.IsChecked = false;
             Reason2.IsChecked = false;
+            Reason3.IsChecked = false;
             otherMistake.Text = "";
         }
 

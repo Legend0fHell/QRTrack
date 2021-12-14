@@ -130,7 +130,7 @@
                             <Label x:Name="usrClassSub" Text="Không có dữ liệu!" FontSize="24" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" IsVisible="False" />
                             <chart:SfChart x:Name="chartSfYourClass" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="10,5,10,0">
                                 <chart:SfChart.Legend>
-                                    <chart:ChartLegend IconHeight="10" IconWidth="10" OverflowMode="Wrap" DockPosition="Bottom"/>
+                                    <chart:ChartLegend IconHeight="10" IconWidth="10" OverflowMode="Wrap" DockPosition="Bottom" />
                                 </chart:SfChart.Legend>
                                 <chart:SfChart.ColorModel>
                                     <chart:ChartColorModel Palette="Custom" CustomBrushes="{StaticResource Colors}" />

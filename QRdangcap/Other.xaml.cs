@@ -34,6 +34,7 @@ namespace QRdangcap
             IsGPSRequired_Switch.IsToggled = true;
             BindingContext = this;
         }
+
         protected override bool OnBackButtonPressed()
         {
             if (Navigation.NavigationStack.Count == 1)
@@ -43,6 +44,7 @@ namespace QRdangcap
             }
             else return base.OnBackButtonPressed();
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -53,6 +55,8 @@ namespace QRdangcap
                 GenQR.IsVisible = false;
                 SendAbs.IsVisible = false;
                 GPSTest.IsVisible = true;
+                Medical.IsVisible = false;
+                TimetablePage.IsVisible = true;
                 RestView.IsVisible = false;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = false;
@@ -70,6 +74,8 @@ namespace QRdangcap
                 GenQR.IsVisible = true;
                 SendAbs.IsVisible = false;
                 GPSTest.IsVisible = true;
+                Medical.IsVisible = true;
+                TimetablePage.IsVisible = true;
                 RestView.IsVisible = false;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = false;
@@ -87,6 +93,8 @@ namespace QRdangcap
                 GenQR.IsVisible = true;
                 SendAbs.IsVisible = true;
                 GPSTest.IsVisible = true;
+                Medical.IsVisible = true;
+                TimetablePage.IsVisible = true;
                 RestView.IsVisible = false;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = true;
@@ -104,6 +112,8 @@ namespace QRdangcap
                 GenQR.IsVisible = true;
                 SendAbs.IsVisible = true;
                 GPSTest.IsVisible = true;
+                Medical.IsVisible = true;
+                TimetablePage.IsVisible = true;
                 RestView.IsVisible = true;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = true;
@@ -121,6 +131,8 @@ namespace QRdangcap
                 GenQR.IsVisible = true;
                 SendAbs.IsVisible = true;
                 GPSTest.IsVisible = true;
+                Medical.IsVisible = true;
+                TimetablePage.IsVisible = true;
                 RestView.IsVisible = true;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = true;
@@ -200,7 +212,7 @@ namespace QRdangcap
 
         private async void Logout_Tapped(object sender, EventArgs e)
         {
-            if(await DisplayActionSheet("Bạn có chắc chắn muốn đăng xuất không?", "Có", "Không") == "Có")
+            if (await DisplayActionSheet("Bạn có chắc chắn muốn đăng xuất không?", "Có", "Không") == "Có")
             {
                 Preferences.Clear();
                 await Shell.Current.GoToAsync($"//{nameof(LoginPage)}", true);
@@ -338,6 +350,16 @@ namespace QRdangcap
         private async void Timetable_Tapped(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new Timetable());
+        }
+
+        private async void Medical_Tapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new MedicalInfo());
+        }
+
+        private async void TimetablePage_Tapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TimetablePage());
         }
     }
 }

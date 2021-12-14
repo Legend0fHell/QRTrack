@@ -3,7 +3,7 @@
     x:Class="QRdangcap.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Hệ thống Điểm danh Học sinh CYB">
+    Title="HT Hỗ trợ Quản lý Học sinh CYB">
 
     <ContentPage.Content>
         <RefreshView x:Name="RefreshingView" Refreshing="RefreshView_Refreshing">
@@ -145,7 +145,7 @@
                                     Source="ic_action_calendar_today.png" />
                                 <Label
                                     HorizontalTextAlignment="Center"
-                                    Text="Bảng báo nghỉ"
+                                    Text="Thời khóa biểu"
                                     TextColor="Black" />
                             </StackLayout>
                             <StackLayout

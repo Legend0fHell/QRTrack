@@ -2,7 +2,8 @@
 <ContentPage
     x:Class="QRdangcap.DUserInfo"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:QRdangcap"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:QRdangcap"
     Title="Thông tin Người dùng">
     <ContentPage.Resources>
         <ResourceDictionary>

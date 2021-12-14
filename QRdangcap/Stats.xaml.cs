@@ -31,6 +31,7 @@ namespace QRdangcap
             throw new NotImplementedException();
         }
     }
+
     public partial class Stats : ContentPage
     {
         private readonly StatsViewModel ViewModel;

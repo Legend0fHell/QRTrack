@@ -43,12 +43,14 @@ namespace QRdangcap
                 UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
             }
         }
-        DateTime LastBack = DateTime.Now - new TimeSpan(0,0,5);
+
+        private DateTime LastBack = DateTime.Now - new TimeSpan(0, 0, 5);
+
         protected override bool OnBackButtonPressed()
         {
             if (Navigation.NavigationStack.Count == 1)
             {
-                if(DateTime.Now - LastBack <= new TimeSpan(0,0,5))
+                if (DateTime.Now - LastBack <= new TimeSpan(0, 0, 5))
                 {
                     return base.OnBackButtonPressed();
                 }
@@ -56,11 +58,11 @@ namespace QRdangcap
                 {
                     DependencyService.Get<IToast>().ShowShort("Nhấn BACK lần nữa để thoát");
                     LastBack = DateTime.Now;
-                    
                 }
             }
             return true;
         }
+
         public void InitStaticText()
         {
             // Limit is 14 characters.
@@ -94,7 +96,6 @@ namespace QRdangcap
             {
                 AdminTab.IsVisible = false;
             }
-            
 
             if (UserData.IsUserLogin == 0)
             {
@@ -161,7 +162,7 @@ namespace QRdangcap
                     string decodedQRCode = "";
 
                     decodedQRCode = instance.Base64Decode(result.Text);
-                    if(decodedQRCode.Length != 11) invalidDetect = true;
+                    if (decodedQRCode.Length != 11) invalidDetect = true;
                     else
                     {
                         for (int i = 0; i < decodedQRCode.Length; ++i)
@@ -276,7 +277,7 @@ namespace QRdangcap
 
         private async void C01_Tapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Timetable());
+            await Navigation.PushAsync(new TimetablePage());
         }
 
         private async void C02_Tapped(object sender, EventArgs e)

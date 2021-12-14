@@ -96,19 +96,22 @@ namespace QRdangcap
             var randomGen = new Random();
             for (int i = 0; i < response.Length; i++)
             {
-                TimetableForm Absenting = new TimetableForm()
+                if (response[i].StClass == UserData.StudentClass)
                 {
-                    LogId = response[i].LogId,
-                    StId = response[i].StId,
-                    ContentStartDate = response[i].ContentStartDate,
-                    ContentEndDate = response[i].ContentEndDate,
-                    ReporterId = response[i].ReporterId,
-                    From = response[i].DateCSD.Date,
-                    To = response[i].DateCED.Date.Add(new TimeSpan(0, 23, 59, 59)),
-                    Name = $"{response[i].StClass} - {response[i].StName}",
-                    Color = Pallette[randomGen.Next(6)],
-                };
-                ViewModel.Timetables.Add(Absenting);
+                    TimetableForm Absenting = new TimetableForm()
+                    {
+                        LogId = response[i].LogId,
+                        StId = response[i].StId,
+                        ContentStartDate = response[i].ContentStartDate,
+                        ContentEndDate = response[i].ContentEndDate,
+                        ReporterId = response[i].ReporterId,
+                        From = response[i].DateCSD.Date,
+                        To = response[i].DateCED.Date.Add(new TimeSpan(0, 23, 59, 59)),
+                        Name = $"{response[i].StClass} - {response[i].StName}",
+                        Color = Pallette[randomGen.Next(6)],
+                    };
+                    ViewModel.Timetables.Add(Absenting);
+                }
             }
             RefreshingView.IsRefreshing = false;
         }

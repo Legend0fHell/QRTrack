@@ -7,6 +7,10 @@
     <ShellItem Route="LoginPage">
         <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" />
     </ShellItem>
+    <ShellItem Route="ParentPage">
+        <ShellContent ContentTemplate="{DataTemplate local:ParentPage}" />
+    </ShellItem>
+
     <TabBar Route="main">
         <Tab
             Title="Cá nhân"

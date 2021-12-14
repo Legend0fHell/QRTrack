@@ -53,5 +53,31 @@ namespace QRdangcap
                 instance.Firebase_SendLog(i, Error.Substring(0, NoError.Next(0, 3)));
             }
         }
+
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            for (int i = int.Parse(From.Text); i <= int.Parse(To.Text); ++i)
+            {
+                await System.Threading.Tasks.Task.Delay(100);
+                Sending.Text = $"Đang gửi: {i}";
+
+                Random NoError = new Random();
+                string Error = "NONE";
+                if (NoError.NextDouble() <= 0.04)
+                {
+                    if (NoError.NextDouble() <= 0.05) Error = "Quên thẻ;Sai đồng phục";
+                    else
+                    {
+                        if (NoError.NextDouble() <= 0.7) Error = "Quên thẻ";
+                        else Error = "Sai đồng phục";
+                    }
+                }
+                if (NoError.NextDouble() <= 0.03)
+                {
+                    instance.Firebase_SendLog(i, Error, false, true, false, true, DateMani.Date.AddHours(7).AddSeconds(NoError.Next(1900, 2300)));
+                }
+                else instance.Firebase_SendLog(i, Error, false, true, false, true, DateMani.Date.AddHours(7).AddSeconds(NoError.Next(0, 1780)));
+            }
+        }
     }
 }

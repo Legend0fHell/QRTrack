@@ -107,7 +107,7 @@
                         Padding="0"
                         CornerRadius="10"
                         HasShadow="True"
-                        HeightRequest="300"
+                        HeightRequest="360"
                         VerticalOptions="Start">
                         <StackLayout Margin="10,0">
                             <Label
@@ -159,6 +159,11 @@
                                         WidthRequest="50" />
                                 </Grid>
                             </StackLayout>
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                HorizontalTextAlignment="Center"
+                                Text="LỖI (NẾU CÓ):" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -209,6 +214,26 @@
                                 Margin="2,-10,0,0"
                                 FontSize="20"
                                 Placeholder="Lỗi khác..." />
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                HorizontalTextAlignment="Center"
+                                Text="KHÁC:" />
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox
+                                    x:Name="Reason3"
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Margin="0,-10,0,0"
+                                    Scale="1.2" />
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Margin="0,-10,0,0"
+                                    FontSize="20"
+                                    Text="Sức khỏe chưa đảm bảo"
+                                    VerticalOptions="Center" />
+                            </StackLayout>
 
                             <Grid Margin="0,0,0,20" VerticalOptions="EndAndExpand">
                                 <Grid.ColumnDefinitions>

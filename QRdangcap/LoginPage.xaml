@@ -116,7 +116,7 @@
                 VerticalOptions="EndAndExpand">
                 <Label
                     HorizontalTextAlignment="Center"
-                    Text="QRTrack - Hệ thống Quản lý Học sinh CYB"
+                    Text="QRTrack - Hệ thống Hỗ trợ Quản lý Học sinh CYB"
                     TextColor="#c9c9c9"
                     VerticalOptions="CenterAndExpand" />
                 <Label

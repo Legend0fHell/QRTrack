@@ -9,6 +9,8 @@
             <Entry x:Name="To" Placeholder="Đến..." />
             <Label x:Name="Sending" Text="Đang gửi: " />
             <Button Text="Gửi test" Clicked="Button_Clicked_2" />
+            <DatePicker x:Name="DateMani" />
+            <Button Text="Gửi test Khống" Clicked="Button_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -118,6 +118,32 @@
                     </StackLayout>
                 </Frame>
                 <Frame
+                    x:Name="TimetablePage"
+                    Margin="10,0"
+                    CornerRadius="5"
+                    HeightRequest="20">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TimetablePage_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image
+                            Margin="0,0,15,0"
+                            Scale="1.5"
+                            Source="ic_action_calendar_today.png" />
+                        <Label
+                            FontSize="17"
+                            Text="Thời khóa biểu"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center" />
+                        <Image
+                            Margin="0,0,-10,0"
+                            HorizontalOptions="EndAndExpand"
+                            Scale="0.7"
+                            Source="ic_action_arrow_forward_ios.png"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </Frame>
+                <Frame
                     x:Name="RestView"
                     Margin="10,0"
                     CornerRadius="5"
@@ -133,6 +159,32 @@
                         <Label
                             FontSize="17"
                             Text="Quản lý ngày nghỉ"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center" />
+                        <Image
+                            Margin="0,0,-10,0"
+                            HorizontalOptions="EndAndExpand"
+                            Scale="0.7"
+                            Source="ic_action_arrow_forward_ios.png"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </Frame>
+                <Frame
+                    x:Name="Medical"
+                    Margin="10,0"
+                    CornerRadius="5"
+                    HeightRequest="20">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Medical_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image
+                            Margin="0,0,15,0"
+                            Scale="1.5"
+                            Source="ic_action_assignment.png" />
+                        <Label
+                            FontSize="17"
+                            Text="DS HS Sức khỏe Chưa đảm bảo"
                             TextColor="Black"
                             VerticalTextAlignment="Center" />
                         <Image

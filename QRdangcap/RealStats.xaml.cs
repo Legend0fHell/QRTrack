@@ -17,6 +17,7 @@ namespace QRdangcap
         public object MonthSelected { get; set; }
         public ObservableCollection<ChartForm> DoughnutSeriesData { get; set; }
         public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
+
         protected override bool OnBackButtonPressed()
         {
             if (Navigation.NavigationStack.Count == 1)
@@ -26,6 +27,7 @@ namespace QRdangcap
             }
             else return base.OnBackButtonPressed();
         }
+
         public RealStats()
         {
             InitializeComponent();
@@ -198,7 +200,7 @@ namespace QRdangcap
                     tmpForm.ClrOnTime += response[i][classes].ClrOnTime;
                     tmpForm.ClrLateTime += response[i][classes].ClrLateTime;
                     tmpForm.ClrAbsent += response[i][classes].ClrAbsent;
-                    tmpForm.ClrError += response[i][classes].ClrError + response[i][classes].ClrLateTime;
+                    tmpForm.ClrError += response[i][classes].ClrError + response[i][classes].ClrLateTime - response[i][classes].ClrAbsent;
                 }
                 classroomListForms.Add(tmpForm);
             }

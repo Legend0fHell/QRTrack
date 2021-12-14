@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+             x:Class="QRdangcap.TimetablePage"
+             Title="Thời khóa biểu">
+    <ContentPage.Content>
+        <RefreshView x:Name="RefreshingView" Refreshing="RefreshView_Refreshing">
+            <ScrollView>
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal" Margin="10,10,10,15">
+                        <Label Text="Lớp:" FontSize="17" FontAttributes="Bold" VerticalOptions="Center" />
+                        <Picker x:Name="ClassChose" Title="Lớp..." SelectedIndexChanged="Class_SelectedIndexChanged"  HorizontalOptions="FillAndExpand" />
+                    </StackLayout>
+                    <Label FontSize="Title" Text="{Binding ClassName}" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                    <Label FontSize="Subtitle" Text="{Binding AddInfo}" TextColor="Black" HorizontalTextAlignment="Center" Margin="0,0,0,15" />
+                    <syncfusion:SfDataGrid x:Name="Timetable" AutoGenerateColumns="False" ItemsSource="{Binding TimetableColl}" AllowEditing="False">
+                        <syncfusion:SfDataGrid.GridStyle>
+                            <syncfusion:DefaultStyle HeaderBackgroundColor="#00FFFF"  HeaderForegroundColor="Black" />
+                        </syncfusion:SfDataGrid.GridStyle>
+                        <syncfusion:SfDataGrid.Columns>
+                            <syncfusion:GridTextColumn MappingName="Thu2" HeaderText="Thứ 2" HeaderFontAttribute="Bold" />
+                            <syncfusion:GridTextColumn MappingName="Thu3" HeaderText="Thứ 3" HeaderFontAttribute="Bold" />
+                            <syncfusion:GridTextColumn MappingName="Thu4" HeaderText="Thứ 4" HeaderFontAttribute="Bold" />
+                            <syncfusion:GridTextColumn MappingName="Thu5" HeaderText="Thứ 5" HeaderFontAttribute="Bold" />
+                            <syncfusion:GridTextColumn MappingName="Thu6" HeaderText="Thứ 6" HeaderFontAttribute="Bold" />
+                            <syncfusion:GridTextColumn MappingName="Thu7" HeaderText="Thứ 7" HeaderFontAttribute="Bold" />
+                        </syncfusion:SfDataGrid.Columns>
+                    </syncfusion:SfDataGrid>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>

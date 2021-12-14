@@ -41,6 +41,7 @@
     <PackageReference Include="Syncfusion.Licensing" Version="19.3.0.53" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="19.3.0.53" />
     <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="19.3.0.53" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="19.3.0.53" />
     <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="19.3.0.53" />
     <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="19.3.0.53" />
     <PackageReference Include="Syncfusion.Xamarin.SfSchedule" Version="19.3.0.53" />
@@ -74,6 +75,12 @@
     </Compile>
     <Compile Update="LocalLogHistory.xaml.cs">
       <DependentUpon>LocalLogHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="ParentPage.xaml.cs">
+      <DependentUpon>ParentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="MedicalInfo.xaml.cs">
+      <DependentUpon>MedicalInfo.xaml</DependentUpon>
     </Compile>
     <Compile Update="Stats.xaml.cs">
       <DependentUpon>Stats.xaml</DependentUpon>
@@ -139,6 +146,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Timetable.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="TimetablePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UserCard.xaml">
