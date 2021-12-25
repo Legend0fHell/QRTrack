@@ -80,7 +80,7 @@
                             Source="ic_action_person_remove.png" />
                         <Label
                             FontSize="17"
-                            Text="Báo nghỉ học sinh"
+                            Text="Báo học sinh vắng mặt"
                             TextColor="Black"
                             VerticalTextAlignment="Center" />
                         <Image
@@ -106,7 +106,7 @@
                             Source="ic_action_calendar_today.png" />
                         <Label
                             FontSize="17"
-                            Text="Bảng báo nghỉ"
+                            Text="DS HS Báo nghỉ"
                             TextColor="Black"
                             VerticalTextAlignment="Center" />
                         <Image
@@ -133,6 +133,32 @@
                         <Label
                             FontSize="17"
                             Text="Thời khóa biểu"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center" />
+                        <Image
+                            Margin="0,0,-10,0"
+                            HorizontalOptions="EndAndExpand"
+                            Scale="0.7"
+                            Source="ic_action_arrow_forward_ios.png"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </Frame>
+                <Frame
+                    x:Name="TeachSubstitute"
+                    Margin="10,0"
+                    CornerRadius="5"
+                    HeightRequest="20">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TeachSubstitute_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image
+                            Margin="0,0,15,0"
+                            Scale="1.5"
+                            Source="ic_action_calendar_today.png" />
+                        <Label
+                            FontSize="17"
+                            Text="Lịch dạy thay"
                             TextColor="Black"
                             VerticalTextAlignment="Center" />
                         <Image
@@ -185,6 +211,32 @@
                         <Label
                             FontSize="17"
                             Text="DS HS Sức khỏe Chưa đảm bảo"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center" />
+                        <Image
+                            Margin="0,0,-10,0"
+                            HorizontalOptions="EndAndExpand"
+                            Scale="0.7"
+                            Source="ic_action_arrow_forward_ios.png"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </Frame>
+                <Frame
+                    x:Name="SetCovid"
+                    Margin="10,0"
+                    CornerRadius="5"
+                    HeightRequest="20">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="SetCovid_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Image
+                            Margin="0,0,15,0"
+                            Scale="1.5"
+                            Source="ic_action_assignment.png" />
+                        <Label
+                            FontSize="17"
+                            Text="DS HS Tiếp xúc COVID-19"
                             TextColor="Black"
                             VerticalTextAlignment="Center" />
                         <Image

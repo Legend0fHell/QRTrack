@@ -69,6 +69,7 @@ namespace QRdangcap
             excTime.Reset();
             excTime.Start();
             bool Lock = false;
+            ViewModel.Folders = new System.Collections.ObjectModel.ObservableCollection<LogListForm>();
             BeginTime = FromDate.Date.Date;
             EndTime = ToDate.Date.Date.AddSeconds(86399);
             Device.StartTimer(TimeSpan.FromMilliseconds(500), () =>

@@ -19,11 +19,11 @@
                     Margin="0,70,0,0"
                     HorizontalOptions="Center"
                     VerticalOptions="StartAndExpand">
-                    <!--
+                    
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="InstantLoginProcedureBypass" />
                     </StackLayout.GestureRecognizers>
-                    -->
+                    
                     <Image
                         Source="ResourcesImg/logo2.png"
                         HeightRequest="150"

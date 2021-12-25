@@ -82,8 +82,14 @@
     <Compile Update="MedicalInfo.xaml.cs">
       <DependentUpon>MedicalInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Update="SetCovid.xaml.cs">
+      <DependentUpon>SetCovid.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Stats.xaml.cs">
       <DependentUpon>Stats.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="TeachSubstitute.xaml.cs">
+      <DependentUpon>TeachSubstitute.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

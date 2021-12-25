@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QRdangcap.SendAbsent"
-             Title="Báo nghỉ học sinh">
+             Title="Báo học sinh vắng mặt">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#f2f4f6">
             <Frame HasShadow="True" CornerRadius="10" Margin="10,10,10,0" Padding="0" HeightRequest="90" VerticalOptions="Start">

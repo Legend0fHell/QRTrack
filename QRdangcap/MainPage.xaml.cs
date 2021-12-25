@@ -16,7 +16,7 @@ namespace QRdangcap
     {
         public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public ObservableCollection<UserListForm> Leaderboard { get; set; }
-
+        public int LoadState = 0;
         public MainPage()
         {
             InitializeComponent();
@@ -24,6 +24,13 @@ namespace QRdangcap
             DeviceDate.Text = DateTime.Now.ToString("dddd, dd.MM.yyyy", CultureInfo.CreateSpecificCulture("vi-VN"));
             VerText.Text = GlobalVariables.ClientVersion + " (" + GlobalVariables.ClientVersionDate.ToString("dd.MM") + ")";
             RefreshingView.IsRefreshing = true;
+            
+            MessagingCenter.Subscribe<Application, int>(this, "LoadCompletion", (p, comp) =>
+            {
+                LoadState++;
+                InitStaticText();
+                if(LoadState == 2) RefreshingView.IsRefreshing = false;
+            });
             Device.StartTimer(TimeSpan.FromMilliseconds(500), () =>
             {
                 Device.BeginInvokeOnMainThread(() =>
@@ -121,7 +128,7 @@ namespace QRdangcap
                 LblStatusToday.TextColor = Xamarin.Forms.Color.Magenta;
                 LblStatusSubString.Text = "";
             }
-            RefreshingView.IsRefreshing = false;
+            
         }
 
         private async void Logout_Clicked(object sender, EventArgs e)
@@ -129,6 +136,7 @@ namespace QRdangcap
             if (await DisplayActionSheet("Bạn có chắc chắn muốn đăng xuất không?", "Có", "Không") == "Có")
             {
                 Preferences.Clear();
+                LoadState = 0;
                 await Shell.Current.GoToAsync($"//{nameof(LoginPage)}", true);
                 UserData.StudentPreIdDatabase = UserData.StudentIdDatabase;
             }
@@ -247,7 +255,7 @@ namespace QRdangcap
                 if (response.Status == "SUCCESS")
                 {
                     instance.Firebase_SendLog(UserData.StudentIdDatabase, "NONE", false, false);
-                    UserData.NoUserRanked = await instance.GetGlobalUserRanking();
+                    await instance.GetGlobalUserRanking();
                     await DisplayAlert("Điểm danh thành công!", Reason, "OK");
                     RefreshingView.IsRefreshing = true;
                 }
@@ -262,6 +270,7 @@ namespace QRdangcap
         private void RefreshView_Refreshing(object sender, EventArgs e)
         {
             InitStaticText();
+            RefreshingView.IsRefreshing = false;
         }
 
         private async void UpdateUser_Tapped(object sender, EventArgs e)

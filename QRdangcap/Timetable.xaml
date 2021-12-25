@@ -8,7 +8,7 @@
         <Grid Margin="0,0,10,0">
             <Label
                 FontSize="22"
-                Text="Bảng báo nghỉ"
+                Text="DS HS Báo nghỉ"
                 TextColor="White"
                 VerticalOptions="Center" />
             <Button
@@ -16,7 +16,7 @@
                 FontSize="15"
                 HorizontalOptions="End"
                 IsVisible="{Binding IsAbsentAllowed}"
-                Text="Báo nghỉ"
+                Text="Báo vắng"
                 VerticalOptions="Center" />
         </Grid>
     </Shell.TitleView>

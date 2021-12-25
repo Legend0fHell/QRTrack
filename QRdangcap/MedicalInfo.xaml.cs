@@ -77,17 +77,18 @@ namespace QRdangcap
             {
                 classSearchTerm = string.Empty;
             }
-            searchTerm = searchTerm.ToLower(CultureInfo.CreateSpecificCulture("vi-VN"));
-            classSearchTerm = classSearchTerm.ToLower(CultureInfo.CreateSpecificCulture("vi-VN"));
+            searchTerm = instance.ConvertToUnsign(searchTerm).ToLower();
+            classSearchTerm = instance.ConvertToUnsign(classSearchTerm).ToLower();
+
             List<UserListForm> UserList = new List<UserListForm>(ItemsList);
             filteredItem = UserList;
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                filteredItem = UserList.Where(x => x.StName.ToLower(CultureInfo.CreateSpecificCulture("vi-VN")).Contains(searchTerm)).ToList();
+                filteredItem = UserList.Where(x => x.UnsignStName.Contains(searchTerm)).ToList();
             }
             if (!string.IsNullOrWhiteSpace(classSearchTerm))
             {
-                filteredItem = filteredItem.Where(x => x.StClass.ToLower(CultureInfo.CreateSpecificCulture("vi-VN")).Contains(classSearchTerm)).ToList();
+                filteredItem = filteredItem.Where(x => x.UnsignStClass.Contains(classSearchTerm)).ToList();
             }
             ViewModel.DisplayList.Clear();
             ViewModel.DisplayList.AddRange(filteredItem);

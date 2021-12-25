@@ -1,8 +1,12 @@
-﻿using QRdangcap.DatabaseModel;
+﻿using Firebase.Database;
+using Firebase.Database.Query;
+using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using SQLite;
 using Syncfusion.XForms.PopupLayout;
 using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,6 +16,7 @@ namespace QRdangcap
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Other : ContentPage
     {
+        public static FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
         public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public string _CurAcc = "Không có thông tin!";
 
@@ -57,6 +62,7 @@ namespace QRdangcap
                 GPSTest.IsVisible = true;
                 Medical.IsVisible = false;
                 TimetablePage.IsVisible = true;
+                TeachSubstitute.IsVisible = true;
                 RestView.IsVisible = false;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = false;
@@ -76,6 +82,7 @@ namespace QRdangcap
                 GPSTest.IsVisible = true;
                 Medical.IsVisible = true;
                 TimetablePage.IsVisible = true;
+                TeachSubstitute.IsVisible = true;
                 RestView.IsVisible = false;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = false;
@@ -95,6 +102,7 @@ namespace QRdangcap
                 GPSTest.IsVisible = true;
                 Medical.IsVisible = true;
                 TimetablePage.IsVisible = true;
+                TeachSubstitute.IsVisible = true;
                 RestView.IsVisible = false;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = true;
@@ -114,6 +122,7 @@ namespace QRdangcap
                 GPSTest.IsVisible = true;
                 Medical.IsVisible = true;
                 TimetablePage.IsVisible = true;
+                TeachSubstitute.IsVisible = true;
                 RestView.IsVisible = true;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = true;
@@ -133,6 +142,7 @@ namespace QRdangcap
                 GPSTest.IsVisible = true;
                 Medical.IsVisible = true;
                 TimetablePage.IsVisible = true;
+                TeachSubstitute.IsVisible = true;
                 RestView.IsVisible = true;
                 TCClr.IsVisible = true;
                 HistDB.IsVisible = true;
@@ -177,14 +187,30 @@ namespace QRdangcap
             RetrieveAllUserDb instance = new RetrieveAllUserDb();
             await instance.RetrieveAllUserDatabase();
             await instance.GetGlobalLogStat();
-            ResponseModel response2 = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
+            await instance.GetGlobalUserRanking();
+            int retry = 1;
+            while (retry < 5)
             {
-                Mode = "18",
-                Contents = UserData.StudentIdDatabase.ToString(),
-            });
-            UserData.SchoolLat = response2.Latitude;
-            UserData.SchoolLon = response2.Longitude;
-            UserData.SchoolDist = response2.Distance;
+                try
+                {
+                    ResponseModel response2 = await fc.Child("SchoolCfg").OnceSingleAsync<ResponseModel>();
+                    UserData.SchoolLat = response2.Latitude;
+                    UserData.SchoolLon = response2.Longitude;
+                    UserData.SchoolDist = response2.Distance;
+                    UserData.StartTime = TimeSpan.FromSeconds(response2.Message1);
+                    UserData.EndTime = TimeSpan.FromSeconds(response2.Message3);
+                    UserData.LateTime = TimeSpan.FromSeconds(response2.Message2);
+                }
+                catch (Exception ex)
+                {
+                    ++retry;
+                    DependencyService.Get<IToast>().ShowShort($"Lỗi: Không thể kết nối với csdl. Đang thử lại {retry}/5");
+                    Debug.WriteLine($"Khởi tạo lỗi ({ex.Message}):, thử lại {retry}/5");
+                    await Task.Delay(retry * 1000);
+                    continue;
+                }
+                break;
+            }
             if (!DependencyService.Get<IGpsDependencyService>().IsGpsEnable())
             {
                 await DisplayAlert("Thông báo", "GPS chưa được bật. Nhấn OK để kích hoạt GPS trước khi sử dụng.", "OK");
@@ -194,18 +220,6 @@ namespace QRdangcap
             else
             {
                 await instance.UpdateCurLocation();
-            }
-            UserData.StartTime = response2.StartTime;
-            UserData.EndTime = response2.EndTime;
-            UserData.LateTime = response2.LateTime;
-            if (response2.Message == "0") UserData.IsUserLogin = 0;
-            else if (response2.Message == "1") UserData.IsUserLogin = 1;
-            else if (response2.Message == "2") UserData.IsUserLogin = 2;
-            else if (response2.Message == "3") UserData.IsUserLogin = 3;
-            else if (response2.Message == "-1")
-            {
-                UserData.IsUserLogin = 0;
-                UserData.IsTodayOff = true;
             }
             DependencyService.Get<IToast>().ShowShort("Cập nhật thành công.");
         }
@@ -268,16 +282,20 @@ namespace QRdangcap
             {
                 if (NewPass1.Text != null && NewPass1.Text.Equals(NewPass2.Text))
                 {
-                    ResponseModel response = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
+                    UserListForm2 response = await fc.Child("Users").Child($"{UserData.StudentUsername}").OnceSingleAsync<UserListForm2>();
+                    if(response.Password.Equals(InitPass.Text))
                     {
-                        Mode = "12",
-                        Contents = UserData.StudentIdDatabase.ToString(),
-                        Contents2 = NewPass1.Text,
-                        Contents3 = InitPass.Text
-                    });
-                    if (response.Status.Equals("SUCCESS"))
-                    {
-                        DependencyService.Get<IToast>().ShowShort("Đổi mật khẩu thành công.");
+                        bool Operation = true;
+                        try
+                        {
+                            await fc.Child("Users").Child($"{UserData.StudentUsername}").PatchAsync(new { Password = NewPass1.Text });
+                        }
+                        catch(Exception ex)
+                        {
+                            Operation = false;
+                            DependencyService.Get<IToast>().ShowShort($"Thất bại: Có lỗi xảy ra. {ex}");
+                        }
+                        if(Operation) DependencyService.Get<IToast>().ShowShort("Đổi mật khẩu thành công.");
                     }
                     else
                     {
@@ -360,6 +378,16 @@ namespace QRdangcap
         private async void TimetablePage_Tapped(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new TimetablePage());
+        }
+
+        private async void TeachSubstitute_Tapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TeachSubstitute());
+        }
+
+        private async void SetCovid_Tapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SetCovid());
         }
     }
 }

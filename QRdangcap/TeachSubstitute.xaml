@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+             x:Class="QRdangcap.TeachSubstitute"
+             Title="Lịch dạy thay">
+    <ContentPage.Content>
+        <RefreshView x:Name="RefreshingView" Refreshing="RefreshView_Refreshing">
+            <ScrollView>
+                <StackLayout>
+                    <Label FontSize="Title" Text="{Binding ClassName}" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                    <Label FontSize="Subtitle" Text="{Binding AddInfo}" TextColor="Black" HorizontalTextAlignment="Center" Margin="0,0,0,15" />
+                    <syncfusion:SfDataGrid x:Name="Timetable" AutoGenerateColumns="False" ItemsSource="{Binding SubsColl}" AllowEditing="False" ColumnSizer="Auto">
+                        <syncfusion:SfDataGrid.GridStyle>
+                            <syncfusion:DefaultStyle HeaderBackgroundColor="#00FFFF"  HeaderForegroundColor="Black" />
+                        </syncfusion:SfDataGrid.GridStyle>
+                        <syncfusion:SfDataGrid.Columns>
+                            <syncfusion:GridTextColumn MappingName="SubDate" HeaderText="Ngày" HeaderFontAttribute="Bold" />
+                            <syncfusion:GridTextColumn MappingName="ClassName" HeaderText="Lớp" HeaderFontAttribute="Bold" />
+                            <syncfusion:GridTextColumn MappingName="Lesson" HeaderText="Tiết" HeaderFontAttribute="Bold" />
+                            <syncfusion:GridTextColumn MappingName="RetireName" HeaderText="GV nghỉ" HeaderFontAttribute="Bold" />
+                            <syncfusion:GridTextColumn MappingName="LessonName" HeaderText="Môn nghỉ" HeaderFontAttribute="Bold" />
+                            <syncfusion:GridTextColumn MappingName="ReplaceName" HeaderText="GV dạy thay" HeaderFontAttribute="Bold" />
+                            <syncfusion:GridTextColumn MappingName="RepLessonName" HeaderText="Môn dạy thay" HeaderFontAttribute="Bold" />
+                        </syncfusion:SfDataGrid.Columns>
+                    </syncfusion:SfDataGrid>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>

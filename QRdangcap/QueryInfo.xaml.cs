@@ -3,6 +3,7 @@ using QRdangcap.GoogleDatabase;
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using Xamarin.CommunityToolkit.ObjectModel;
@@ -19,13 +20,26 @@ namespace QRdangcap
         public List<UserListForm> filteredItem = new List<UserListForm>();
         public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public int queryStat = -1;
-        public bool ForcedReload { get; set; }
         public bool UpdateStat { get; set; }
-
+        private readonly Stopwatch SinceLastQuery = new Stopwatch();
+        public bool Locked { get; set; }
         public QueryInfo()
         {
             InitializeComponent();
-            RetrieveAllUserDb instance = new RetrieveAllUserDb();
+            SinceLastQuery.Start();
+            Locked = true;
+            Device.StartTimer(TimeSpan.FromMilliseconds(200), () =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    if (SinceLastQuery.IsRunning && SinceLastQuery.ElapsedMilliseconds > 300)
+                    {
+                        SinceLastQuery.Stop();
+                        if (!Locked) UpdateQuery();
+                    }
+                });
+                return true;
+            });
             Checking();
             async void Checking()
             {
@@ -53,15 +67,21 @@ namespace QRdangcap
 
         public void Init()
         {
+            Locked = true;
             ItemsList = new ObservableRangeCollection<UserListForm>();
             ItemsList.Clear();
             ItemsList.AddRange(db.Table<UserListForm>().ToList().Where(x => x.IsHidden == 0));
             myCollectionView.ItemsSource = ItemsList;
+            Locked = false;
             BindingContext = this;
             refreshAll.IsRefreshing = false;
         }
 
         private void Test_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SinceLastQuery.Restart();
+        }
+        private void UpdateQuery()
         {
             string searchTerm = NameQuery.Text;
             string classSearchTerm = ClassQuery.Text;
@@ -74,31 +94,33 @@ namespace QRdangcap
             {
                 classSearchTerm = string.Empty;
             }
-            searchTerm = searchTerm.ToLower(CultureInfo.CreateSpecificCulture("vi-VN"));
-            classSearchTerm = classSearchTerm.ToLower(CultureInfo.CreateSpecificCulture("vi-VN"));
+            searchTerm = instance.ConvertToUnsign(searchTerm).ToLower();
+            classSearchTerm = instance.ConvertToUnsign(classSearchTerm).ToLower();
 
             List<UserListForm> UserList = new List<UserListForm>(db.Table<UserListForm>().ToList().Where(x => x.IsHidden == 0));
             filteredItem = UserList;
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                filteredItem = UserList.Where(x => x.StName.ToLower(CultureInfo.CreateSpecificCulture("vi-VN")).Contains(searchTerm)).ToList();
+                filteredItem = UserList.Where(x => x.UnsignStName.Contains(searchTerm)).ToList();
             }
             if (!string.IsNullOrWhiteSpace(classSearchTerm))
             {
-                filteredItem = filteredItem.Where(x => x.StClass.ToLower(CultureInfo.CreateSpecificCulture("vi-VN")).Contains(classSearchTerm)).ToList();
+                filteredItem = filteredItem.Where(x => x.UnsignStClass.Contains(classSearchTerm)).ToList();
             }
             queryStat = 0;
             if (filteredItem.Count > 0) queryStat = 1;
             ItemsList.Clear();
             ItemsList.AddRange(filteredItem);
         }
-
         private async void RefreshView_Refreshing(object sender, EventArgs e)
         {
-            if (UpdateStat) await instance.GetGlobalLogStat();
-            UpdateStat = false;
-            ForcedReload = true;
+            if (UpdateStat)
+            {
+                await instance.GetGlobalLogStat();
+            }
             Init();
+            UpdateQuery();
+            UpdateStat = false;
         }
 
         private async void MyCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)

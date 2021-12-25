@@ -1,6 +1,9 @@
-﻿using QRdangcap.DatabaseModel;
+﻿using Firebase.Database;
+using Firebase.Database.Query;
+using QRdangcap.DatabaseModel;
 using QRdangcap.GoogleDatabase;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xamanimation;
@@ -14,13 +17,14 @@ namespace QRdangcap
     public partial class LoginPage : ContentPage
     {
         public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
-
+        public static FirebaseClient fc = new FirebaseClient(GlobalVariables.FirebaseURL);
         public LoginPage()
         {
             InitializeComponent();
             Entry_Username.Text = "";
             Entry_Password.Text = "";
             ClientVer.Text = "Bản dựng: " + GlobalVariables.ClientVersion + " (Dựng lúc " + GlobalVariables.ClientVersionDate.ToString("G") + ")";
+            SavedPreference.IsChecked = true;
             Init();
             if (Preferences.Get("PrevSaved", false))
             {
@@ -94,8 +98,6 @@ namespace QRdangcap
                     Duration = "100",
                 });
             }
-            // dirty hack to hopefully got animation preloaded
-            await Task.Delay(500);
             if (isInstantLogin > 0)
             {
                 Entry_Username.Text = "InstantLoginAdmin";
@@ -117,27 +119,34 @@ namespace QRdangcap
 
             if (Entry_Username.Text.Length > 0 && Entry_Password.Text.Length > 0)
             {
-                ResponseModel response = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
+                int retry = 1;
+                while (retry < 5)
                 {
-                    Mode = "0",
-                    Contents = Entry_Username.Text,
-                    Contents2 = Entry_Password.Text,
-                });
-                if (response.Status == "SUCCESS")
-                {
-                    if (response.Message == "OK")
+                    try
                     {
-                        UserData.StudentUsername = Entry_Username.Text;
-                        UserData.StudentClass = response.STClass;
-                        UserData.StudentFullName = response.STName;
-                        UserData.StudentPriv = response.STPriv;
-                        UserData.StudentIdDatabase = response.STId;
-                        UserData.IsHidden = response.Message1 == 1;
-                        LoginSucceeded();
+                        UserListForm2 response = await fc.Child("Users").Child($"{Entry_Username.Text}").OnceSingleAsync<UserListForm2>();
+                        if (response != null && response.Password == Entry_Password.Text)
+                        {
+                            UserData.StudentUsername = Entry_Username.Text;
+                            UserData.StudentClass = response.StClass;
+                            UserData.StudentFullName = response.StName;
+                            UserData.StudentPriv = response.Priv;
+                            UserData.StudentIdDatabase = response.StId;
+                            UserData.IsHidden = response.IsHidden == 1;
+                            LoginSucceeded();
+                        }
+                        else LoginFailed();
                     }
-                    else LoginFailed();
+                    catch (Exception ex)
+                    {
+                        ++retry;
+                        DependencyService.Get<IToast>().ShowShort($"Lỗi: Không thể kết nối với csdl. Đang thử lại {retry}/5");
+                        Debug.WriteLine($"Khởi tạo lỗi ({ex.Message}):, thử lại {retry}/5");
+                        await Task.Delay(retry * 1000);
+                        continue;
+                    }
+                    break;
                 }
-                else LoginFailed();
             }
             else LoginFailed();
         }
@@ -202,8 +211,7 @@ namespace QRdangcap
             {
                 try
                 {
-                    var result = client.GetAsync("https://google.com",
-                          HttpCompletionOption.ResponseHeadersRead).Result;
+                    var result = client.GetAsync("https://google.com", HttpCompletionOption.ResponseHeadersRead).Result;
                     UserData.OffsetWithNIST = (TimeSpan)(result.Headers.Date - DateTimeOffset.Now);
                 }
                 catch
@@ -218,17 +226,33 @@ namespace QRdangcap
                 return;
             }
             LoginStat.Text = "Đang tải dữ liệu của trường... (3/6)";
-            UserData.NoUserRanked = await instance.GetGlobalUserRanking();
+            _ = instance.GetGlobalLogStat();
+            
             LoginStat.Text = "Đang tải dữ liệu của trường... (4/6)";
-            await instance.GetGlobalLogStat();
-            ResponseModel response2 = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
+            _ = instance.GetGlobalUserRanking();
+            int retry = 1;
+            while (retry < 5)
             {
-                Mode = "18",
-                Contents = UserData.StudentIdDatabase.ToString(),
-            });
-            UserData.SchoolLat = response2.Latitude;
-            UserData.SchoolLon = response2.Longitude;
-            UserData.SchoolDist = response2.Distance;
+                try
+                {
+                    ResponseModel response2 = await fc.Child("SchoolCfg").OnceSingleAsync<ResponseModel>();
+                    UserData.SchoolLat = response2.Latitude;
+                    UserData.SchoolLon = response2.Longitude;
+                    UserData.SchoolDist = response2.Distance;
+                    UserData.StartTime = TimeSpan.FromSeconds(response2.Message1);
+                    UserData.EndTime = TimeSpan.FromSeconds(response2.Message3);
+                    UserData.LateTime = TimeSpan.FromSeconds(response2.Message2);
+                }
+                catch (Exception ex)
+                {
+                    ++retry;
+                    DependencyService.Get<IToast>().ShowShort($"Lỗi: Không thể kết nối với csdl. Đang thử lại {retry}/5");
+                    Debug.WriteLine($"Khởi tạo lỗi ({ex.Message}):, thử lại {retry}/5");
+                    await Task.Delay(retry * 1000);
+                    continue;
+                }
+                break;
+            }
             LoginStat.Text = "Đang cập nhật vị trí... (5/6)";
             GlobalVariables.IsGPSRequired = true;
             if (!DependencyService.Get<IGpsDependencyService>().IsGpsEnable())
@@ -242,20 +266,9 @@ namespace QRdangcap
             {
                 await instance.UpdateCurLocation();
             }
-            UserData.StartTime = response2.StartTime;
-            UserData.EndTime = response2.EndTime;
-            UserData.LateTime = response2.LateTime;
-            if (response2.Message == "0") UserData.IsUserLogin = 0;
-            else if (response2.Message == "1") UserData.IsUserLogin = 1;
-            else if (response2.Message == "2") UserData.IsUserLogin = 2;
-            else if (response2.Message == "3") UserData.IsUserLogin = 3;
-            else if (response2.Message == "-1")
-            {
-                UserData.IsUserLogin = 0;
-                UserData.IsTodayOff = true;
-            }
             LoginStat.Text = "Đang kiểm tra cập nhật mới... (6/6)";
             instance.CheckUpdates();
+            
             LoginStat.Text = "Đăng nhập thành công! (6/6)";
             Entry_Username.Text = "";
             Entry_Password.Text = "";

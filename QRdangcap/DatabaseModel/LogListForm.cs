@@ -19,7 +19,6 @@ namespace QRdangcap.DatabaseModel
         public DateTime LoginDate => new DateTime(1970, 1, 1, 0, 0, 0, 0).AddMilliseconds(Timestamp).ToLocalTime();
         public int ReporterId { get; set; }
         public string RpString => GetInfo(1, ReporterId) + " - " + GetInfo(2, ReporterId);
-
         public int LoginStatus { get; set; }
         public string LoginColor => (LoginStatus == 1) ? "Green" : "Orange";
 
