@@ -1,7 +1,7 @@
 # QRTrack - Hệ thống Hỗ trợ Quản lý Học sinh CYB
 
 ## Thông tin
-- **Bản dựng cuối cùng**: D045 (v0.45-release) @ 26.12.2021
+- **Bản dựng cuối cùng**: R045 (v0.45-release) @ 26.12.2021
 - **Tiến độ dự án**: **99%**
 
 ## Cảnh báo:
