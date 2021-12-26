@@ -31,7 +31,23 @@ namespace QRdangcap
             throw new NotImplementedException();
         }
     }
+    internal class EditConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (UserData.StudentPriv >= 2) return "true";
+            else if(UserData.StudentPriv >= 1) 
+            {
+                if ((DateTime)value >= (DateTime.Now + UserData.OffsetWithNIST).AddMinutes(-10)) return "true";
+            }
+            return "false";
+        }
 
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public partial class Stats : ContentPage
     {
         private readonly StatsViewModel ViewModel;

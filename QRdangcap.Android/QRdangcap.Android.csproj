@@ -76,22 +76,22 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Syncfusion.Licensing">
-      <Version>19.3.0.53</Version>
+      <Version>19.4.0.38</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>19.3.0.53</Version>
+      <Version>19.4.0.38</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfChart">
-      <Version>19.3.0.53</Version>
+      <Version>19.4.0.38</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPicker">
-      <Version>19.3.0.53</Version>
+      <Version>19.4.0.38</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout">
-      <Version>19.3.0.53</Version>
+      <Version>19.4.0.38</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.XlsIO">
-      <Version>19.3.0.53</Version>
+      <Version>19.4.0.38</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Annotation">
       <Version>1.2.0.3</Version>
@@ -99,10 +99,10 @@
     <PackageReference Include="Xamarin.AndroidX.Core">
       <Version>1.6.0.3</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
     <PackageReference Include="Xamarin.GooglePlayServices.Base">
-      <Version>117.6.0.1</Version>
+      <Version>117.6.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

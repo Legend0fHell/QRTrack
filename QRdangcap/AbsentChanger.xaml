@@ -43,7 +43,7 @@
                                     Margin="0,0,5,0"
                                     FontAttributes="Bold"
                                     FontSize="18"
-                                    Text="người báo cáo:" />
+                                    Text="Người báo cáo:" />
                                 <Label
                                     x:Name="ChoseString2"
                                     FontSize="18"
@@ -102,16 +102,6 @@
                         </Grid.ColumnDefinitions>
                         <Button
                             Grid.Column="0"
-                            BackgroundColor="#a6dca1"
-                            Clicked="Button_Clicked_1"
-                            CornerRadius="15"
-                            FontAttributes="Bold"
-                            FontSize="30"
-                            HeightRequest="70"
-                            Text="Sửa"
-                            TextColor="#7D7D7D" />
-                        <Button
-                            Grid.Column="1"
                             BackgroundColor="#fab8bc"
                             Clicked="Button_Clicked_2"
                             CornerRadius="15"
@@ -119,6 +109,16 @@
                             FontSize="30"
                             HeightRequest="70"
                             Text="Xóa"
+                            TextColor="#7D7D7D" />
+                        <Button
+                            Grid.Column="1"
+                            BackgroundColor="#a6dca1"
+                            Clicked="Button_Clicked_1"
+                            CornerRadius="15"
+                            FontAttributes="Bold"
+                            FontSize="30"
+                            HeightRequest="70"
+                            Text="Sửa"
                             TextColor="#7D7D7D" />
                     </Grid>
                 </StackLayout>

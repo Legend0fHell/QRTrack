@@ -15,7 +15,7 @@ namespace QRdangcap
         public LogListForm globalLogList = new LogListForm();
         public static RetrieveAllUserDb instance = new RetrieveAllUserDb();
         public SQLiteConnection db = new SQLiteConnection(GlobalVariables.localLogHistDatabasePath);
-
+        public DateTime EditingTime { get; set; }
         public LogChanger(LogListForm logList)
         {
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace QRdangcap
                 StMistake.IsReadOnly = false;
                 EditButton.IsVisible = true;
             }
-            else
+            else if(UserData.StudentPriv == 1)
             {
                 OnTime.IsEnabled = false;
                 LateTime.IsEnabled = false;
@@ -51,11 +51,18 @@ namespace QRdangcap
             }
             if (logList.LoginStatus == 1) OnTime.IsChecked = true;
             else if (logList.LoginStatus == 2) LateTime.IsChecked = true;
+            EditingTime = logList.LoginDate;
             StTime.Text = logList.LoginDate.ToString("HH:mm:ss dd.MM.yyyy");
         }
 
         public async void Button_Clicked_1(object sender, System.EventArgs e)
         {
+            if (UserData.StudentPriv == 1 && EditingTime.AddMinutes(10) < DateTime.Now + UserData.OffsetWithNIST)
+            {
+                DependencyService.Get<IToast>().ShowShort("Hết thời gian sửa");
+                await Navigation.PopAsync();
+                return;
+            }
             if (string.IsNullOrEmpty(StMistake.Text) || string.IsNullOrWhiteSpace(StMistake.Text))
             {
                 StMistake.Text = "NONE";
@@ -85,18 +92,27 @@ namespace QRdangcap
 
         public async void Button_Clicked_2(object sender, System.EventArgs e)
         {
-            string QueryName = ChoseString.Text;
-            await CrossCloudFirestore.Current.Instance.Collection("logging").Document(globalLogList.Keys).DeleteAsync();
-            _ = await instance.HttpPolly(new FeedbackModel()
+            if (await DisplayActionSheet("Bạn có chắc chắn muốn xóa báo cáo không?", "Có", "Không") == "Có")
             {
-                Mode = "13",
-                Contents = globalLogList.StId.ToString(),
-                Contents2 = globalLogList.LoginDate.DayOfYear.ToString(),
-                Contents3 = "",
-                Contents4 = "",
-            }, false);
-            DependencyService.Get<IToast>().ShowShort("Xóa thành công: " + QueryName);
-            await Navigation.PopAsync();
+                if (UserData.StudentPriv == 1 && EditingTime.AddMinutes(10) < DateTime.Now + UserData.OffsetWithNIST)
+                {
+                    DependencyService.Get<IToast>().ShowShort("Hết thời gian sửa");
+                    await Navigation.PopAsync();
+                    return;
+                }
+                string QueryName = ChoseString.Text;
+                await CrossCloudFirestore.Current.Instance.Collection("logging").Document(globalLogList.Keys).DeleteAsync();
+                _ = await instance.HttpPolly(new FeedbackModel()
+                {
+                    Mode = "13",
+                    Contents = globalLogList.StId.ToString(),
+                    Contents2 = globalLogList.LoginDate.DayOfYear.ToString(),
+                    Contents3 = "",
+                    Contents4 = "",
+                }, false);
+                DependencyService.Get<IToast>().ShowShort("Xóa thành công: " + QueryName);
+                await Navigation.PopAsync();
+            }
         }
     }
 }

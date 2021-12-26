@@ -3,7 +3,8 @@
     x:Class="QRdangcap.ParentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="HT Hỗ trợ Quản lý Học sinh CYB">
+    Title="HT Hỗ trợ Quản lý Học sinh CYB"
+    Shell.FlyoutBehavior="Disabled">
 
     <ContentPage.Content>
         <RefreshView x:Name="RefreshingView" Refreshing="RefreshView_Refreshing">

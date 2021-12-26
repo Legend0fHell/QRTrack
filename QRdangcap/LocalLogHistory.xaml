@@ -8,6 +8,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:MistakeConverter x:Key="mistakeConverter" />
+            <local:EditConverter x:Key="editConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -105,8 +106,9 @@
                                                 Margin="0,0,5,0"
                                                 FontSize="12"
                                                 HorizontalTextAlignment="End"
-                                                Text="Nhấn để chỉnh sửa"
-                                                TextColor="#757575"
+                                                IsVisible="{Binding LoginDate, Converter={StaticResource editConverter}}"
+                                                Text="Chỉnh sửa &gt;"
+                                                TextColor="Blue"
                                                 VerticalOptions="End" />
                                         </StackLayout>
                                     </Grid>

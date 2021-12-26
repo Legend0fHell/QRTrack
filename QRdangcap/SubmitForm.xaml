@@ -242,16 +242,6 @@
                                 </Grid.ColumnDefinitions>
                                 <Button
                                     Grid.Column="0"
-                                    BackgroundColor="#a6dca1"
-                                    Clicked="Button_Clicked_1"
-                                    CornerRadius="15"
-                                    FontAttributes="Bold"
-                                    FontSize="30"
-                                    HeightRequest="65"
-                                    Text="Gửi"
-                                    TextColor="#7D7D7D" />
-                                <Button
-                                    Grid.Column="1"
                                     BackgroundColor="#fab8bc"
                                     Clicked="Button_Clicked_2"
                                     CornerRadius="15"
@@ -260,6 +250,17 @@
                                     HeightRequest="60"
                                     Text="Hủy"
                                     TextColor="#7D7D7D" />
+                                <Button
+                                    Grid.Column="1"
+                                    BackgroundColor="#a6dca1"
+                                    Clicked="Button_Clicked_1"
+                                    CornerRadius="15"
+                                    FontAttributes="Bold"
+                                    FontSize="30"
+                                    HeightRequest="65"
+                                    Text="Gửi"
+                                    TextColor="#7D7D7D" />
+
                             </Grid>
                         </StackLayout>
                     </Frame>

@@ -324,11 +324,6 @@ namespace QRdangcap
             await Navigation.PushAsync(new RestDay());
         }
 
-        private async void AbsLog_Tapped(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AbsentLog());
-        }
-
         private async void DelDBLocal_Tapped(object sender, EventArgs e)
         {
             if (await DisplayActionSheet("Bạn có chắc chắn muốn xóa dữ liệu không?", "Có", "Không") == "Có")

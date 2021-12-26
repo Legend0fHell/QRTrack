@@ -3,7 +3,13 @@
     x:Class="QRdangcap.AbsentLog"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:QRdangcap"
     Title="Danh sách học sinh báo nghỉ">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:EditForceConverter x:Key="editForceConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <RefreshView x:Name="refreshAll" Refreshing="RefreshView_Refreshing">
             <ScrollView>
@@ -105,11 +111,13 @@
                                                     Text="{Binding StringCED}"
                                                     VerticalOptions="End" />
                                                 <Label
+                                                    x:Name="EditLbl"
                                                     Margin="0,0,5,0"
                                                     FontSize="12"
                                                     HorizontalTextAlignment="End"
-                                                    Text="Nhấn để chỉnh sửa"
-                                                    TextColor="#757575"
+                                                    IsVisible="{Binding ., Converter={StaticResource editForceConverter}}"
+                                                    Text="Chỉnh sửa &gt;"
+                                                    TextColor="Blue"
                                                     VerticalOptions="End" />
                                             </StackLayout>
                                         </Grid>

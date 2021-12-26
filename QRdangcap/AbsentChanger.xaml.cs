@@ -57,27 +57,30 @@ namespace QRdangcap
 
         public async void Button_Clicked_2(object sender, System.EventArgs e)
         {
-            string QueryName = ChoseString.Text;
-            DependencyService.Get<IToast>().ShowShort("Đang xóa: " + QueryName);
-            ResponseModel response = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
+            if (await DisplayActionSheet("Bạn có chắc chắn muốn xóa báo cáo không?", "Có", "Không") == "Có")
             {
-                Mode = "16",
-                Contents = globalLogList.LogId.ToString(),
-            });
-            AbsentLogForm LogChanged = new AbsentLogForm()
-            {
-                ChangeStat = 2,
-            };
-            if (response.Status == "SUCCESS")
-            {
-                MessagingCenter.Send<Page, AbsentLogForm>(this, "AbsentChangerEdit", LogChanged);
-                DependencyService.Get<IToast>().ShowShort("Xóa thành công: " + QueryName);
+                string QueryName = ChoseString.Text;
+                DependencyService.Get<IToast>().ShowShort("Đang xóa: " + QueryName);
+                ResponseModel response = (ResponseModel)await instance.HttpPolly(new FeedbackModel()
+                {
+                    Mode = "16",
+                    Contents = globalLogList.LogId.ToString(),
+                });
+                AbsentLogForm LogChanged = new AbsentLogForm()
+                {
+                    ChangeStat = 2,
+                };
+                if (response.Status == "SUCCESS")
+                {
+                    MessagingCenter.Send<Page, AbsentLogForm>(this, "AbsentChangerEdit", LogChanged);
+                    DependencyService.Get<IToast>().ShowShort("Xóa thành công: " + QueryName);
+                }
+                else
+                {
+                    DependencyService.Get<IToast>().ShowShort("Thất bại (Không tồn tại): " + QueryName);
+                }
+                await Navigation.PopAsync();
             }
-            else
-            {
-                DependencyService.Get<IToast>().ShowShort("Thất bại (Không tồn tại): " + QueryName);
-            }
-            await Navigation.PopAsync();
         }
     }
 }
