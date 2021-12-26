@@ -6,7 +6,6 @@
 
 ## Cảnh báo:
 - Code vô cùng rối rắm.
-- Phiên bản mới sẽ luôn được cập nhật ở mục Release.
 
 ## Giai đoạn Phát triển Dự án
 * **Pre-Product** (từ 02.2021): 
