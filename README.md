@@ -9,4 +9,4 @@
 ## Readme:
 - Cần API Syncfusion (App.xaml.cs)
 - Cần ProtectKey của Script (GoogleDatabase/RetrieveAllUserDb.cs)
-- Cần google-services.json trong Firebase (Android0
+- Cần google-services.json trong Firebase (Android)
